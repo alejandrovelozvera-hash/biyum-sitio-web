@@ -310,7 +310,13 @@ function biyum_rest_list_projects() {
 		'orderby'        => 'menu_order',
 		'order'          => 'ASC',
 	) );
-	return array_map( 'biyum_project_to_array', $posts );
+	$data = array_map( 'biyum_project_to_array', $posts );
+
+	nocache_headers();
+	header( 'Cache-Control: no-store, no-cache, must-revalidate, max-age=0' );
+	header( 'Pragma: no-cache' );
+
+	return $data;
 }
 
 function biyum_rest_get_project( $request ) {

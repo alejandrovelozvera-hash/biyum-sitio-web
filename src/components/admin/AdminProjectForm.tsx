@@ -3,13 +3,17 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Project, Category, WpMediaItem } from "@/types";
-import { Save, ArrowLeft } from "../Icons";
+import { Save, ArrowLeft, Plus, X } from "../Icons";
 import ImageSelector from "./ImageSelector";
 import Link from "next/link";
 
 interface Props {
   project?: Project;
   categories: Category[];
+}
+
+function slugify(text: string): string {
+  return text.toLowerCase().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-").replace(/-+/g, "-").trim();
 }
 
 export default function AdminProjectForm({ project, categories }: Props) {
@@ -23,6 +27,10 @@ export default function AdminProjectForm({ project, categories }: Props) {
   const [servicesStr, setServicesStr] = useState(project?.services?.join(", ") || "");
   const [featured, setFeatured] = useState(project?.featured || false);
   const [error, setError] = useState("");
+  const [localCategories, setLocalCategories] = useState<Category[]>(categories);
+  const [showNewCategory, setShowNewCategory] = useState(false);
+  const [newCategoryName, setNewCategoryName] = useState("");
+  const [categoryBusy, setCategoryBusy] = useState(false);
 
   const initialImages: (WpMediaItem & { isCover?: boolean })[] = [
     ...(project?.cover_image_url
@@ -44,18 +52,68 @@ export default function AdminProjectForm({ project, categories }: Props) {
 
     const body = {
       id: project?.id, title, description, category,
-      cover_image_url: coverImage?.url || otherImages[0]?.url || "",
-      cover_image_id: coverImage?.id || null,
-      images: otherImages, client: client || null, year: year || null,
-      services: servicesStr.split(",").map((s) => s.trim()).filter(Boolean), featured,
-    };
+cover_image_url: coverImage?.url || otherImages[0]?.url || "",
+    cover_image_id: coverImage?.id || null,
+    images: otherImages, client: client || null, year: year || null,
+    services: servicesStr.split(",").map((s) => s.trim()).filter(Boolean), featured,
+  };
 
     try {
       const res = await fetch("/api/proyectos", { method: project ? "PUT" : "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
-      if (res.ok) { router.push("/admin/proyectos"); router.refresh(); }
-      else { const data = await res.json(); setError(data.error || "Error al guardar"); }
-    } catch { setError("Error de conexión"); }
-    setSaving(false);
+      if (res.ok) {
+        const data = await res.json();
+        if (!project) {
+          router.push(`/admin/proyectos/${data.id}`);
+          router.refresh();
+        } else {
+          router.push("/admin/proyectos");
+          router.refresh();
+        }
+      }
+      else { const data = await res.json(); setError(data.error || "Error al guardar"); setSaving(false); }
+    } catch (err) {
+      console.error("Error guardando proyecto", err);
+      setError("Error de conexión. Revisa que WordPress responda.");
+      setSaving(false);
+    }
+  }
+
+  async function createCategory() {
+    const name = newCategoryName.trim();
+    if (!name) return;
+    if (slugify(name) === "") { setError("Nombre de categoría no válido"); return; }
+    setCategoryBusy(true);
+    setError("");
+    try {
+      const cfgRes = await fetch("/api/config", { method: "GET" });
+      const cfg = await cfgRes.json();
+      const slides = cfg?.hero_slides || cfg?.slides || [];
+      const current: Category[] = cfg?.categories || [];
+      const slug = slugify(name);
+      if (current.some((c) => c.slug === slug)) {
+        setLocalCategories(current);
+        setCategory(slug);
+        setShowNewCategory(false);
+        setNewCategoryName("");
+        setCategoryBusy(false);
+        return;
+      }
+      const newCat: Category = { id: `cat-${Date.now()}`, name, slug, order_index: current.length };
+      const updated = [...current, newCat];
+      const res = await fetch("/api/config", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ slides, categories: updated }),
+      });
+      if (!res.ok) { setError("Error al crear la categoría"); setCategoryBusy(false); return; }
+      setLocalCategories(updated);
+      setCategory(slug);
+      setShowNewCategory(false);
+      setNewCategoryName("");
+    } catch {
+      setError("Error de conexión creando la categoría");
+    }
+    setCategoryBusy(false);
   }
 
   return (
@@ -67,10 +125,31 @@ export default function AdminProjectForm({ project, categories }: Props) {
         </div>
         <div>
           <label className="text-[#525252] text-xs block mb-2">Categoría</label>
-          <select value={category} onChange={(e) => setCategory(e.target.value)} className="w-full bg-[#141414] border border-[#1F1F1F] px-4 py-3 text-white text-sm focus:outline-none focus:border-white/20">
-            <option value="">Sin categoría</option>
-            {categories.map((cat) => (<option key={cat.slug} value={cat.slug}>{cat.name}</option>))}
-          </select>
+          {showNewCategory ? (
+            <div className="flex items-center gap-2">
+              <input
+                type="text"
+                value={newCategoryName}
+                onChange={(e) => setNewCategoryName(e.target.value)}
+                onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); createCategory(); } }}
+                placeholder="Nueva categoría"
+                autoFocus
+                className="flex-1 bg-[#141414] border border-[#1F1F1F] px-4 py-3 text-white text-sm focus:outline-none focus:border-white/20"
+              />
+              <button type="button" onClick={createCategory} disabled={categoryBusy} className="bg-gold text-[#0A0A0A] px-3 py-3 text-sm font-medium hover:bg-gold-light disabled:opacity-50">
+                {categoryBusy ? "…" : "Crear"}
+              </button>
+              <button type="button" onClick={() => setShowNewCategory(false)} className="p-3 text-[#525252] hover:text-white"><X size={15} /></button>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2">
+              <select value={category} onChange={(e) => setCategory(e.target.value)} className="flex-1 bg-[#141414] border border-[#1F1F1F] px-4 py-3 text-white text-sm focus:outline-none focus:border-white/20">
+                <option value="">Sin categoría</option>
+                {localCategories.map((cat) => (<option key={cat.slug} value={cat.slug}>{cat.name}</option>))}
+              </select>
+              <button type="button" onClick={() => setShowNewCategory(true)} title="Nueva categoría" className="p-3 text-[#525252] hover:text-white"><Plus size={16} /></button>
+            </div>
+          )}
         </div>
         <div className="md:col-span-2">
           <label className="text-[#525252] text-xs block mb-2">Descripción</label>

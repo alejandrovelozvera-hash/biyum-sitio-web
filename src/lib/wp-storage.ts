@@ -11,7 +11,9 @@ interface ConfigData {
 
 async function wpFetch<T>(path: string, init?: RequestInit, revalidate = 300): Promise<T | null> {
   try {
-    const res = await fetch(`${BASE}${path}`, {
+    const sep = path.includes("?") ? "&" : "?";
+    const url = revalidate === 0 ? `${BASE}${path}${sep}_=${Date.now()}` : `${BASE}${path}`;
+    const res = await fetch(url, {
       ...init,
       next: { revalidate },
       signal: AbortSignal.timeout(8000),
