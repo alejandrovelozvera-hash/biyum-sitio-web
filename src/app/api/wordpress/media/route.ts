@@ -1,6 +1,39 @@
 import { NextResponse } from "next/server";
 
 const WP_URL = process.env.NEXT_PUBLIC_WORDPRESS_URL || "https://biyum.agency";
+const TOKEN = process.env.BIYUM_WP_TOKEN || "";
+
+export const runtime = "nodejs";
+
+export async function POST(request: Request) {
+  const formData = await request.formData();
+  const file = formData.get("file");
+  if (!file || !(file instanceof File)) {
+    return NextResponse.json({ error: "No se recibió archivo" }, { status: 400 });
+  }
+
+  try {
+    const wpForm = new FormData();
+    wpForm.append("file", file);
+
+    const res = await fetch(`${WP_URL}/wp-json/biyum/v1/media`, {
+      method: "POST",
+      headers: { "X-Biyum-Token": TOKEN },
+      body: wpForm,
+      signal: AbortSignal.timeout(30000),
+    });
+
+    if (!res.ok) {
+      const text = await res.text();
+      return NextResponse.json({ error: text }, { status: res.status });
+    }
+
+    const item = await res.json();
+    return NextResponse.json(item, { status: 201 });
+  } catch (err) {
+    return NextResponse.json({ error: String(err) }, { status: 500 });
+  }
+}
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);

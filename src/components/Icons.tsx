@@ -15,6 +15,7 @@ export const ChevronLeft = s("M15 18l-6-6 6-6");
 export const ChevronRight = s("M9 18l6-6-6-6");
 export const ArrowLeft = s("M19 12H5m7-7l-7 7 7 7");
 export const Plus = s("M12 5v14m-7-7h14");
+export const Upload = s("M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4m5-6l5-5 5 5m-5-5v12");
 export const Trash = s("M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2");
 export const Pencil = s("M17 3a2.85 2.85 0 114 4L7.5 20.5 2 22l1.5-5.5L17 3z");
 export const Eye = s("M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8zM12 9a3 3 0 100 6 3 3 0 000-6z");

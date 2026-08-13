@@ -58,6 +58,14 @@ export default function AdminProjectList({
 
   return (
     <div className="bg-[#141414] border border-[#1F1F1F] overflow-hidden">
+      {projects.length === 0 ? (
+        <div className="py-20 text-center">
+          <p className="text-[#9CA3AF] text-sm">No hay proyectos todavía</p>
+          <Link href="/admin/proyectos/nuevo" className="inline-block mt-4 bg-gold text-[#0A0A0A] px-5 py-2.5 text-sm font-medium hover:bg-gold-light transition-colors">
+            Crear el primero
+          </Link>
+        </div>
+      ) : (
       <table className="w-full">
         <thead>
           <tr className="border-b border-[#1F1F1F] text-left">
@@ -71,7 +79,7 @@ export default function AdminProjectList({
         </thead>
         <tbody>
           {projects.map((project, index) => (
-            <tr key={project.id} className="border-b border-[#1F1F1F] hover:bg-white/[0.01] transition-colors">
+            <tr key={project.id} className="border-b border-[#1F1F1F] hover:bg-white/[0.02] transition-colors">
               <td className="p-2 text-center">
                 <div className="flex flex-col items-center gap-0.5">
                   <button
@@ -102,9 +110,9 @@ export default function AdminProjectList({
                   </div>
                 </div>
               </td>
-              <td className="p-4 text-[#737373] text-sm hidden md:table-cell">{project.category || "—"}</td>
-              <td className="p-4 text-[#737373] text-sm hidden md:table-cell">{project.client || "—"}</td>
-              <td className="p-4 text-[#737373] text-sm">{project.images?.length || 0}</td>
+              <td className="p-4 text-[#9CA3AF] text-sm hidden md:table-cell">{project.category || "—"}</td>
+              <td className="p-4 text-[#9CA3AF] text-sm hidden md:table-cell">{project.client || "—"}</td>
+              <td className="p-4 text-[#9CA3AF] text-sm">{project.images?.length || 0}</td>
               <td className="p-4">
                 <div className="flex items-center gap-1">
                   <Link href={`/admin/proyectos/${project.id}`} className="p-2 text-[#525252] hover:text-white transition-colors">
@@ -122,6 +130,7 @@ export default function AdminProjectList({
           ))}
         </tbody>
       </table>
+      )}
     </div>
   );
 }

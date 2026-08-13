@@ -27,6 +27,8 @@ export default function AdminProjectForm({ project, categories }: Props) {
   const [servicesStr, setServicesStr] = useState(project?.services?.join(", ") || "");
   const [featured, setFeatured] = useState(project?.featured || false);
   const [error, setError] = useState("");
+  const [saved, setSaved] = useState(false);
+  const [warnings, setWarnings] = useState<string[]>([]);
   const [localCategories, setLocalCategories] = useState<Category[]>(categories);
   const [showNewCategory, setShowNewCategory] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState("");
@@ -44,6 +46,7 @@ export default function AdminProjectForm({ project, categories }: Props) {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
+    setSaved(false);
     setSaving(true);
     if (!title.trim()) { setError("El título es obligatorio"); setSaving(false); return; }
 
@@ -66,7 +69,10 @@ cover_image_url: coverImage?.url || otherImages[0]?.url || "",
           router.push(`/admin/proyectos/${data.id}`);
           router.refresh();
         } else {
-          router.push("/admin/proyectos");
+          setSaved(true);
+          setSaving(false);
+          window.scrollTo({ top: 0, behavior: "smooth" });
+          setTimeout(() => setSaved(false), 3000);
           router.refresh();
         }
       }
@@ -116,9 +122,42 @@ cover_image_url: coverImage?.url || otherImages[0]?.url || "",
     setCategoryBusy(false);
   }
 
+  const categoryLabel = localCategories.find((c) => c.slug === category)?.name || category;
+  const previewCover = selectedImages.find((i) => i.isCover)?.url || selectedImages[0]?.url;
+
+  const missingWarnings: string[] = [];
+  if (!previewCover) missingWarnings.push("No hay portada: el proyecto se verá sin imagen en el portafolio");
+  if (!description.trim()) missingWarnings.push("Sin descripción");
+  if (!client.trim()) missingWarnings.push("Sin cliente");
+  if (!selectedImages.length) missingWarnings.push("Sin imágenes: añade al menos una");
+
+  function showWarnings() {
+    setWarnings(missingWarnings);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
   return (
     <form onSubmit={handleSubmit} className="max-w-4xl space-y-10">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {saved && (
+        <div className="flex items-center gap-2 border border-green-500/40 bg-green-500/10 text-green-400 px-4 py-3 text-sm">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6L9 17l-5-5" /></svg>
+          Guardado correctamente
+        </div>
+      )}
+
+      {error && <p className="text-red-400 text-sm">{error}</p>}
+
+      {warnings.length > 0 && (
+        <div className="border border-amber-500/40 bg-amber-500/10 px-4 py-3 text-sm">
+          <p className="text-amber-400 font-medium mb-1">Te falta completar:</p>
+          <ul className="list-disc list-inside text-amber-300/80 space-y-0.5 text-xs">
+            {warnings.map((w) => <li key={w}>{w}</li>)}
+          </ul>
+        </div>
+      )}
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label className="text-[#525252] text-xs block mb-2">Título *</label>
           <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} className="w-full bg-[#141414] border border-[#1F1F1F] px-4 py-3 text-white text-sm focus:outline-none focus:border-white/20" placeholder="Nombre del proyecto" />
@@ -172,6 +211,28 @@ cover_image_url: coverImage?.url || otherImages[0]?.url || "",
             <input type="checkbox" checked={featured} onChange={(e) => setFeatured(e.target.checked)} className="w-4 h-4 accent-gold" />
             <span className="text-[#737373] text-sm">Proyecto destacado</span>
           </label>
+        </div>
+        </div>
+
+        <div className="lg:col-span-1">
+          <p className="text-[#525252] text-xs mb-3">Vista previa</p>
+          <div className="bg-[#1A1A1A] border border-[#1F1F1F] overflow-hidden">
+            <div className="aspect-[4/5] relative">
+              {previewCover ? (
+                <img src={previewCover} alt={title || "preview"} className="w-full h-full object-cover" />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-[#525252] text-xs">Sin imagen</div>
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-[#1A1A1A]/50 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-4">
+                <p className="text-[#737373] text-[10px] tracking-[0.15em] uppercase mb-1">{categoryLabel || "Categoría"}</p>
+                <p className="text-white text-sm font-bold truncate">{title || "Título del proyecto"}</p>
+              </div>
+            </div>
+          </div>
+          <button type="button" onClick={showWarnings} className="mt-4 w-full text-xs text-[#525252] hover:text-white border border-[#1F1F1F] px-4 py-2.5 transition-colors">
+            Verificar antes de publicar
+          </button>
         </div>
       </div>
 

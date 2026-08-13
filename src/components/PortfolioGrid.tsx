@@ -81,7 +81,7 @@ function TiltCard({ project, index, reduce, onSelect }: {
               />
             )}
           </motion.div>
-          <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/60 to-transparent transition-opacity duration-500" />
+          <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/25 to-transparent transition-opacity duration-500" />
           <div
             className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center"
             style={{
