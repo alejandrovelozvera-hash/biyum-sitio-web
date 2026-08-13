@@ -57,8 +57,7 @@ export default function ExhibitionDetail({ project, onClose }: Props) {
               className={`w-full h-full object-contain transition-opacity duration-700 ${imageLoaded ? "opacity-100" : "opacity-0"}`}
               onLoad={() => setImageLoaded(true)}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-background/60" />
-            <div className="absolute inset-0 bg-gradient-to-r from-background/40 via-transparent to-background/40" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/5 to-background/30" />
           </>
         )}
       </div>

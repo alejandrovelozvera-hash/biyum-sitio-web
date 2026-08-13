@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import {
   getProjects,
   createProject,
@@ -6,6 +7,12 @@ import {
   deleteProject,
 } from "@/lib/wp-storage";
 import { slugify } from "@/lib/utils";
+
+function revalidatePublic() {
+  revalidatePath("/", "page");
+  revalidatePath("/proyecto/[slug]", "page");
+  revalidatePath("/admin/proyectos", "page");
+}
 
 export async function GET() {
   const projects = await getProjects(0);
@@ -23,6 +30,7 @@ export async function POST(request: Request) {
   if (!project) {
     return NextResponse.json({ error: "Error al crear el proyecto" }, { status: 500 });
   }
+  revalidatePublic();
   return NextResponse.json(project);
 }
 
@@ -37,6 +45,7 @@ export async function PUT(request: Request) {
   if (!project) {
     return NextResponse.json({ error: "Error al actualizar" }, { status: 500 });
   }
+  revalidatePublic();
   return NextResponse.json(project);
 }
 
@@ -52,5 +61,6 @@ export async function DELETE(request: Request) {
   if (!ok) {
     return NextResponse.json({ error: "Error al eliminar" }, { status: 500 });
   }
+  revalidatePublic();
   return NextResponse.json({ success: true });
 }

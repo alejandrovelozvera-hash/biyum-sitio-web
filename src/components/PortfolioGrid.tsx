@@ -81,7 +81,6 @@ function TiltCard({ project, index, reduce, onSelect }: {
               />
             )}
           </motion.div>
-          <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/25 to-transparent transition-opacity duration-500" />
           <div
             className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center"
             style={{
@@ -96,10 +95,10 @@ function TiltCard({ project, index, reduce, onSelect }: {
           </div>
         </div>
         <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5 z-10">
-          <p className="text-muted text-[10px] tracking-[0.15em] uppercase mb-1">
+          <p className="text-muted text-[10px] tracking-[0.15em] uppercase mb-1 [text-shadow:0_1px_3px_rgba(0,0,0,0.8)]">
             {categoryLabels[project.category] || project.category}
           </p>
-          <h3 className="text-gold-dark text-sm md:text-base font-bold leading-tight break-words">
+          <h3 className="text-gold-dark text-sm md:text-base font-bold leading-tight break-words [text-shadow:0_1px_4px_rgba(0,0,0,0.9)]">
             {project.title}
           </h3>
         </div>
