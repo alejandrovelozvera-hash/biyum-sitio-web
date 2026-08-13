@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Biyum Storage
  * Description: Almacenamiento de proyectos y configuración del sitio Biyum vía REST API (reemplaza Supabase).
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Biyum
  * License: GPL-2.0-or-later
  *
@@ -302,6 +302,28 @@ function biyum_sanitize_config_input( $body ) {
  *  Handlers REST
  * --------------------------------------------------------------------- */
 
+function biyum_send_nocache() {
+	nocache_headers();
+	header( 'Cache-Control: no-store, no-cache, must-revalidate, max-age=0' );
+	header( 'Pragma: no-cache' );
+	header( 'X-LiteSpeed-Cache-Control: no-cache, no-store, must-revalidate' );
+	if ( class_exists( 'LiteSpeed\Control' ) && method_exists( 'LiteSpeed\Control', 'set_nocache' ) ) {
+		\LiteSpeed\Control::set_nocache( 'biyum-dynamic' );
+	}
+	do_action( 'litespeed_control_set_nocache', 'biyum-dynamic' );
+}
+
+function biyum_purge_litespeed() {
+	if ( class_exists( 'LiteSpeed\Purge' ) && method_exists( 'LiteSpeed\Purge', 'purge_all' ) ) {
+		\LiteSpeed\Purge::purge_all();
+	}
+	do_action( 'litespeed_purge_all' );
+	if ( function_exists( 'wp_cache_flush' ) ) {
+		wp_cache_flush();
+	}
+	header( 'X-LiteSpeed-Purge: *' );
+}
+
 function biyum_rest_list_projects() {
 	$posts = get_posts( array(
 		'post_type'      => 'biyum_proyecto',
@@ -312,9 +334,7 @@ function biyum_rest_list_projects() {
 	) );
 	$data = array_map( 'biyum_project_to_array', $posts );
 
-	nocache_headers();
-	header( 'Cache-Control: no-store, no-cache, must-revalidate, max-age=0' );
-	header( 'Pragma: no-cache' );
+	biyum_send_nocache();
 
 	return $data;
 }
@@ -335,6 +355,7 @@ function biyum_rest_get_project( $request ) {
 	if ( ! $post || 'biyum_proyecto' !== $post->post_type ) {
 		return new WP_Error( 'biyum_not_found', 'No encontrado', array( 'status' => 404 ) );
 	}
+	biyum_send_nocache();
 	return biyum_project_to_array( $post );
 }
 
@@ -347,6 +368,7 @@ function biyum_rest_create_project( $request ) {
 	if ( is_wp_error( $result ) ) {
 		return $result;
 	}
+	biyum_purge_litespeed();
 	return $result['project'];
 }
 
@@ -363,6 +385,7 @@ function biyum_rest_update_project( $request ) {
 	if ( is_wp_error( $result ) ) {
 		return $result;
 	}
+	biyum_purge_litespeed();
 	return $result['project'];
 }
 
@@ -376,6 +399,7 @@ function biyum_rest_delete_project( $request ) {
 		return new WP_Error( 'biyum_not_found', 'No encontrado', array( 'status' => 404 ) );
 	}
 	wp_delete_post( $post_id, true );
+	biyum_purge_litespeed();
 	return array(
 		'success' => true,
 		'id'      => (string) $post_id,
@@ -383,6 +407,7 @@ function biyum_rest_delete_project( $request ) {
 }
 
 function biyum_rest_get_config_handler() {
+	biyum_send_nocache();
 	return biyum_get_config();
 }
 
@@ -398,6 +423,7 @@ function biyum_rest_update_config_handler( $request ) {
 	$current = biyum_get_config();
 	$stored  = array_merge( $current, $clean );
 	update_option( 'biyum_site_config', $stored, false );
+	biyum_purge_litespeed();
 	return array(
 		'success' => true,
 		'config'  => biyum_get_config(),
