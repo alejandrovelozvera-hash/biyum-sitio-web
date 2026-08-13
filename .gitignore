@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# artefactos locales (copias del plugin; el token vive solo en .env.local)
+/biyum-storage.php
+/wordpress.zip
