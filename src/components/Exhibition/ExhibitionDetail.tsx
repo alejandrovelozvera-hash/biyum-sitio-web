@@ -11,25 +11,33 @@ interface Props {
 
 export default function ExhibitionDetail({ project, onClose }: Props) {
   const [imageLoaded, setImageLoaded] = useState(false);
-
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    window.addEventListener("keydown", onKey);
-    return () => {
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", onKey);
-    };
-  }, [onClose]);
+  const [active, setActive] = useState(0);
 
   const slides = [
     ...(project.cover_image_url ? [{ url: project.cover_image_url, alt: project.title }] : []),
     ...project.images.map((i) => ({ url: i.url, alt: i.alt })),
   ];
 
-  const mainImage = slides[0]?.url;
+  if (slides.length === 0) return null;
+
+  const prev = () => setActive((a) => (a - 1 + slides.length) % slides.length);
+  const next = () => setActive((a) => (a + 1) % slides.length);
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowRight") next();
+      if (e.key === "ArrowLeft") prev();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [onClose, slides.length]);
+
+  const mainImage = slides[active]?.url;
 
   return (
     <motion.div
@@ -63,6 +71,46 @@ export default function ExhibitionDetail({ project, onClose }: Props) {
           <path d="M18 6L6 18M6 6l12 12" />
         </svg>
       </button>
+
+      {slides.length > 1 && (
+        <>
+          <button
+            onClick={(e) => { e.stopPropagation(); prev(); }}
+            className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 glass rounded-full w-12 h-12 flex items-center justify-center text-gold-dark/70 hover:text-gold transition-all hover:scale-105 active:scale-95"
+            aria-label="Anterior"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+          <button
+            onClick={(e) => { e.stopPropagation(); next(); }}
+            className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 glass rounded-full w-12 h-12 flex items-center justify-center text-gold-dark/70 hover:text-gold transition-all hover:scale-105 active:scale-95"
+            aria-label="Siguiente"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </button>
+          <div className="absolute bottom-40 md:bottom-44 left-0 right-0 z-20 flex justify-center gap-2 px-8" onClick={(e) => e.stopPropagation()}>
+            {slides.map((s, i) => (
+              <button
+                key={s.url + i}
+                onClick={() => { setActive(i); setImageLoaded(false); }}
+                className={`w-14 h-14 md:w-16 md:h-16 overflow-hidden rounded-lg border transition-all ${
+                  i === active ? "border-gold scale-105" : "border-white/10 opacity-60 hover:opacity-100"
+                }`}
+                aria-label={`Imagen ${i + 1}`}
+              >
+                <img src={s.url} alt={s.alt || `${project.title} ${i + 1}`} className="w-full h-full object-cover" />
+              </button>
+            ))}
+          </div>
+          <p className="absolute bottom-28 md:bottom-32 left-0 right-0 z-20 text-center text-muted text-[10px] tracking-[0.2em] uppercase">
+            {active + 1} / {slides.length}
+          </p>
+        </>
+      )}
 
       <motion.div
         initial={{ opacity: 0, y: 40 }}
