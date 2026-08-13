@@ -1,0 +1,225 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { motion, useReducedMotion, AnimatePresence } from "motion/react";
+import { ChevronLeft, ChevronRight, Spinner } from "./Icons";
+
+export interface VideoItem {
+  id: string;
+  title: string;
+  description: string;
+  youtubeId: string;
+  category?: string;
+}
+
+function getYtThumb(id: string) {
+  return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+}
+
+export default function VideoSection({ videos }: { videos: VideoItem[] }) {
+  const reduce = useReducedMotion();
+  const anim = !reduce;
+  const [featured, setFeatured] = useState<VideoItem | null>(null);
+  const [active, setActive] = useState(0);
+  const [rowStart, setRowStart] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [playing, setPlaying] = useState(false);
+
+  const select = (i: number) => {
+    setActive(i);
+    setFeatured(videos[i]);
+    setLoading(true);
+    setPlaying(false);
+  };
+
+  useEffect(() => {
+    if (!featured || playing) return;
+    setProgress(0);
+    const start = performance.now();
+    let raf: number;
+    const tick = (t: number) => {
+      const p = (t - start) / 15000;
+      setProgress(Math.min(p, 1));
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [featured, playing, active]);
+
+  if (videos.length === 0) return null;
+
+  const current = featured || videos[0];
+  const rowVideos = videos.filter((_, i) => i !== active);
+
+  return (
+    <section id="video" className="py-24 md:py-32 bg-background">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-16 mb-10 md:mb-14">
+        <motion.div
+          initial={anim ? { clipPath: "inset(0 100% 0 0)" } : false}
+          whileInView={{ clipPath: "inset(0 0% 0 0)" }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <div className="flex items-center gap-4 mb-3">
+            <span className="w-8 h-px bg-gradient-to-r from-gold/60 to-transparent" />
+            <p className="text-muted text-[10px] tracking-[0.2em] uppercase">Audiovisual</p>
+          </div>
+          <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gold tracking-[-0.04em] leading-[0.92]">
+            Videos
+          </h2>
+        </motion.div>
+      </div>
+
+      <div className="max-w-[1400px] mx-auto px-6 md:px-16">
+        <div className="flex flex-col lg:flex-row gap-4 md:gap-5">
+          {/* Featured / Main video */}
+          <div className="lg:w-[65%]">
+            <motion.div
+              key={current.id}
+              initial={anim ? { opacity: 0 } : false}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4 }}
+              className="relative overflow-hidden rounded-2xl md:rounded-3xl bg-surface cursor-pointer group ring-1 ring-gold/20"
+              onClick={() => {
+                setFeatured(current);
+                setLoading(true);
+                setPlaying(false);
+              }}
+            >
+              <div className="aspect-video">
+                <img
+                  src={getYtThumb(current.youtubeId)}
+                  alt={current.title}
+                  className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/60 via-transparent to-transparent" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <motion.div
+                    whileHover={{ scale: 1.15 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="w-16 h-16 md:w-20 md:h-20 rounded-full glass-strong flex items-center justify-center ring-1 ring-gold/30 shadow-[0_0_40px_rgba(201,168,76,0.25)] group-hover:shadow-[0_0_60px_rgba(201,168,76,0.45)] transition-shadow duration-500"
+                  >
+                    {loading ? (
+                      <Spinner size={22} className="text-gold" />
+                    ) : (
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="text-white ml-1">
+                        <polygon points="5 3 19 12 5 21 5 3" />
+                      </svg>
+                    )}
+                  </motion.div>
+                </div>
+                {!playing && progress > 0 && (
+                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-white/10">
+                    <div
+                      className="h-full bg-gold origin-left transition-transform duration-100 linear"
+                      style={{ transform: `scaleX(${progress})` }}
+                    />
+                  </div>
+                )}
+              </div>
+              <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
+                <p className="text-[#737373] text-[10px] tracking-[0.15em] uppercase mb-1.5">
+                  {current.category || "Audiovisual"}
+                </p>
+                <h3 className="text-white text-xl md:text-2xl lg:text-3xl font-bold tracking-[-0.02em]">
+                  {current.title}
+                </h3>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Sidebar / row of other videos */}
+          <div className="lg:w-[35%] flex lg:flex-col gap-3 md:gap-4 overflow-x-auto lg:overflow-y-auto lg:max-h-[calc((100vw-16rem)*0.5625)] pb-2 lg:pb-0"
+            style={{ scrollbarWidth: "none" }}
+          >
+            {rowVideos.map((video, i) => (
+              <motion.button
+                key={video.id}
+                initial={anim ? { opacity: 0, x: 20 } : false}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.06 }}
+                onClick={() => select(videos.indexOf(video))}
+                className="group flex-shrink-0 w-[70vw] sm:w-[45vw] lg:w-full text-left cursor-pointer focus:outline-none"
+              >
+                <div className="relative overflow-hidden rounded-xl md:rounded-2xl bg-surface flex flex-row lg:flex-col">
+                  <div className="w-[40%] lg:w-full aspect-video lg:aspect-video relative">
+                    <img
+                      src={getYtThumb(video.youtubeId)}
+                      alt={video.title}
+                      className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-black/60 flex items-center justify-center group-hover:bg-gold/80 transition-colors">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" className="text-white ml-0.5">
+                          <polygon points="5 3 19 12 5 21 5 3" />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex-1 p-3 md:p-4 flex flex-col justify-center lg:p-3">
+                    <p className="text-muted text-[9px] tracking-[0.15em] uppercase mb-0.5 lg:hidden">
+                      {video.category || "Audiovisual"}
+                    </p>
+                    <h4 className="text-gold-dark text-xs md:text-sm font-semibold tracking-tight line-clamp-2 leading-snug">
+                      {video.title}
+                    </h4>
+                    <p className="text-secondary text-[10px] mt-1 leading-relaxed line-clamp-1 hidden lg:block">
+                      {video.description}
+                    </p>
+                  </div>
+                </div>
+              </motion.button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Player modal */}
+      <AnimatePresence>
+        {featured && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" onClick={() => { setFeatured(null); setLoading(false); setPlaying(false); setProgress(0); }}>
+            <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="relative z-10 w-full max-w-5xl glass-strong rounded-3xl overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button onClick={() => { setFeatured(null); setLoading(false); setPlaying(false); setProgress(0); }} className="absolute top-4 right-4 z-20 glass rounded-full w-10 h-10 flex items-center justify-center text-white/60 hover:text-white transition-all hover:scale-105">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+                  <path d="M18 6L6 18M6 6l12 12" />
+                </svg>
+              </button>
+              <div className="aspect-video relative bg-black">
+                {loading && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/60">
+                    <Spinner size={30} className="text-gold" />
+                  </div>
+                )}
+                <iframe
+                  src={`https://www.youtube.com/embed/${current.youtubeId}?autoplay=1`}
+                  title={current.title}
+                  className="w-full h-full"
+                  allow="autoplay; encrypted-media"
+                  allowFullScreen
+                  onLoad={() => {
+                    setLoading(false);
+                    setPlaying(true);
+                  }}
+                />
+              </div>
+              <div className="p-6 md:p-8">
+                <p className="text-[#737373] text-[10px] tracking-[0.15em] uppercase mb-1">{current.category || "Audiovisual"}</p>
+                <h3 className="text-white text-xl md:text-2xl font-bold tracking-[-0.02em]">{current.title}</h3>
+                {current.description && <p className="text-[#525252] text-sm mt-2 leading-relaxed">{current.description}</p>}
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+    </section>
+  );
+}

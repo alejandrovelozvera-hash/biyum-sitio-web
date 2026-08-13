@@ -1,0 +1,151 @@
+@import "tailwindcss";
+
+:root {
+  --gold: #1C1463;
+  --gold-light: #4A46A0;
+  --gold-dark: #120C42;
+  --on-gold: #FFFFFF;
+  --background: #D3D3D3;
+  --foreground: #16161A;
+  --surface: #F6F6F8;
+  --surface-elevated: #FFFFFF;
+  --section-alt: #F6F6F8;
+  --border: #DDDDE3;
+  --secondary: #3D3D45;
+  --muted: #6B6B75;
+  --placeholder: #8A8A94;
+  --watermark-stroke: rgba(28, 20, 99, 0.08);
+  --glow: rgba(28, 20, 99, 0.05);
+  --cursor-ring: rgba(28, 20, 99, 0.15);
+  --cursor-ring-strong: rgba(28, 20, 99, 0.25);
+  --glass-bg: rgba(255, 255, 255, 0.6);
+  --glass-border: rgba(28, 20, 99, 0.08);
+}
+
+.dark {
+  --gold: #E4E4EE;
+  --gold-light: #F2F2F8;
+  --gold-dark: #E9E9F0;
+  --on-gold: #1C1463;
+  --background: #1C1463;
+  --foreground: #D3D3D3;
+  --surface: #241B71;
+  --surface-elevated: #2B2180;
+  --section-alt: #241B71;
+  --border: #38308F;
+  --secondary: #B7B7C9;
+  --muted: #9494A8;
+  --placeholder: #76768C;
+  --watermark-stroke: rgba(211, 211, 211, 0.14);
+  --glow: rgba(211, 211, 211, 0.08);
+  --cursor-ring: rgba(211, 211, 211, 0.4);
+  --cursor-ring-strong: rgba(211, 211, 211, 0.6);
+  --glass-bg: rgba(28, 20, 99, 0.6);
+  --glass-border: rgba(211, 211, 211, 0.16);
+}
+
+@theme inline {
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-gold-dark: var(--gold-dark);
+  --color-on-gold: var(--on-gold);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-section-alt: var(--section-alt);
+  --color-border: var(--border);
+  --color-secondary: var(--secondary);
+  --color-muted: var(--muted);
+  --color-placeholder: var(--placeholder);
+  --font-sans: 'Geist', system-ui, sans-serif;
+}
+
+@layer base {
+  * { @apply antialiased; }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+  ::selection {
+    @apply bg-gold/15 text-gold;
+  }
+  html { scroll-behavior: smooth; }
+}
+
+@layer utilities {
+  .logo-theme {
+    filter: none;
+    transition: filter 0.4s ease;
+  }
+  .dark .logo-theme {
+    filter: brightness(0) invert(1);
+  }
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(32px);
+    -webkit-backdrop-filter: blur(32px);
+    border: 1px solid var(--glass-border);
+    transition: background 0.4s, border-color 0.4s;
+  }
+  .glass-strong {
+    background: var(--glass-bg);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border: 1px solid var(--glass-border);
+  }
+  .glass-hover {
+    background: var(--glass-bg);
+    backdrop-filter: blur(32px);
+    -webkit-backdrop-filter: blur(32px);
+    border: 1px solid var(--glass-border);
+    transition: background 0.4s, border-color 0.4s;
+  }
+  .glass-hover:hover {
+    background: var(--glass-bg);
+    border-color: rgba(139, 134, 236, 0.24);
+  }
+  @keyframes grain {
+    0%, 100% { transform: translate(0, 0); }
+    10% { transform: translate(-2%, -2%); }
+    20% { transform: translate(1%, -1%); }
+    30% { transform: translate(-1%, 2%); }
+    40% { transform: translate(2%, 1%); }
+    50% { transform: translate(-2%, 1%); }
+    60% { transform: translate(1%, 2%); }
+    70% { transform: translate(-1%, -2%); }
+    80% { transform: translate(2%, -1%); }
+    90% { transform: translate(-2%, -2%); }
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes progress-line {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+  @keyframes scroll-line {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(12px); opacity: 0; }
+  }
+  .grain-overlay {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    opacity: 0.03;
+    mix-blend-mode: overlay;
+  }
+  .grain-overlay::after {
+    content: "";
+    position: absolute;
+    inset: -50%;
+    width: 200%;
+    height: 200%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-size: 256px 256px;
+    animation: grain 0.5s steps(4) infinite;
+  }
+}
