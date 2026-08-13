@@ -217,7 +217,7 @@ cover_image_url: coverImage?.url || otherImages[0]?.url || "",
         <div className="lg:col-span-1">
           <p className="text-[#525252] text-xs mb-3">Vista previa</p>
           <div className="bg-[#1A1A1A] border border-[#1F1F1F] overflow-hidden">
-            <div className="aspect-[4/5] relative">
+            <div className="aspect-[4/3] relative">
               {previewCover ? (
                 <img src={previewCover} alt={title || "preview"} className="w-full h-full object-cover" />
               ) : (

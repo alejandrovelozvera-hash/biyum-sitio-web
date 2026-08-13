@@ -60,7 +60,7 @@ function TiltCard({ project, index, reduce, onSelect }: {
         }}
       >
 <div
-            className="aspect-[4/5] transition-transform duration-200 ease-out"
+            className="aspect-[4/3] transition-transform duration-200 ease-out"
             style={{
               transform: reduce ? "none" : `rotateX(${tilt.y}deg) rotateY(${tilt.x}deg)`,
             }}
