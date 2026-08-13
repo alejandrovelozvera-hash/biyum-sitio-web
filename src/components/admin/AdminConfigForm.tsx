@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Save, Plus, Trash } from "../Icons";
 import { Category } from "@/types";
+import { demoHeroSlides } from "@/lib/demo-data";
+import MediaPicker from "./MediaPicker";
 
 interface Slide { image_url: string; title: string; subtitle: string; cta_text: string; cta_link: string; }
 interface CategoryInput { id: string; name: string; slug: string; order_index: number; }
@@ -20,7 +22,7 @@ function slugify(text: string): string {
 
 export default function AdminConfigForm({ initialSlides, initialCategories }: Props) {
   const router = useRouter();
-  const [slides, setSlides] = useState<Slide[]>(initialSlides && initialSlides.length > 0 ? initialSlides : [defaultSlide]);
+  const [slides, setSlides] = useState<Slide[]>(initialSlides && initialSlides.length > 0 ? initialSlides : demoHeroSlides as any[]);
   const [categories, setCategories] = useState<CategoryInput[]>(initialCategories && initialCategories.length > 0
     ? initialCategories.map((c, i) => ({ id: c.id, name: c.name, slug: c.slug, order_index: c.order_index ?? i }))
     : []);
@@ -70,6 +72,12 @@ export default function AdminConfigForm({ initialSlides, initialCategories }: Pr
 
   return (
     <form onSubmit={handleSubmit} className="max-w-3xl space-y-10">
+      {(initialSlides == null || initialSlides.length === 0) && (
+        <div className="border border-gold/30 bg-gold/5 p-5 text-sm text-gold">
+          Tu hero está mostrando actualmente las <strong>portadas de ejemplo</strong> (las fotos grises del placeholder).
+          Estos son esos slides, ya cargados aquí para que los edites: pega tus imágenes y cambia títulos y subtítulos.
+        </div>
+      )}
       {slides.map((slide, index) => (
         <div key={index} className="bg-[#141414] border border-[#1F1F1F] p-6 space-y-4">
           <div className="flex items-center justify-between">
@@ -95,6 +103,7 @@ export default function AdminConfigForm({ initialSlides, initialCategories }: Pr
             <label className="text-[#525252] text-xs block mb-2">URL de imagen</label>
             <input type="text" value={slide.image_url} onChange={(e) => updateSlide(index, "image_url", e.target.value)} className="w-full bg-black/30 border border-[#1F1F1F] px-4 py-3 text-white text-sm focus:outline-none focus:border-white/20" placeholder="https://biyum.agency/wp-content/uploads/..." />
           </div>
+          <MediaPicker value={slide.image_url} onPick={(url) => updateSlide(index, "image_url", url)} />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="text-[#525252] text-xs block mb-2">Título</label>

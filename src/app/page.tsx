@@ -8,6 +8,7 @@ import ServicesSection from "@/components/ServicesSection";
 import InfoSection from "@/components/InfoSection";
 import Cursor from "@/components/Cursor";
 import AmbientGlow from "@/components/AmbientGlow";
+import BackToTop from "@/components/BackToTop";
 
 async function getProjectsData() {
   const projects = await getProjects();
@@ -46,6 +47,7 @@ export default async function HomePage() {
         <Divider alt />
         <InfoSection />
       </div>
+      <BackToTop />
     </main>
   );
 }
