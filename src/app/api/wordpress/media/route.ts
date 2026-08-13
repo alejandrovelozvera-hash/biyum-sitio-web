@@ -41,7 +41,7 @@ export async function GET(request: Request) {
   const search = searchParams.get("search") || "";
 
   try {
-    let url = `${WP_URL}/wp-json/wp/v2/media?page=${page}&per_page=50&_embed`;
+    let url = `${WP_URL}/wp-json/wp/v2/media?page=${page}&per_page=100&_embed`;
     if (search) url += `&search=${encodeURIComponent(search)}`;
 
     const res = await fetch(url, {

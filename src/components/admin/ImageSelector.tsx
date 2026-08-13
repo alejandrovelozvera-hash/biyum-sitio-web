@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { WpMediaItem } from "@/types";
-import { Search, X, Spinner, Upload } from "../Icons";
+import { Search, X, Spinner, Upload, Copy } from "../Icons";
 
 interface Props {
   selected: (WpMediaItem & { isCover?: boolean })[];
@@ -19,6 +19,7 @@ export default function ImageSelector({ selected, onSelect, maxImages = 50 }: Pr
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState("");
   const [dragIndex, setDragIndex] = useState<number | null>(null);
+  const [copied, setCopied] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => { loadImages(); }, [page, search]);
@@ -70,6 +71,13 @@ export default function ImageSelector({ selected, onSelect, maxImages = 50 }: Pr
     }
   }
 
+  function copyLink(url: string) {
+    navigator.clipboard.writeText(url).then(() => {
+      setCopied(url);
+      setTimeout(() => setCopied(null), 1500);
+    });
+  }
+
   function reorder(from: number, to: number) {
     if (to < 0 || to >= selected.length) return;
     const next = [...selected];
@@ -105,7 +113,8 @@ export default function ImageSelector({ selected, onSelect, maxImages = 50 }: Pr
                   {!img.isCover && (
                     <button onClick={() => onSelect(selected.map((s) => ({ ...s, isCover: s.id === img.id })))} className="text-[10px] bg-gold text-[#0A0A0A] px-2 py-0.5">Portada</button>
                   )}
-                  <button onClick={() => onSelect(selected.filter((s) => s.id !== img.id))} className="text-white/80 hover:text-red-400"><X size={14} /></button>
+                  <button onClick={() => copyLink(img.url)} className="mt-1 flex items-center gap-1 text-[10px] bg-white/15 text-white px-2 py-0.5"><Copy size={10} /> Link</button>
+                  <button onClick={() => onSelect(selected.filter((s) => s.id !== img.id))} className="mt-1 text-white/80 hover:text-red-400"><X size={14} /></button>
                 </div>
                 {img.isCover && <span className="absolute top-1 left-1 text-[8px] bg-gold text-[#0A0A0A] px-1 py-0.5">Cover</span>}
                 <span className="absolute bottom-1 right-1 text-[8px] text-white/40">{i + 1}</span>
@@ -147,7 +156,10 @@ export default function ImageSelector({ selected, onSelect, maxImages = 50 }: Pr
       </div>
 
       <div>
-        <p className="text-[#9CA3AF] text-xs mb-3">WordPress Media</p>
+        <div className="flex items-center justify-between mb-3">
+          <p className="text-[#9CA3AF] text-xs">WordPress Media</p>
+          <p className="text-[#525252] text-xs">Haz clic en una imagen para añadirla. Pasa el cursor y toca "Link" para copiar su URL.</p>
+        </div>
         <div className="relative mb-4">
           <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#9CA3AF]" />
           <input type="text" value={search} onChange={(e) => { setSearch(e.target.value); setPage(1); }} placeholder="Buscar..." className="w-full bg-white/[0.03] border border-white/10 pl-10 pr-4 py-2.5 text-white text-sm placeholder:text-[#6B7280] focus:outline-none focus:border-gold/50" />
@@ -159,19 +171,30 @@ export default function ImageSelector({ selected, onSelect, maxImages = 50 }: Pr
           <p className="text-[#9CA3AF] text-sm py-12 text-center">{search ? "Sin resultados" : "No hay imágenes. Sube una con el botón de arriba."}</p>
         ) : (
           <>
-            <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2 max-h-[400px] overflow-y-auto">
+            <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-10 lg:grid-cols-12 gap-2 max-h-[70vh] overflow-y-auto pr-1">
               {images.map((img) => (
-                <button key={img.id} onClick={() => toggleImage(img)}
-                  className={`aspect-square bg-[#1A1A1A] overflow-hidden border transition-all ${selected.find((s) => s.id === img.id) ? "border-gold opacity-80 ring-1 ring-gold/40" : "border-white/10 hover:border-white/40"}`}>
-                  <img src={img.thumb} alt={img.alt || img.title} className="w-full h-full object-cover" />
-                </button>
+                <div key={img.id} className="relative group aspect-square bg-[#1A1A1A] overflow-hidden border border-white/10 transition-all">
+                  <button onClick={() => toggleImage(img)} className={`w-full h-full ${selected.find((s) => s.id === img.id) ? "opacity-80" : ""}`}>
+                    <img src={img.thumb} alt={img.alt || img.title} className="w-full h-full object-cover" />
+                  </button>
+                  {selected.find((s) => s.id === img.id) && (
+                    <span className="absolute top-1 left-1 text-[8px] bg-gold text-[#0A0A0A] px-1 py-0.5">✓</span>
+                  )}
+                  <button
+                    onClick={() => copyLink(img.url)}
+                    className="absolute bottom-1 right-1 bg-black/70 hover:bg-gold text-white hover:text-[#0A0A0A] px-2 py-1 text-[9px] flex items-center gap-1 transition-colors"
+                    title="Copiar link"
+                  >
+                    {copied === img.url ? "¡Copiado!" : <><Copy size={9} /> Link</>}
+                  </button>
+                </div>
               ))}
             </div>
             {total > images.length && (
               <div className="flex justify-center gap-2 mt-4">
                 <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1} className="text-xs text-[#9CA3AF] hover:text-white disabled:opacity-30 px-3 py-1 bg-white/[0.03] border border-white/10">Anterior</button>
-                <span className="text-xs text-[#9CA3AF] px-3 py-1">{page} / {Math.ceil(total / 50)}</span>
-                <button onClick={() => setPage((p) => p + 1)} disabled={page >= Math.ceil(total / 50)} className="text-xs text-[#9CA3AF] hover:text-white disabled:opacity-30 px-3 py-1 bg-white/[0.03] border border-white/10">Siguiente</button>
+                <span className="text-xs text-[#9CA3AF] px-3 py-1">Página {page} de {Math.ceil(total / 100)} · {total} imágenes</span>
+                <button onClick={() => setPage((p) => p + 1)} disabled={page >= Math.ceil(total / 100)} className="text-xs text-[#9CA3AF] hover:text-white disabled:opacity-30 px-3 py-1 bg-white/[0.03] border border-white/10">Siguiente</button>
               </div>
             )}
           </>
