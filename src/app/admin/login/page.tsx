@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { LogIn } from "@/components/Icons";
 
@@ -11,9 +11,13 @@ function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  if (searchParams.get("logout") === "true") {
-    fetch("/api/auth/logout", { method: "POST" }).then(() => router.push("/admin/login"));
-  }
+  useEffect(() => {
+    if (searchParams.get("logout") === "true") {
+      fetch("/api/auth/logout", { method: "POST" }).then(() =>
+        router.replace("/admin/login")
+      );
+    }
+  }, [searchParams, router]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();

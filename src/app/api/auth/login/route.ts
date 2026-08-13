@@ -3,11 +3,17 @@ import { cookies } from "next/headers";
 
 export async function POST(request: Request) {
   const { password } = await request.json();
-  const adminPassword = process.env.ADMIN_PASSWORD || "admin123";
+  const adminPassword = process.env.ADMIN_PASSWORD;
 
-  if (password !== adminPassword) {
+  if (
+    !adminPassword ||
+    adminPassword.length < 8 ||
+    typeof password !== "string" ||
+    password.length < 8 ||
+    password !== adminPassword
+  ) {
     return NextResponse.json(
-      { error: "Contraseña incorrecta" },
+      { error: "Credenciales inválidas" },
       { status: 401 }
     );
   }

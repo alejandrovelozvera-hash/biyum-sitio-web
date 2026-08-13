@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { requireAdmin } from "@/lib/session";
 
 const WP_URL = process.env.NEXT_PUBLIC_WORDPRESS_URL || "https://biyum.agency";
 const TOKEN = process.env.BIYUM_WP_TOKEN || "";
@@ -6,6 +7,9 @@ const TOKEN = process.env.BIYUM_WP_TOKEN || "";
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
+  const auth = await requireAdmin();
+  if (!auth.ok) return NextResponse.json({ error: "No autorizado" }, { status: auth.status });
+
   const formData = await request.formData();
   const file = formData.get("file");
   if (!file || !(file instanceof File)) {
@@ -79,6 +83,9 @@ export async function GET(request: Request) {
 }
 
 export async function DELETE(request: Request) {
+  const auth = await requireAdmin();
+  if (!auth.ok) return NextResponse.json({ error: "No autorizado" }, { status: auth.status });
+
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");
   if (!id) {

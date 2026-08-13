@@ -7,6 +7,7 @@ import {
   deleteProject,
 } from "@/lib/wp-storage";
 import { slugify } from "@/lib/utils";
+import { requireAdmin } from "@/lib/session";
 
 function revalidatePublic() {
   revalidatePath("/", "page");
@@ -20,6 +21,9 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  const auth = await requireAdmin();
+  if (!auth.ok) return NextResponse.json({ error: "No autorizado" }, { status: auth.status });
+
   const body = await request.json();
 
   if (!body.title) {
@@ -35,6 +39,9 @@ export async function POST(request: Request) {
 }
 
 export async function PUT(request: Request) {
+  const auth = await requireAdmin();
+  if (!auth.ok) return NextResponse.json({ error: "No autorizado" }, { status: auth.status });
+
   const body = await request.json();
 
   if (!body.id) {
@@ -50,6 +57,9 @@ export async function PUT(request: Request) {
 }
 
 export async function DELETE(request: Request) {
+  const auth = await requireAdmin();
+  if (!auth.ok) return NextResponse.json({ error: "No autorizado" }, { status: auth.status });
+
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");
 
