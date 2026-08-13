@@ -77,6 +77,21 @@ export default function AdminConfigForm({ initialSlides, initialCategories }: Pr
             {slides.length > 1 && <button type="button" onClick={() => removeSlide(index)} className="text-[#525252] hover:text-red-400"><Trash size={15} /></button>}
           </div>
           <div>
+            <label className="text-[#525252] text-xs block mb-2">Preview del slide</label>
+            <div className="relative aspect-[16/7] bg-black/40 border border-[#1F1F1F] overflow-hidden">
+              {slide.image_url ? (
+                <img src={slide.image_url} alt={`Slide ${index + 1}`} className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.opacity = "0.2"; }} />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-[#525252] text-xs">Sin imagen — pega una URL abajo</div>
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+              <div className="absolute bottom-3 left-4">
+                <p className="text-[#9CA3AF] text-[9px] tracking-[0.15em] uppercase mb-0.5">{slide.title || "Título"}</p>
+                <p className="text-white text-xs">{slide.subtitle || "Subtítulo"}</p>
+              </div>
+            </div>
+          </div>
+          <div>
             <label className="text-[#525252] text-xs block mb-2">URL de imagen</label>
             <input type="text" value={slide.image_url} onChange={(e) => updateSlide(index, "image_url", e.target.value)} className="w-full bg-black/30 border border-[#1F1F1F] px-4 py-3 text-white text-sm focus:outline-none focus:border-white/20" placeholder="https://biyum.agency/wp-content/uploads/..." />
           </div>

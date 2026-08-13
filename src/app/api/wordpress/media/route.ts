@@ -41,35 +41,58 @@ export async function GET(request: Request) {
   const search = searchParams.get("search") || "";
 
   try {
-    let url = `${WP_URL}/wp-json/wp/v2/media?page=${page}&per_page=100&_embed`;
+    const sep = search ? "&" : "?";
+    let url = `${WP_URL}/wp-json/biyum/v1/media${sep}page=${page}&_=${Date.now()}`;
     if (search) url += `&search=${encodeURIComponent(search)}`;
 
     const res = await fetch(url, {
-      next: { revalidate: 300 },
+      signal: AbortSignal.timeout(10000),
     });
     if (!res.ok) {
-      return NextResponse.json([], { status: 200 });
+      return NextResponse.json({ items: [], total: 0 }, { status: 200 });
     }
 
-    const totalHeader = res.headers.get("x-wp-total");
-    const total = totalHeader ? parseInt(totalHeader) : 0;
-
-    const data = await res.json();
-    const items = data.map((item: any) => ({
+    const body = await res.json();
+    const items = (body.items || []).map((item: any) => ({
       id: item.id,
-      title: item.title?.rendered || "",
-      url: item.source_url || "",
-      thumb:
-        item.media_details?.sizes?.thumbnail?.source_url || item.source_url,
-      medium:
-        item.media_details?.sizes?.medium?.source_url || item.source_url,
-      alt: item.alt_text || "",
-      width: item.media_details?.width || 0,
-      height: item.media_details?.height || 0,
+      title: item.title || "",
+      url: item.url || "",
+      thumb: item.thumb || item.url || "",
+      medium: item.medium || item.url || "",
+      alt: item.alt || "",
+      width: item.width || 0,
+      height: item.height || 0,
+      filename: item.filename || "",
     }));
 
-    return NextResponse.json({ items, total });
+    return NextResponse.json({ items, total: body.total || 0 });
   } catch {
     return NextResponse.json({ items: [], total: 0 });
+  }
+}
+
+export async function DELETE(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get("id");
+  if (!id) {
+    return NextResponse.json({ error: "Falta id" }, { status: 400 });
+  }
+
+  try {
+    const res = await fetch(`${WP_URL}/wp-json/biyum/v1/media/${id}`, {
+      method: "DELETE",
+      headers: { "X-Biyum-Token": TOKEN },
+      signal: AbortSignal.timeout(10000),
+    });
+
+    if (!res.ok) {
+      const data = await res.json().catch(() => null);
+      return NextResponse.json({ error: data?.message || "No se pudo eliminar" }, { status: res.status });
+    }
+
+    const data = await res.json();
+    return NextResponse.json(data);
+  } catch (err) {
+    return NextResponse.json({ error: String(err) }, { status: 500 });
   }
 }

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { WpMediaItem } from "@/types";
-import { Search, X, Spinner, Upload, Copy } from "../Icons";
+import { Search, X, Spinner, Upload, Copy, Trash2 } from "../Icons";
 
 interface Props {
   selected: (WpMediaItem & { isCover?: boolean })[];
@@ -20,6 +20,10 @@ export default function ImageSelector({ selected, onSelect, maxImages = 50 }: Pr
   const [uploadError, setUploadError] = useState("");
   const [dragIndex, setDragIndex] = useState<number | null>(null);
   const [copied, setCopied] = useState<string | null>(null);
+  const [scanning, setScanning] = useState(false);
+  const [duplicates, setDuplicates] = useState<{ key: string; items: WpMediaItem[] }[]>([]);
+  const [deletingIds, setDeletingIds] = useState<Set<string>>(new Set());
+  const [deleteMsg, setDeleteMsg] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => { loadImages(); }, [page, search]);
@@ -76,6 +80,77 @@ export default function ImageSelector({ selected, onSelect, maxImages = 50 }: Pr
       setCopied(url);
       setTimeout(() => setCopied(null), 1500);
     });
+  }
+
+  function baseName(filename: string): string {
+    const noExt = filename.replace(/\.[^.]+$/, "");
+    return noExt.replace(/-\d+$/, "").toLowerCase();
+  }
+
+  async function scanDuplicates() {
+    setScanning(true);
+    setDeleteMsg("");
+    setDuplicates([]);
+    try {
+      const byName = new Map<string, WpMediaItem[]>();
+      const res = await fetch(`/api/wordpress/media?page=1&_=${Date.now()}`);
+      const data = await res.json();
+      const all = data.items || [];
+      const total = data.total || 0;
+
+      for (const img of all) {
+        const key = baseName(img.filename || img.title || img.url.split("/").pop() || "");
+        if (!key) continue;
+        if (!byName.has(key)) byName.set(key, []);
+        byName.get(key)!.push(img);
+      }
+
+      const groups = Array.from(byName.entries())
+        .filter(([, items]) => items.length > 1)
+        .map(([key, items]) => ({ key, items }))
+        .sort((a, b) => b.items.length - a.items.length);
+
+      setDuplicates(groups);
+
+      if (total > all.length) {
+        setDeleteMsg(`Se vieron los primeros ${all.length} de ${total} imágenes. Si hay más, revisa por lotes con el buscador o dime y ajusto el escaneo.`);
+      }
+    } catch {
+      setDeleteMsg("Error al escanear");
+    }
+    setScanning(false);
+  }
+
+  async function deleteImage(id: string) {
+    setDeletingIds((prev) => new Set(prev).add(id));
+    setDeleteMsg("");
+    try {
+      const res = await fetch(`/api/wordpress/media?id=${id}`, { method: "DELETE" });
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        setDeleteMsg(data?.error || "No se pudo eliminar");
+        return;
+      }
+      setDuplicates((groups) =>
+        groups
+          .map((g) => ({ ...g, items: g.items.filter((i) => String(i.id) !== id) }))
+          .filter((g) => g.items.length > 1)
+      );
+      setImages((prev) => prev.filter((i) => String(i.id) !== id));
+      setSelectedImagesRemove(id);
+    } catch {
+      setDeleteMsg("Error de conexión al eliminar");
+    } finally {
+      setDeletingIds((prev) => {
+        const next = new Set(prev);
+        next.delete(id);
+        return next;
+      });
+    }
+  }
+
+  function setSelectedImagesRemove(id: string) {
+    onSelect(selected.filter((i) => String(i.id) !== id));
   }
 
   function reorder(from: number, to: number) {
@@ -159,6 +234,61 @@ export default function ImageSelector({ selected, onSelect, maxImages = 50 }: Pr
         <div className="flex items-center justify-between mb-3">
           <p className="text-[#9CA3AF] text-xs">WordPress Media</p>
           <p className="text-[#525252] text-xs">Haz clic en una imagen para añadirla. Pasa el cursor y toca "Link" para copiar su URL.</p>
+        </div>
+
+        <div className="mb-4 p-4 border border-white/10 bg-white/[0.02]">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <p className="text-white text-sm font-medium">Eliminar duplicadas</p>
+              <p className="text-[#525252] text-xs mt-0.5">Busca imágenes con el mismo nombre y elimina las copias del servidor.</p>
+            </div>
+            <button
+              type="button"
+              onClick={scanDuplicates}
+              disabled={scanning}
+              className="flex items-center gap-2 text-[#9CA3AF] hover:text-white border border-white/15 px-4 py-2.5 text-sm transition-colors disabled:opacity-50"
+            >
+              {scanning ? <Spinner size={15} /> : <Trash2 size={15} />}
+              {scanning ? "Escaneando..." : "Buscar duplicadas"}
+            </button>
+          </div>
+
+          {deleteMsg && <p className="text-[#9CA3AF] text-xs mt-3">{deleteMsg}</p>}
+
+          {duplicates.length > 0 && (
+            <div className="mt-4 space-y-3">
+              <p className="text-[#9CA3AF] text-xs">Se encontraron {duplicates.length} grupos de duplicadas:</p>
+              {duplicates.map((g) => (
+                <div key={g.key} className="border border-white/10 p-3">
+                  <p className="text-white text-xs font-medium mb-2">{g.key.replace(/-/g, " ")} · {g.items.length} copias</p>
+                  <div className="flex flex-wrap gap-2 items-center">
+                    {g.items.map((img) => (
+                      <div key={img.id} className="relative w-16 h-16 bg-black/30 overflow-hidden border border-white/10 group">
+                        <img src={img.thumb} alt={img.alt || img.title} className="w-full h-full object-cover" />
+                        <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-1">
+                          <button
+                            onClick={() => deleteImage(String(img.id))}
+                            disabled={deletingIds.has(String(img.id))}
+                            className="text-[9px] bg-red-500/80 hover:bg-red-500 text-white px-1.5 py-1"
+                          >
+                            {deletingIds.has(String(img.id)) ? "..." : "Eliminar"}
+                          </button>
+                        </div>
+                        <span className="absolute bottom-0 left-0 right-0 text-[8px] text-white/70 bg-black/60 px-1 truncate">{img.title}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={() => { setDuplicates([]); setDeleteMsg("Escaneo cerrado. Puedes volver a buscar cuando quieras."); }}
+                className="text-[#525252] hover:text-white text-xs"
+              >
+                Cerrar gestor
+              </button>
+            </div>
+          )}
         </div>
         <div className="relative mb-4">
           <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#9CA3AF]" />

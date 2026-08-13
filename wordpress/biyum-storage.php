@@ -479,11 +479,91 @@ function biyum_rest_upload_media( $request ) {
 	);
 }
 
+function biyum_rest_list_media( $request ) {
+	$page = isset( $request['page'] ) ? max( 1, (int) $request['page'] ) : 1;
+	$per  = 100;
+	$args = array(
+		'post_type'      => 'attachment',
+		'post_status'    => 'inherit',
+		'post_mime_type' => 'image',
+		'posts_per_page' => $per,
+		'paged'          => $page,
+	);
+
+	if ( isset( $request['search'] ) && $request['search'] ) {
+		$args['s'] = sanitize_text_field( $request['search'] );
+	}
+
+	$query = new WP_Query( $args );
+
+	$items = array_map( 'biyum_media_item_to_array', $query->posts );
+
+	return array(
+		'items' => $items,
+		'total' => (int) $query->found_posts,
+		'pages' => (int) $query->max_num_pages,
+	);
+}
+
+function biyum_media_item_to_array( $attachment ) {
+	$attachment_id = $attachment->ID;
+	$meta   = wp_get_attachment_metadata( $attachment_id );
+	$source = wp_get_attachment_url( $attachment_id );
+	$thumb_src  = wp_get_attachment_image_src( $attachment_id, 'thumbnail' );
+	$medium_src = wp_get_attachment_image_src( $attachment_id, 'medium' );
+
+	return array(
+		'id'     => (int) $attachment_id,
+		'title'  => get_the_title( $attachment_id ),
+		'url'    => $source,
+		'thumb'  => $thumb_src ? $thumb_src[0] : $source,
+		'medium' => $medium_src ? $medium_src[0] : $source,
+		'alt'    => get_post_meta( $attachment_id, '_wp_attachment_image_alt', true ),
+		'width'  => isset( $meta['width'] ) ? (int) $meta['width'] : 0,
+		'height' => isset( $meta['height'] ) ? (int) $meta['height'] : 0,
+		'filename' => wp_basename( $source ),
+	);
+}
+
+function biyum_rest_delete_media( $request ) {
+	$auth = biyum_check_write_auth();
+	if ( is_wp_error( $auth ) ) {
+		return $auth;
+	}
+	$attachment_id = (int) $request['id'];
+	if ( ! wp_attachment_is_image( $attachment_id ) ) {
+		return new WP_Error( 'biyum_not_found', 'No se encontró la imagen', array( 'status' => 404 ) );
+	}
+	$deleted = wp_delete_attachment( $attachment_id, true );
+	if ( ! $deleted ) {
+		return new WP_Error( 'biyum_delete_failed', 'No se pudo eliminar', array( 'status' => 500 ) );
+	}
+	biyum_purge_litespeed();
+	return array(
+		'success' => true,
+		'id'      => (int) $attachment_id,
+	);
+}
+
 function biyum_register_routes() {
 	register_rest_route( BIYUM_NAMESPACE, '/media', array(
-		'methods'             => 'POST',
-		'callback'            => 'biyum_rest_upload_media',
-		'permission_callback' => '__return_true',
+		array(
+			'methods'             => 'POST',
+			'callback'            => 'biyum_rest_upload_media',
+			'permission_callback' => '__return_true',
+		),
+		array(
+			'methods'             => 'GET',
+			'callback'            => 'biyum_rest_list_media',
+			'permission_callback' => '__return_true',
+		),
+	) );
+	register_rest_route( BIYUM_NAMESPACE, '/media/(?P<id>\d+)', array(
+		array(
+			'methods'             => 'DELETE',
+			'callback'            => 'biyum_rest_delete_media',
+			'permission_callback' => '__return_true',
+		),
 	) );
 	register_rest_route( BIYUM_NAMESPACE, '/projects', array(
 		array(
