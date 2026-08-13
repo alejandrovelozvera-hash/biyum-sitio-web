@@ -41,8 +41,7 @@ export async function GET(request: Request) {
   const search = searchParams.get("search") || "";
 
   try {
-    const sep = search ? "&" : "?";
-    let url = `${WP_URL}/wp-json/biyum/v1/media${sep}page=${page}&_=${Date.now()}`;
+    let url = `${WP_URL}/wp-json/wp/v2/media?page=${page}&per_page=100&_embed`;
     if (search) url += `&search=${encodeURIComponent(search)}`;
 
     const res = await fetch(url, {
@@ -52,20 +51,28 @@ export async function GET(request: Request) {
       return NextResponse.json({ items: [], total: 0 }, { status: 200 });
     }
 
-    const body = await res.json();
-    const items = (body.items || []).map((item: any) => ({
-      id: item.id,
-      title: item.title || "",
-      url: item.url || "",
-      thumb: item.thumb || item.url || "",
-      medium: item.medium || item.url || "",
-      alt: item.alt || "",
-      width: item.width || 0,
-      height: item.height || 0,
-      filename: item.filename || "",
-    }));
+    const totalHeader = res.headers.get("x-wp-total");
+    const total = totalHeader ? parseInt(totalHeader) : 0;
 
-    return NextResponse.json({ items, total: body.total || 0 });
+    const data = await res.json();
+    const items = data.map((item: any) => {
+      const url = item.source_url || "";
+      const filePath = item.media_details?.file || item.source_url || "";
+      const filename = filePath.split("/").pop() || url.split("/").filter(Boolean).pop() || "";
+      return {
+        id: item.id,
+        title: item.title?.rendered || "",
+        url,
+        thumb: item.media_details?.sizes?.thumbnail?.source_url || url,
+        medium: item.media_details?.sizes?.medium?.source_url || url,
+        alt: item.alt_text || "",
+        width: item.media_details?.width || 0,
+        height: item.media_details?.height || 0,
+        filename,
+      };
+    });
+
+    return NextResponse.json({ items, total });
   } catch {
     return NextResponse.json({ items: [], total: 0 });
   }
