@@ -23,6 +23,27 @@ async function wpFetch<T>(path: string, init?: RequestInit, revalidate = 300): P
   }
 }
 
+function decodeEntities(s: string | null | undefined): string {
+  if (!s) return "";
+  return s
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#0?39;/g, "'")
+    .replace(/&#x27;/g, "'");
+}
+
+function normalizeProject(p: Project): Project {
+  return {
+    ...p,
+    title: decodeEntities(p.title),
+    category: decodeEntities(p.category),
+    client: p.client ? decodeEntities(p.client) : null,
+    services: (p.services || []).map((s) => decodeEntities(s)),
+  };
+}
+
 async function wpFetchWrite<T>(path: string, method: string, body: unknown): Promise<T | null> {
   try {
     const res = await fetch(`${BASE}${path}`, {
@@ -43,11 +64,12 @@ async function wpFetchWrite<T>(path: string, method: string, body: unknown): Pro
 
 export async function getProjects(revalidate = 300): Promise<Project[]> {
   const data = await wpFetch<Project[]>(`/projects`, undefined, revalidate);
-  return data && data.length ? data : [];
+  return data && data.length ? data.map(normalizeProject) : [];
 }
 
 export async function getProjectByIdentifier(id: string, revalidate = 300): Promise<Project | null> {
-  return wpFetch<Project>(`/projects/${encodeURIComponent(id)}`, undefined, revalidate);
+  const p = await wpFetch<Project>(`/projects/${encodeURIComponent(id)}`, undefined, revalidate);
+  return p ? normalizeProject(p) : null;
 }
 
 export async function getCategories(revalidate = 300): Promise<Category[]> {

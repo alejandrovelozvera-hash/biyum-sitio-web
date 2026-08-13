@@ -12,6 +12,7 @@
  *   POST   /projects            Crear proyecto (requiere token)
  *   PUT    /projects/{id}       Actualizar proyecto (requiere token)
  *   DELETE /projects/{id}       Eliminar proyecto (requiere token)
+ *   POST   /media               Subir imagen a la librería (requiere token, multipart campo "file")
  *   GET    /config              Configuración del sitio (hero slides + categorías)
  *   PUT    /config              Guardar configuración (requiere token)
  *
@@ -144,6 +145,10 @@ function biyum_normalize_images( $images ) {
 	return $out;
 }
 
+function biyum_clean_text( $str ) {
+	return html_entity_decode( sanitize_text_field( $str ), ENT_QUOTES, 'UTF-8' );
+}
+
 function biyum_sanitize_project_input( $body ) {
 	if ( ! is_array( $body ) ) {
 		return new WP_Error( 'biyum_invalid', 'Cuerpo no válido', array( 'status' => 400 ) );
@@ -152,17 +157,17 @@ function biyum_sanitize_project_input( $body ) {
 	$images = isset( $body['images'] ) && is_array( $body['images'] ) ? biyum_normalize_images( $body['images'] ) : array();
 
 	return array(
-		'title'           => isset( $body['title'] ) ? sanitize_text_field( $body['title'] ) : '',
+		'title'           => isset( $body['title'] ) ? biyum_clean_text( $body['title'] ) : '',
 		'description'     => isset( $body['description'] ) ? wp_kses_post( $body['description'] ) : '',
-		'category'        => isset( $body['category'] ) ? sanitize_text_field( $body['category'] ) : '',
+		'category'        => isset( $body['category'] ) ? biyum_clean_text( $body['category'] ) : '',
 		'cover_image_url' => isset( $body['cover_image_url'] ) ? esc_url_raw( $body['cover_image_url'] ) : '',
 		'cover_image_id'  => isset( $body['cover_image_id'] ) && null !== $body['cover_image_id'] ? (int) $body['cover_image_id'] : null,
 		'images'          => $images,
 		'video_url'       => isset( $body['video_url'] ) && $body['video_url'] ? esc_url_raw( $body['video_url'] ) : null,
-		'client'          => isset( $body['client'] ) && $body['client'] ? sanitize_text_field( $body['client'] ) : null,
-		'year'            => isset( $body['year'] ) && $body['year'] ? sanitize_text_field( $body['year'] ) : null,
+		'client'          => isset( $body['client'] ) && $body['client'] ? biyum_clean_text( $body['client'] ) : null,
+		'year'            => isset( $body['year'] ) && $body['year'] ? biyum_clean_text( $body['year'] ) : null,
 		'services'        => isset( $body['services'] ) && is_array( $body['services'] )
-			? array_values( array_map( 'sanitize_text_field', $body['services'] ) ) : array(),
+			? array_values( array_map( 'biyum_clean_text', $body['services'] ) ) : array(),
 		'featured'        => ! empty( $body['featured'] ),
 		'order_index'     => isset( $body['order_index'] ) ? (int) $body['order_index'] : 0,
 	);
@@ -393,7 +398,61 @@ function biyum_rest_update_config_handler( $request ) {
 	);
 }
 
+/* --------------------------------------------------------------------- *
+ *  Subida de imágenes (media library)
+ * --------------------------------------------------------------------- */
+
+function biyum_rest_upload_media( $request ) {
+	$auth = biyum_check_write_auth();
+	if ( is_wp_error( $auth ) ) {
+		return $auth;
+	}
+
+	$files = $request->get_file_params();
+	if ( empty( $files['file'] ) || ! is_array( $files['file'] ) ) {
+		return new WP_Error( 'biyum_no_file', 'No se recibió archivo (campo "file")', array( 'status' => 400 ) );
+	}
+	$file = $files['file'];
+	if ( isset( $file['error'] ) && UPLOAD_ERR_OK !== (int) $file['error'] ) {
+		return new WP_Error( 'biyum_upload_error', 'Error al recibir el archivo: ' . $file['error'], array( 'status' => 400 ) );
+	}
+
+	// set server vars para que media_handle_upload funcione con el filename
+	$_SERVER['HTTP_CONTENT_DISPOSITION'] = 'attachment; filename="' . ( isset( $file['name'] ) ? $file['name'] : 'imagen.jpg' ) . '"';
+
+	require_once ABSPATH . 'wp-admin/includes/image.php';
+	require_once ABSPATH . 'wp-admin/includes/file.php';
+	require_once ABSPATH . 'wp-admin/includes/media.php';
+
+	$attachment_id = media_handle_upload( 'file', 0 );
+	if ( is_wp_error( $attachment_id ) ) {
+		return new WP_Error( 'biyum_upload_failed', $attachment_id->get_error_message(), array( 'status' => 500 ) );
+	}
+
+	$meta   = wp_get_attachment_metadata( $attachment_id );
+	$source = wp_get_attachment_url( $attachment_id );
+
+	$thumb_src  = wp_get_attachment_image_src( $attachment_id, 'thumbnail' );
+	$medium_src = wp_get_attachment_image_src( $attachment_id, 'medium' );
+
+	return array(
+		'id'     => (int) $attachment_id,
+		'title'  => get_the_title( $attachment_id ),
+		'url'    => $source,
+		'thumb'  => $thumb_src ? $thumb_src[0] : $source,
+		'medium' => $medium_src ? $medium_src[0] : $source,
+		'alt'    => get_post_meta( $attachment_id, '_wp_attachment_image_alt', true ),
+		'width'  => isset( $meta['width'] ) ? (int) $meta['width'] : 0,
+		'height' => isset( $meta['height'] ) ? (int) $meta['height'] : 0,
+	);
+}
+
 function biyum_register_routes() {
+	register_rest_route( BIYUM_NAMESPACE, '/media', array(
+		'methods'             => 'POST',
+		'callback'            => 'biyum_rest_upload_media',
+		'permission_callback' => '__return_true',
+	) );
 	register_rest_route( BIYUM_NAMESPACE, '/projects', array(
 		array(
 			'methods'             => 'GET',
