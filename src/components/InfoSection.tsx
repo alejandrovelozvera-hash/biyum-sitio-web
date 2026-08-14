@@ -15,8 +15,8 @@ export default function InfoSection() {
     const form = e.currentTarget;
     const fd = new FormData(form);
     const name = fd.get("name");
-    const email = fd.get("email");
     const message = fd.get("message");
+    if (fd.get("website")) return;
     const text = encodeURIComponent(`Hola Biyum, soy ${name}.%0A${message}`);
     const url = `https://wa.me/message/N3PW46LKUALOK1?text=${text}`;
     setSent(true);
@@ -115,6 +115,14 @@ export default function InfoSection() {
                 required
                 placeholder="Tu nombre"
                 className="w-full bg-surface/70 border border-gold/15 rounded-xl px-4 py-3 text-sm text-gold-dark placeholder:text-placeholder focus:outline-none focus:border-gold/50 transition-colors"
+              />
+              <input
+                name="website"
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden opacity-0"
               />
               <input
                 name="email"
