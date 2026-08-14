@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { Fragment, useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "motion/react";
 import { ChevronLeft, ChevronRight } from "./Icons";
 import Link from "next/link";
@@ -81,7 +81,6 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
 
   useEffect(() => {
     if (slides.length <= 1) return;
-    setProgress(0);
     const start = performance.now();
     let raf: number;
     const tick = (t: number) => {
@@ -163,17 +162,17 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className={`w-full relative ${current % 3 === 0 ? "flex justify-center" : current % 3 === 1 ? "flex justify-start" : "flex justify-end"}`}
+            className={`w-full relative ${current % 3 === 0 ? "flex justify-center" : current % 3 === 1 ? "flex justify-center sm:justify-start" : "flex justify-center sm:justify-end"}`}
           >
             <div className={`relative flex items-center ${
               current % 3 === 0
                 ? "flex-col text-center max-w-xl sm:max-w-2xl"
                 : current % 3 === 1
-                  ? "flex-col sm:flex-row gap-6 md:gap-14"
-                  : "flex-col sm:flex-row-reverse gap-6 md:gap-14"
+                  ? "flex-col items-center text-center sm:flex-row sm:items-center sm:text-left gap-6 md:gap-14"
+                  : "flex-col items-center text-center sm:flex-row-reverse sm:items-center sm:text-left gap-6 md:gap-14"
             }`}>
               <div className={current % 3 === 0 ? "" : "max-w-lg sm:max-w-xl"}>
-                <p className="flex items-center gap-3 text-muted text-[10px] tracking-[0.2em] uppercase mb-3 md:mb-4">
+                <p className={`flex items-center gap-3 text-muted text-[10px] tracking-[0.2em] uppercase mb-3 md:mb-4 ${current % 3 === 0 ? "justify-center" : "justify-center sm:justify-start"}`}>
                   <span className="text-gold">N° {String(current + 1).padStart(2, "0")}</span>
                   <span className="w-6 h-px bg-gold/20" />
                   <span>Galería de Diseño</span>
@@ -185,22 +184,34 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: 1 }}
                   transition={{ duration: 0.9, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                  className={`block h-[2px] w-16 md:w-24 mt-4 md:mt-6 bg-gradient-to-r from-gold to-gold/0 origin-left ${current % 3 === 0 ? "mx-auto" : ""}`}
+                  className={`block h-[2px] w-16 md:w-24 mt-4 md:mt-6 bg-gradient-to-r from-gold to-gold/0 origin-left ${current % 3 === 0 ? "mx-auto" : "mx-auto sm:mx-0"}`}
                 />
                 <motion.p
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.7 }}
-                  className={`text-secondary text-base sm:text-lg md:text-xl mt-3 md:mt-5 max-w-lg leading-relaxed ${current % 3 === 0 ? "mx-auto" : ""}`}
+                  className={`text-secondary text-base sm:text-lg md:text-xl mt-3 md:mt-5 max-w-lg leading-relaxed ${current % 3 === 0 ? "mx-auto" : "mx-auto sm:mx-0"}`}
                 >
-                  {s?.subtitle}
+                  {s?.subtitle
+                    ? s.subtitle.split("imágenes").map((part, i) => (
+                        <Fragment key={i}>
+                          {i > 0 && (
+                            <>
+                              imágenes
+                              <br />
+                            </>
+                          )}
+                          {part}
+                        </Fragment>
+                      ))
+                    : null}
                 </motion.p>
               </div>
               <motion.div
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.85 }}
-                className={`flex flex-col sm:flex-row gap-3 md:gap-4 mt-6 md:mt-8 ${current % 3 === 0 ? "justify-center" : "shrink-0 sm:mt-0"}`}
+                className={`flex flex-col sm:flex-row gap-3 md:gap-4 mt-6 md:mt-8 ${current % 3 === 0 ? "justify-center" : "justify-center shrink-0 sm:justify-start sm:mt-0"}`}
               >
                 <Link
                   href="/#portafolio"
