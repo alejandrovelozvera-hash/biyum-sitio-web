@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Biyum Storage
  * Description: Almacenamiento de proyectos y configuración del sitio Biyum vía REST API (reemplaza Supabase).
- * Version: 1.0.2
+ * Version: 1.0.3
  * Author: Biyum
  * License: GPL-2.0-or-later
  *
@@ -74,6 +74,9 @@ function biyum_check_write_auth() {
 			$sent = $candidate;
 			break;
 		}
+	}
+	if ( strpos( $sent, 'Bearer ' ) === 0 ) {
+		$sent = trim( substr( $sent, 7 ) );
 	}
 	$expected = biyum_get_token();
 	if ( '' === $expected || $sent !== $expected ) {
@@ -482,6 +485,10 @@ function biyum_rest_upload_media( $request ) {
 }
 
 function biyum_rest_list_media( $request ) {
+	$auth = biyum_check_write_auth();
+	if ( is_wp_error( $auth ) ) {
+		return $auth;
+	}
 	$page = isset( $request['page'] ) ? max( 1, (int) $request['page'] ) : 1;
 	$per  = 100;
 	$args = array(
