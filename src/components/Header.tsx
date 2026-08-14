@@ -9,6 +9,7 @@ const navLinks = [
   { href: "/#portafolio", label: "Portafolio" },
   { href: "/#info", label: "Agencia" },
   { href: "/#contacto", label: "Contacto" },
+  { href: "/chimbucerosweb.html", label: "Chimbuceros" },
 ];
 
 export default function Header() {
