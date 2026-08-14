@@ -169,8 +169,8 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
               current % 3 === 0
                 ? "flex-col text-center max-w-xl sm:max-w-2xl"
                 : current % 3 === 1
-                  ? "flex-row gap-8 md:gap-14"
-                  : "flex-row-reverse gap-8 md:gap-14"
+                  ? "flex-col sm:flex-row gap-6 md:gap-14"
+                  : "flex-col sm:flex-row-reverse gap-6 md:gap-14"
             }`}>
               <div className={current % 3 === 0 ? "" : "max-w-lg sm:max-w-xl"}>
                 <p className="flex items-center gap-3 text-muted text-[10px] tracking-[0.2em] uppercase mb-3 md:mb-4">
@@ -200,7 +200,7 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.85 }}
-                className={`flex flex-wrap gap-3 md:gap-4 mt-6 md:mt-8 ${current % 3 === 0 ? "justify-center" : "mt-0 shrink-0"}`}
+                className={`flex flex-col sm:flex-row gap-3 md:gap-4 mt-6 md:mt-8 ${current % 3 === 0 ? "justify-center" : "shrink-0 sm:mt-0"}`}
               >
                 <Link
                   href="/#portafolio"
