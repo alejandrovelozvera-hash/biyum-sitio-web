@@ -52,7 +52,7 @@ export default function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-[13px] font-medium tracking-wider uppercase text-gold-dark/60 hover:text-gold transition-colors"
+              className="text-[13px] font-medium tracking-wider uppercase text-gold-dark hover:text-gold transition-colors"
             >
               {link.label}
             </Link>
@@ -112,7 +112,7 @@ export default function Header() {
                   <Link
                     href={link.href}
                     onClick={() => setOpen(false)}
-                    className="text-sm font-medium tracking-wider uppercase text-gold-dark/60 hover:text-gold py-2 block transition-colors"
+                    className="text-sm font-medium tracking-wider uppercase text-gold-dark hover:text-gold py-2 block transition-colors"
                   >
                     {link.label}
                   </Link>
