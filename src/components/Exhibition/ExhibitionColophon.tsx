@@ -53,7 +53,7 @@ export default function ExhibitionColophon() {
           </div>
 
           <div className="mt-16 pt-8 border-t border-white/5 text-[#525252] text-[10px] tracking-wider">
-            &copy; {new Date().getFullYear()} Biyum &mdash; Diseño, Fotografía &amp; Branding
+            &copy; {new Date().getFullYear()} Biyum &mdash; Diseño Integral / Producción Audiovisual / Desarrollo Web
           </div>
         </motion.div>
       </div>

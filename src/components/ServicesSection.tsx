@@ -195,13 +195,6 @@ function ServiceCard({ s, i }: { s: (typeof services)[number]; i: number }) {
     >
       <span className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-gold/0 via-gold to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-      <span
-        className="absolute -right-2 -top-8 text-[140px] leading-none font-bold text-gold/[0.05] group-hover:text-gold/[0.1] transition-colors duration-500 tabular-nums select-none"
-        aria-hidden
-      >
-        {String(i + 1).padStart(2, "0")}
-      </span>
-
       <div
         className="absolute -left-16 top-1/3 w-64 h-64 rounded-full bg-gold/[0.05] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
         aria-hidden
@@ -268,7 +261,7 @@ export default function ServicesSection() {
           <div>
             <div className="flex items-center gap-4 mb-3">
               <span className="w-8 h-px bg-gradient-to-r from-gold/60 to-transparent" />
-              <p className="text-muted text-[10px] tracking-[0.2em] uppercase">Servicios</p>
+              <p className="text-muted text-[10px] tracking-[0.2em] uppercase">Qué hacemos</p>
             </div>
             <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gold tracking-[-0.04em] leading-[0.92] overflow-hidden">
               <motion.span
