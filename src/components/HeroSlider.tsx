@@ -46,7 +46,7 @@ function KineticTitle({ text }: { text: string }) {
       {text.split(" ").map((word, wi) => (
         <span key={wi} className="inline-block whitespace-nowrap">
           {word.split("").map((char, ci) => (
-            <span key={ci} className="inline-block overflow-hidden align-bottom pb-[0.18em] mb-[-0.18em]">
+            <span key={ci} className="inline-block overflow-hidden align-bottom pb-[0.32em] mb-[-0.32em]">
               <motion.span
                 className="inline-block"
                 initial={{ y: "110%" }}

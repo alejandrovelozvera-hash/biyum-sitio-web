@@ -263,16 +263,8 @@ export default function ServicesSection() {
               <span className="w-8 h-px bg-gradient-to-r from-gold/60 to-transparent" />
               <p className="text-muted text-[10px] tracking-[0.2em] uppercase">Qué hacemos</p>
             </div>
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gold tracking-[-0.04em] leading-[0.92] overflow-hidden">
-              <motion.span
-                initial={anim ? { y: "110%" } : false}
-                whileInView={{ y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-                className="inline-block pb-[0.18em] mb-[-0.18em]"
-              >
-                Servicios
-              </motion.span>
+            <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gold tracking-[-0.04em] leading-[0.92]">
+              Servicios
             </h2>
             <motion.p
               initial={anim ? { opacity: 0 } : false}
