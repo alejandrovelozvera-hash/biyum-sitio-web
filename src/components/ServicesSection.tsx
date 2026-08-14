@@ -191,7 +191,7 @@ function ServiceCard({ s, i }: { s: (typeof services)[number]; i: number }) {
       viewport={{ once: true, amount: 0.2 }}
       whileHover={!reduce ? { y: -6 } : undefined}
       transition={{ duration: 0.7, delay: i * 0.06, ease: [0.16, 1, 0.3, 1] }}
-      className={`bg-surface-elevated rounded-2xl md:rounded-3xl p-8 md:p-10 group relative overflow-hidden ring-1 ring-gold/10 hover:ring-gold/30 shadow-[0_10px_40px_-20px_rgba(28,20,99,0.18)] transition-shadow duration-500 ${s.size === "large" ? "md:col-span-2" : "md:col-span-1"}`}
+      className={`bg-surface-elevated rounded-2xl md:rounded-3xl p-8 md:p-10 group relative overflow-hidden ring-1 ring-gold/10 hover:ring-gold/30 shadow-[0_10px_40px_-20px_rgba(28,20,99,0.18)] transition-shadow duration-500`}
     >
       <span className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-gold/0 via-gold to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -278,7 +278,7 @@ export default function ServicesSection() {
                 transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
                 className="inline-block pb-[0.18em] mb-[-0.18em]"
               >
-                Qué ofrecemos
+                Servicios
               </motion.span>
             </h2>
             <motion.p
