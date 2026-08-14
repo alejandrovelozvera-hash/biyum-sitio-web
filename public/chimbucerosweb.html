@@ -902,6 +902,49 @@
     border-color: var(--gold-light) !important;
   }
 
+  /* ── FLOATING UI: back to top + language toggle ── */
+  .float-ui {
+    position: fixed;
+    right: 1.6rem;
+    bottom: 2rem;
+    z-index: 150;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+  .float-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid rgba(212,170,82,0.35);
+    background: rgba(8,7,5,0.72);
+    backdrop-filter: blur(8px);
+    color: var(--gold-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(6px);
+  }
+  .float-ui.ready .float-btn { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .float-btn:hover { background: var(--gold-light); color: #080705; border-color: var(--gold-light); }
+  .float-btn-top svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.5; }
+  .float-btn-lang {
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+    width: 48px;
+    height: 48px;
+  }
+  .float-btn-lang .lang-alt { display: none; }
+  .float-btn-lang.active .lang-current { display: none; }
+  .float-btn-lang.active .lang-alt { display: inline; }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
     body { font-size: 1.45rem !important; }
@@ -1302,11 +1345,98 @@
 
 </div>
 
+<div class="float-ui" id="floatUI">
+  <button class="float-btn float-btn-top" id="backToTop" aria-label="Volver arriba">
+    <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+  <button class="float-btn float-btn-lang" id="langToggle" aria-label="Cambiar idioma">
+    <span class="lang-current">EN</span><span class="lang-alt">ES</span>
+  </button>
+</div>
+
 <script>
+  const i18n = {
+    es: {
+      nav: ['La Película','Premios','Trailer','Galería','Equipo','Contacto'],
+      heroEyebrow: 'Cortometraje Documental · 2025',
+      heroSubtitle: 'Time to live',
+      heroTrailer: 'Ver Trailer',
+      heroSinopsis: 'Conoce la historia →',
+      heroScroll: 'Scroll',
+      patrocinadores: 'Gracias al apoyo de',
+      sinopsisLabel: 'La Historia',
+      sinopsisTitle: 'Sobre la <em>Película</em>',
+      sinopsisP1: 'A través de su vida cotidiana, sus voces y sus instrumentos que se resisten al silencio, <strong>CHIMBUCEROS</strong> captura cómo la tradición lucha contra la desaparición y cómo perdura la memoria colectiva, incluso cuando ya solo quedan dos para recordarla.',
+      sinopsisP2: 'Una mirada íntima hacia la resistencia cultural, filmada en una enriquecedora atmósfera sonora y visual nativa.',
+      sinopsisCta: 'Solicitar proyección →',
+      statDuracion: 'Duración',
+      statAnio: 'Año',
+      statGenero: 'Género',
+      statLang: 'Quechua · Subt. EN / ES',
+      premiosLabel: 'Trayectoria Festivalera',
+      premiosTitle: 'Premios & <em>Selecciones</em>',
+      premioGanador: 'Ganador',
+      premioSeleccion: 'Selección Oficial',
+      premioBeca: 'Beca Kunturñawi Lab',
+      crewLabel: 'Ficha Técnica',
+      crewTitle: 'El <em>Equipo</em> detrás',
+      trailerEyebrow: 'Cortometraje Documental · 2025',
+      trailerLabel: 'Reproducir Trailer',
+      trailerDuration: '28 segundos',
+      galeriaLabel: 'Detrás de Cámaras',
+      galeriaTitle: 'Fotos de <em>Producción</em>',
+      contactoLabel: 'Contacto Directo',
+      contactoTitle: 'Póngase en <em>Contacto</em>',
+      footerCopy: '© 2026 Chimbuceros — Todos los derechos reservados',
+    },
+    en: {
+      nav: ['The Film','Awards','Trailer','Gallery','Team','Contact'],
+      heroEyebrow: 'Documentary Short Film · 2025',
+      heroSubtitle: 'Time to live',
+      heroTrailer: 'Watch Trailer',
+      heroSinopsis: 'Know the story →',
+      heroScroll: 'Scroll',
+      patrocinadores: 'With the support of',
+      sinopsisLabel: 'The Story',
+      sinopsisTitle: 'About the <em>Film</em>',
+      sinopsisP1: 'Through their daily life, their voices and their instruments that resist silence, <strong>CHIMBUCEROS</strong> captures how tradition fights against disappearance and how collective memory endures, even when only two remain to remember it.',
+      sinopsisP2: 'An intimate look at cultural resistance, filmed in an enriching native sound and visual atmosphere.',
+      sinopsisCta: 'Request a screening →',
+      statDuracion: 'Duration',
+      statAnio: 'Year',
+      statGenero: 'Genre',
+      statLang: 'Quechua · Subs. EN / ES',
+      premiosLabel: 'Festival Journey',
+      premiosTitle: 'Awards & <em>Selections</em>',
+      premioGanador: 'Winner',
+      premioSeleccion: 'Official Selection',
+      premioBeca: 'Kunturñawi Lab Grant',
+      crewLabel: 'Credits',
+      crewTitle: 'The <em>Team</em> behind',
+      trailerEyebrow: 'Documentary Short Film · 2025',
+      trailerLabel: 'Play Trailer',
+      trailerDuration: '28 seconds',
+      galeriaLabel: 'Behind the Scenes',
+      galeriaTitle: 'Production <em>Photos</em>',
+      contactoLabel: 'Direct Contact',
+      contactoTitle: 'Get in <em>Touch</em>',
+      footerCopy: '© 2026 Chimbuceros — All rights reserved',
+    },
+  };
+
+  const floatUI = document.getElementById('floatUI');
+  const backToTop = document.getElementById('backToTop');
+  const langToggle = document.getElementById('langToggle');
   const navbar = document.getElementById('navbar');
+
   window.addEventListener('scroll', () => {
     navbar.classList.toggle('scrolled', window.scrollY > 60);
+    backToTop.style.opacity = (window.scrollY > 400) ? 1 : 0;
+    backToTop.style.pointerEvents = (window.scrollY > 400) ? 'auto' : 'none';
+    floatUI.classList.add('ready');
   }, { passive: true });
+
+  backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
   function toggleMenu() {
     const links = document.getElementById('navLinks');
@@ -1325,6 +1455,67 @@
       document.body.style.overflow = '';
     });
   });
+
+  document.querySelectorAll('.premio-titulo').forEach((el) => {
+    if (!el.getAttribute('data-base')) el.setAttribute('data-base', el.textContent.trim());
+  });
+
+  let lang = localStorage.getItem('chimbuceros-lang') || 'es';
+  applyLang(lang);
+
+  langToggle.addEventListener('click', () => {
+    lang = lang === 'es' ? 'en' : 'es';
+    localStorage.setItem('chimbuceros-lang', lang);
+    applyLang(lang);
+  });
+
+  function applyLang(l) {
+    const t = i18n[l];
+
+    document.querySelectorAll('#navLinks li a').forEach((a, i) => {
+      if (t.nav[i]) a.textContent = t.nav[i];
+    });
+
+    document.querySelector('.hero-eyebrow-text').textContent = t.heroEyebrow;
+    document.querySelector('.hero-subtitle').textContent = t.heroSubtitle;
+    document.querySelector('.btn-primary span').textContent = t.heroTrailer;
+    document.querySelector('#hero a.hero-scroll').textContent = t.heroScroll;
+    document.querySelector('.patrocinadores-label').textContent = t.patrocinadores;
+    document.querySelector('.sinopsis-text .section-label').textContent = t.sinopsisLabel;
+    document.querySelector('.sinopsis-text .section-title').innerHTML = t.sinopsisTitle;
+    const sinP = document.querySelectorAll('.sinopsis-text p');
+    sinP[0].innerHTML = t.sinopsisP1;
+    sinP[1].innerHTML = t.sinopsisP2;
+    document.querySelector('.sinopsis-text .btn-ghost').textContent = t.sinopsisCta;
+    const stats = document.querySelectorAll('.stat-label');
+    stats[0].textContent = t.statDuracion;
+    stats[1].textContent = t.statAnio;
+    stats[2].textContent = t.statGenero;
+    stats[3].textContent = t.statLang;
+    document.querySelector('#premios .section-label').textContent = t.premiosLabel;
+    document.querySelector('#premios .section-title').innerHTML = t.premiosTitle;
+    document.querySelector('#crew .section-label').textContent = t.crewLabel;
+    document.querySelector('#crew .section-title').innerHTML = t.crewTitle;
+    document.querySelector('.trailer-eyebrow-text').textContent = t.trailerEyebrow;
+    document.querySelector('.trailer-label').textContent = t.trailerLabel;
+    document.querySelector('.trailer-duration').textContent = t.trailerDuration;
+    document.querySelector('#galeria .section-label').textContent = t.galeriaLabel;
+    document.querySelector('#galeria .section-title').innerHTML = t.galeriaTitle;
+    document.querySelector('#contacto .section-label').textContent = t.contactoLabel;
+    document.querySelector('#contacto .section-title').innerHTML = t.contactoTitle;
+    document.querySelector('.footer-copy').textContent = t.footerCopy;
+
+    const premioTitles = document.querySelectorAll('.premio-titulo');
+    premioTitles.forEach((el) => {
+      const base = el.getAttribute('data-base');
+      if (base === 'Ganador') el.textContent = t.premioGanador;
+      if (base === 'Selección Oficial') el.textContent = t.premioSeleccion;
+      if (base === 'Beca Kunturñawi Lab') el.textContent = t.premioBeca;
+    });
+
+    langToggle.querySelector('.lang-current').textContent = l === 'es' ? 'EN' : 'ES';
+    langToggle.querySelector('.lang-alt').textContent = l === 'es' ? 'ES' : 'EN';
+  }
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
