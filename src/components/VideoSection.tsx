@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, useReducedMotion, AnimatePresence } from "motion/react";
-import { ChevronLeft, ChevronRight, Spinner } from "./Icons";
+import { Spinner } from "./Icons";
 
 export interface VideoItem {
   id: string;
@@ -21,21 +21,31 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
   const anim = !reduce;
   const [featured, setFeatured] = useState<VideoItem | null>(null);
   const [active, setActive] = useState(0);
-  const [rowStart, setRowStart] = useState(0);
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [playing, setPlaying] = useState(false);
+  const [category, setCategory] = useState("Todos");
+
+  const categories = ["Todos", ...Array.from(new Set(videos.map((v) => v.category || "Otros")))];
+  const filtered = category === "Todos" ? videos : videos.filter((v) => (v.category || "Otros") === category);
 
   const select = (i: number) => {
     setActive(i);
-    setFeatured(videos[i]);
+    setFeatured(filtered[i]);
     setLoading(true);
+    setPlaying(false);
+  };
+
+  const selectCategory = (c: string) => {
+    setCategory(c);
+    setActive(0);
+    setFeatured(null);
+    setProgress(0);
     setPlaying(false);
   };
 
   useEffect(() => {
     if (!featured || playing) return;
-    setProgress(0);
     const start = performance.now();
     let raf: number;
     const tick = (t: number) => {
@@ -49,8 +59,7 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
 
   if (videos.length === 0) return null;
 
-  const current = featured || videos[0];
-  const rowVideos = videos.filter((_, i) => i !== active);
+  const current = featured || filtered[0];
 
   return (
     <section id="video" className="py-24 md:py-32 bg-background">
@@ -69,6 +78,23 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
             Videos
           </h2>
         </motion.div>
+      </div>
+
+      {/* Category filter */}
+      <div className="max-w-[1400px] mx-auto px-6 md:px-16 mb-8 md:mb-10 flex gap-2 md:gap-3 flex-wrap">
+        {categories.map((c) => (
+          <button
+            key={c}
+            onClick={() => selectCategory(c)}
+            className={`text-[10px] md:text-xs tracking-[0.15em] uppercase rounded-full px-4 md:px-5 py-2 border transition-all ${
+              category === c
+                ? "bg-gold text-on-gold border-gold"
+                : "text-muted border-gold/20 hover:text-gold hover:border-gold/50"
+            }`}
+          >
+            {c}
+          </button>
+        ))}
       </div>
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-16">
@@ -133,45 +159,47 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
           <div className="lg:w-[35%] flex lg:flex-col gap-3 md:gap-4 overflow-x-auto lg:overflow-y-auto lg:max-h-[calc((100vw-16rem)*0.5625)] pb-2 lg:pb-0"
             style={{ scrollbarWidth: "none" }}
           >
-            {rowVideos.map((video, i) => (
-              <motion.button
-                key={video.id}
-                initial={anim ? { opacity: 0, x: 20 } : false}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.06 }}
-                onClick={() => select(videos.indexOf(video))}
-                className="group flex-shrink-0 w-[70vw] sm:w-[45vw] lg:w-full text-left cursor-pointer focus:outline-none"
-              >
-                <div className="relative overflow-hidden rounded-xl md:rounded-2xl bg-surface flex flex-row lg:flex-col">
-                  <div className="w-[40%] lg:w-full aspect-video lg:aspect-video relative">
-                    <img
-                      src={getYtThumb(video.youtubeId)}
-                      alt={video.title}
-                      className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-black/60 flex items-center justify-center group-hover:bg-gold/80 transition-colors">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" className="text-white ml-0.5">
-                          <polygon points="5 3 19 12 5 21 5 3" />
-                        </svg>
+            {filtered.map((video, i) =>
+              i === active ? null : (
+                <motion.button
+                  key={video.id}
+                  initial={anim ? { opacity: 0, x: 20 } : false}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.06 }}
+                  onClick={() => select(i)}
+                  className="group flex-shrink-0 w-[70vw] sm:w-[45vw] lg:w-full text-left cursor-pointer focus:outline-none"
+                >
+                  <div className="relative overflow-hidden rounded-xl md:rounded-2xl bg-surface flex flex-row lg:flex-col">
+                    <div className="w-[40%] lg:w-full aspect-video lg:aspect-video relative">
+                      <img
+                        src={getYtThumb(video.youtubeId)}
+                        alt={video.title}
+                        className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-black/60 flex items-center justify-center group-hover:bg-gold/80 transition-colors">
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" className="text-white ml-0.5">
+                            <polygon points="5 3 19 12 5 21 5 3" />
+                          </svg>
+                        </div>
                       </div>
                     </div>
+                    <div className="flex-1 p-3 md:p-4 flex flex-col justify-center lg:p-3">
+                      <p className="text-muted text-[9px] tracking-[0.15em] uppercase mb-0.5 lg:hidden">
+                        {video.category || "Audiovisual"}
+                      </p>
+                      <h4 className="text-gold-dark text-xs md:text-sm font-semibold tracking-tight line-clamp-2 leading-snug">
+                        {video.title}
+                      </h4>
+                      <p className="text-secondary text-[10px] mt-1 leading-relaxed line-clamp-1 hidden lg:block">
+                        {video.description}
+                      </p>
+                    </div>
                   </div>
-                  <div className="flex-1 p-3 md:p-4 flex flex-col justify-center lg:p-3">
-                    <p className="text-muted text-[9px] tracking-[0.15em] uppercase mb-0.5 lg:hidden">
-                      {video.category || "Audiovisual"}
-                    </p>
-                    <h4 className="text-gold-dark text-xs md:text-sm font-semibold tracking-tight line-clamp-2 leading-snug">
-                      {video.title}
-                    </h4>
-                    <p className="text-secondary text-[10px] mt-1 leading-relaxed line-clamp-1 hidden lg:block">
-                      {video.description}
-                    </p>
-                  </div>
-                </div>
-              </motion.button>
-            ))}
+                </motion.button>
+              )
+            )}
           </div>
         </div>
       </div>
