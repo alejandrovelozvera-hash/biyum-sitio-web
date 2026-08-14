@@ -73,6 +73,11 @@ function TiltCard({ project, index, reduce, onSelect }: {
                 className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
               />
             )}
+            {project.featured && (
+              <span className="absolute top-3 left-3 z-20 bg-gold text-[#0A0A0A] text-[9px] tracking-[0.15em] uppercase font-medium px-3 py-1.5 rounded-full">
+                Destacado
+              </span>
+            )}
             {project.images && project.images.length > 0 && (
               <img
                 src={project.images[0].url}
@@ -118,10 +123,12 @@ export default function PortfolioGrid({ projects }: { projects: Project[] }) {
     return Array.from(cats);
   }, [projects]);
 
-  const filtered = useMemo(
-    () => (filter ? projects.filter((p) => p.category === filter) : projects),
-    [projects, filter]
-  );
+  const filtered = useMemo(() => {
+    const list = (filter ? projects.filter((p) => p.category === filter) : projects);
+    return [...list].sort(
+      (a, b) => Number(b.featured) - Number(a.featured)
+    );
+  }, [projects, filter]);
 
   if (projects.length === 0) return null;
 
