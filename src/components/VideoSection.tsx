@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, useReducedMotion, AnimatePresence } from "motion/react";
+import Image from "next/image";
 import { Spinner } from "./Icons";
 
 export interface VideoItem {
@@ -12,54 +13,89 @@ export interface VideoItem {
   category?: string;
 }
 
-function getYtThumb(id: string) {
-  return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+const PREVIEW_MS = 15000;
+
+function YtThumb({ id, alt, className, eager = false }: { id: string; alt: string; className?: string; eager?: boolean }) {
+  const [src, setSrc] = useState(`https://img.youtube.com/vi/${id}/maxresdefault.jpg`);
+  return (
+    <Image
+      src={src}
+      alt={alt}
+      fill
+      sizes="(max-width: 1024px) 40vw, (max-width: 768px) 70vw, 35vw"
+      priority={eager}
+      className={className}
+      onError={() => {
+        if (src.includes("maxresdefault")) {
+          setSrc(`https://img.youtube.com/vi/${id}/hqdefault.jpg`);
+        }
+      }}
+    />
+  );
+}
+
+function countFor(videos: VideoItem[], c: string) {
+  return c === "Todos" ? videos.length : videos.filter((v) => (v.category || "Otros") === c).length;
 }
 
 export default function VideoSection({ videos }: { videos: VideoItem[] }) {
   const reduce = useReducedMotion();
   const anim = !reduce;
-  const [featured, setFeatured] = useState<VideoItem | null>(null);
   const [active, setActive] = useState(0);
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [playing, setPlaying] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const [category, setCategory] = useState("Todos");
 
   const categories = ["Todos", ...Array.from(new Set(videos.map((v) => v.category || "Otros")))];
   const filtered = category === "Todos" ? videos : videos.filter((v) => (v.category || "Otros") === category);
+  const filteredCount = filtered.length;
 
-  const select = (i: number) => {
+  const openVideo = (i: number) => {
     setActive(i);
-    setFeatured(filtered[i]);
+    setModalOpen(true);
     setLoading(true);
-    setPlaying(false);
+    setProgress(0);
   };
 
   const selectCategory = (c: string) => {
     setCategory(c);
     setActive(0);
-    setFeatured(null);
     setProgress(0);
-    setPlaying(false);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setLoading(false);
+    setProgress(0);
   };
 
   useEffect(() => {
-    if (!featured || playing) return;
+    if (filteredCount <= 1 || modalOpen) return;
     const start = performance.now();
-    let raf: number;
+    let raf = 0;
+    let timer = 0;
     const tick = (t: number) => {
-      const p = (t - start) / 15000;
+      const p = (t - start) / PREVIEW_MS;
       setProgress(Math.min(p, 1));
-      if (p < 1) raf = requestAnimationFrame(tick);
+      if (p < 1) {
+        raf = requestAnimationFrame(tick);
+      } else {
+        timer = window.setTimeout(() => {
+          setActive((a) => (a + 1) % filteredCount);
+        }, 350);
+      }
     };
     raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [featured, playing, active]);
+    return () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(timer);
+    };
+  }, [active, category, modalOpen, filteredCount]);
 
   if (videos.length === 0) return null;
 
-  const current = featured || filtered[0];
+  const current = filtered[active];
 
   return (
     <section id="video" className="py-24 md:py-32 bg-background">
@@ -93,6 +129,7 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
             }`}
           >
             {c}
+            <span className="opacity-70 ml-1.5">({countFor(videos, c)})</span>
           </button>
         ))}
       </div>
@@ -107,16 +144,13 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.4 }}
               className="relative overflow-hidden rounded-2xl md:rounded-3xl bg-surface cursor-pointer group ring-1 ring-gold/20"
-              onClick={() => {
-                setFeatured(current);
-                setLoading(true);
-                setPlaying(false);
-              }}
+              onClick={() => openVideo(active)}
             >
-              <div className="aspect-video">
-                <img
-                  src={getYtThumb(current.youtubeId)}
+              <div className="aspect-video relative">
+                <YtThumb
+                  id={current.youtubeId}
                   alt={current.title}
+                  eager
                   className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/60 via-transparent to-transparent" />
@@ -126,16 +160,12 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
                     whileTap={{ scale: 0.95 }}
                     className="w-16 h-16 md:w-20 md:h-20 rounded-full glass-strong flex items-center justify-center ring-1 ring-gold/30 shadow-[0_0_40px_rgba(201,168,76,0.25)] group-hover:shadow-[0_0_60px_rgba(201,168,76,0.45)] transition-shadow duration-500"
                   >
-                    {loading ? (
-                      <Spinner size={22} className="text-gold" />
-                    ) : (
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="text-white ml-1">
-                        <polygon points="5 3 19 12 5 21 5 3" />
-                      </svg>
-                    )}
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="text-white ml-1">
+                      <polygon points="5 3 19 12 5 21 5 3" />
+                    </svg>
                   </motion.div>
                 </div>
-                {!playing && progress > 0 && (
+                {filteredCount > 1 && progress > 0 && (
                   <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-white/10">
                     <div
                       className="h-full bg-gold origin-left transition-transform duration-100 linear"
@@ -156,7 +186,8 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
           </div>
 
           {/* Sidebar / row of other videos */}
-          <div className="lg:w-[35%] flex lg:flex-col gap-3 md:gap-4 overflow-x-auto lg:overflow-y-auto lg:max-h-[calc((100vw-16rem)*0.5625)] pb-2 lg:pb-0"
+          <div
+            className="lg:w-[35%] flex lg:flex-col gap-3 md:gap-4 overflow-x-auto lg:overflow-y-auto lg:max-h-[calc((100vw-16rem)*0.5625)] pb-2 lg:pb-0"
             style={{ scrollbarWidth: "none" }}
           >
             {filtered.map((video, i) =>
@@ -167,13 +198,13 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: i * 0.06 }}
-                  onClick={() => select(i)}
+                  onClick={() => openVideo(i)}
                   className="group flex-shrink-0 w-[70vw] sm:w-[45vw] lg:w-full text-left cursor-pointer focus:outline-none"
                 >
                   <div className="relative overflow-hidden rounded-xl md:rounded-2xl bg-surface flex flex-row lg:flex-col">
-                    <div className="w-[40%] lg:w-full aspect-video lg:aspect-video relative">
-                      <img
-                        src={getYtThumb(video.youtubeId)}
+                    <div className="w-[40%] lg:w-full aspect-video lg:aspect-video relative overflow-hidden">
+                      <YtThumb
+                        id={video.youtubeId}
                         alt={video.title}
                         className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
                       />
@@ -200,14 +231,32 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
                 </motion.button>
               )
             )}
+
+            {/* Empty state / CTA when the category has only one video */}
+            {filteredCount <= 1 && (
+              <div className="hidden lg:flex flex-1 flex-col items-center justify-center text-center rounded-xl bg-surface/60 border border-gold/10 p-6">
+                <p className="text-muted text-[10px] tracking-[0.2em] uppercase mb-3">¿Tienes un proyecto audiovisual?</p>
+                <p className="text-secondary text-xs leading-relaxed mb-4">
+                  Cuéntanos tu idea y creemos el video que tu marca necesita.
+                </p>
+                <a
+                  href="https://wa.me/message/N3PW46LKUALOK1"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[10px] tracking-[0.15em] uppercase text-gold hover:text-gold-light border border-gold/30 hover:border-gold/60 rounded-full px-5 py-2 transition-all"
+                >
+                  Escríbenos
+                </a>
+              </div>
+            )}
           </div>
         </div>
       </div>
 
       {/* Player modal */}
       <AnimatePresence>
-        {featured && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" onClick={() => { setFeatured(null); setLoading(false); setPlaying(false); setProgress(0); }}>
+        {modalOpen && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" onClick={closeModal}>
             <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" />
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
@@ -216,7 +265,7 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
               className="relative z-10 w-full max-w-5xl glass-strong rounded-3xl overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
-              <button onClick={() => { setFeatured(null); setLoading(false); setPlaying(false); setProgress(0); }} className="absolute top-4 right-4 z-20 glass rounded-full w-10 h-10 flex items-center justify-center text-white/60 hover:text-white transition-all hover:scale-105">
+              <button onClick={closeModal} className="absolute top-4 right-4 z-20 glass rounded-full w-10 h-10 flex items-center justify-center text-white/60 hover:text-white transition-all hover:scale-105">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
                   <path d="M18 6L6 18M6 6l12 12" />
                 </svg>
@@ -228,6 +277,7 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
                   </div>
                 )}
                 <iframe
+                  key={current.youtubeId}
                   src={`https://www.youtube.com/embed/${current.youtubeId}?autoplay=1`}
                   title={current.title}
                   className="w-full h-full"
@@ -235,7 +285,6 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
                   allowFullScreen
                   onLoad={() => {
                     setLoading(false);
-                    setPlaying(true);
                   }}
                 />
               </div>
