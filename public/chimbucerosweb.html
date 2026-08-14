@@ -937,15 +937,36 @@
   .float-ui.ready .float-btn { opacity: 1; pointer-events: auto; transform: translateY(0); }
   .float-btn:hover { background: var(--gold-light); color: #080705; border-color: var(--gold-light); }
   .float-btn-top svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.5; }
-  .float-btn-lang {
-    font-size: 0.95rem;
-    letter-spacing: 0.08em;
-    width: 48px;
-    height: 48px;
+
+  .nav-lang {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: 1.2rem;
+    padding: 5px 10px;
+    border: 1px solid rgba(212,170,82,0.35);
+    border-radius: 24px;
+    background: rgba(8,7,5,0.4);
+    backdrop-filter: blur(8px);
+    position: relative;
+    z-index: 102;
   }
-  .float-btn-lang .lang-alt { display: none; }
-  .float-btn-lang.active .lang-current { display: none; }
-  .float-btn-lang.active .lang-alt { display: inline; }
+  .nav-lang-seg {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: rgba(216,206,188,0.55);
+    padding: 2px 6px;
+    border-radius: 14px;
+    transition: color 0.3s, background 0.3s;
+  }
+  .nav-lang-seg:hover { color: var(--gold-light); }
+  .nav-lang-seg.active { color: #080705; background: var(--gold-light); }
+  .nav-lang-sep { width: 1px; height: 14px; background: rgba(216,206,188,0.25); }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
@@ -1058,6 +1079,11 @@
       <li><a href="#crew">Equipo</a></li>
       <li><a href="#contacto">Contacto</a></li>
     </ul>
+    <div class="nav-lang" id="langToggle" role="group" aria-label="Cambiar idioma">
+      <button type="button" class="nav-lang-seg" data-lang="es">ES</button>
+      <span class="nav-lang-sep"></span>
+      <button type="button" class="nav-lang-seg" data-lang="en">EN</button>
+    </div>
     <div class="hamburger" id="hamburger" onclick="toggleMenu()">
       <span></span><span></span><span></span>
     </div>
@@ -1351,9 +1377,6 @@
   <button class="float-btn float-btn-top" id="backToTop" aria-label="Volver arriba">
     <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
   </button>
-  <button class="float-btn float-btn-lang" id="langToggle" aria-label="Cambiar idioma">
-    <span class="lang-current">EN</span><span class="lang-alt">ES</span>
-  </button>
 </div>
 
 <script>
@@ -1465,8 +1488,12 @@
   let lang = localStorage.getItem('chimbuceros-lang') || 'es';
   applyLang(lang);
 
-  langToggle.addEventListener('click', () => {
-    lang = lang === 'es' ? 'en' : 'es';
+  langToggle.addEventListener('click', (e) => {
+    const seg = e.target.closest('.nav-lang-seg');
+    if (!seg) return;
+    const target = seg.getAttribute('data-lang');
+    if (target === lang) return;
+    lang = target;
     localStorage.setItem('chimbuceros-lang', lang);
     applyLang(lang);
   });
@@ -1515,8 +1542,10 @@
       if (base === 'Beca Kunturñawi Lab') el.textContent = t.premioBeca;
     });
 
-    langToggle.querySelector('.lang-current').textContent = l === 'es' ? 'EN' : 'ES';
-    langToggle.querySelector('.lang-alt').textContent = l === 'es' ? 'ES' : 'EN';
+    document.querySelectorAll('.nav-lang-seg').forEach((s) => {
+      s.classList.toggle('active', s.getAttribute('data-lang') === l);
+    });
+    langToggle.setAttribute('aria-label', l === 'es' ? 'Cambiar idioma' : 'Change language');
   }
 
   const observer = new IntersectionObserver((entries) => {
