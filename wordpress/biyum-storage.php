@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Biyum Storage
  * Description: Almacenamiento de proyectos y configuración del sitio Biyum vía REST API (reemplaza Supabase).
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author: Biyum
  * License: GPL-2.0-or-later
  *
@@ -13,6 +13,8 @@
  *   PUT    /projects/{id}       Actualizar proyecto (requiere token)
  *   DELETE /projects/{id}       Eliminar proyecto (requiere token)
  *   POST   /media               Subir imagen a la librería (requiere token, multipart campo "file")
+ *   GET    /media               Listar media de la librería (requiere token)
+ *   DELETE /media/{id}          Eliminar media de la librería (requiere token)
  *   GET    /config              Configuración del sitio (hero slides + categorías)
  *   PUT    /config              Guardar configuración (requiere token)
  *
