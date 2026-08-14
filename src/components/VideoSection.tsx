@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, useReducedMotion, AnimatePresence } from "motion/react";
 import Image from "next/image";
 import { Spinner } from "./Icons";
@@ -43,9 +43,9 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
   const anim = !reduce;
   const [active, setActive] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [progress, setProgress] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
   const [category, setCategory] = useState("Todos");
+  const progressBarRef = useRef<HTMLDivElement>(null);
 
   const categories = ["Todos", ...Array.from(new Set(videos.map((v) => v.category || "Otros")))];
   const filtered = category === "Todos" ? videos : videos.filter((v) => (v.category || "Otros") === category);
@@ -55,29 +55,29 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
     setActive(i);
     setModalOpen(true);
     setLoading(true);
-    setProgress(0);
   };
 
   const selectCategory = (c: string) => {
     setCategory(c);
     setActive(0);
-    setProgress(0);
   };
 
   const closeModal = () => {
     setModalOpen(false);
     setLoading(false);
-    setProgress(0);
   };
 
   useEffect(() => {
     if (filteredCount <= 1 || modalOpen) return;
+    const bar = progressBarRef.current;
     const start = performance.now();
     let raf = 0;
     let timer = 0;
     const tick = (t: number) => {
-      const p = (t - start) / PREVIEW_MS;
-      setProgress(Math.min(p, 1));
+      const p = Math.min((t - start) / PREVIEW_MS, 1);
+      if (bar) {
+        bar.style.transform = `scaleX(${p})`;
+      }
       if (p < 1) {
         raf = requestAnimationFrame(tick);
       } else {
@@ -90,6 +90,9 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
     return () => {
       cancelAnimationFrame(raf);
       clearTimeout(timer);
+      if (bar) {
+        bar.style.transform = "scaleX(0)";
+      }
     };
   }, [active, category, modalOpen, filteredCount]);
 
@@ -165,11 +168,12 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
                     </svg>
                   </motion.div>
                 </div>
-                {filteredCount > 1 && progress > 0 && (
+                {filteredCount > 1 && (
                   <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-white/10">
                     <div
-                      className="h-full bg-gold origin-left transition-transform duration-100 linear"
-                      style={{ transform: `scaleX(${progress})` }}
+                      ref={progressBarRef}
+                      className="h-full bg-gold origin-left"
+                      style={{ transform: "scaleX(0)" }}
                     />
                   </div>
                 )}

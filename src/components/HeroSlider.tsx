@@ -69,7 +69,7 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
   const parallaxY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
-  const [progress, setProgress] = useState(0);
+  const progressBarRef = useRef<HTMLDivElement>(null);
 
   const next = useCallback(() => {
     setCurrent((c) => (c + 1) % slides.length);
@@ -81,11 +81,14 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
 
   useEffect(() => {
     if (slides.length <= 1) return;
+    const bar = progressBarRef.current;
     const start = performance.now();
     let raf: number;
     const tick = (t: number) => {
-      const p = (t - start) / (TITLE_DURATION * 1000);
-      setProgress(Math.min(p, 1));
+      const p = Math.min((t - start) / (TITLE_DURATION * 1000), 1);
+      if (bar) {
+        bar.style.transform = `scaleX(${p})`;
+      }
       if (p < 1) raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
@@ -93,6 +96,9 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
     return () => {
       cancelAnimationFrame(raf);
       clearTimeout(timeout);
+      if (bar) {
+        bar.style.transform = "scaleX(0)";
+      }
     };
   }, [next, slides.length, current]);
 
@@ -282,8 +288,9 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
       {/* Progress bar */}
       <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gold/10">
         <div
+          ref={progressBarRef}
           className="h-full bg-gold origin-left"
-          style={{ transform: `scaleX(${progress})`, transition: "transform 0.1s linear" }}
+          style={{ transform: "scaleX(0)" }}
         />
       </div>
     </section>
