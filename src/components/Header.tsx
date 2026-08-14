@@ -5,6 +5,16 @@ import { motion, AnimatePresence } from "motion/react";
 import { Menu, X, Sun, Moon } from "./Icons";
 import Link from "next/link";
 
+const scrollToHash = (href: string) => {
+  const [path, hash] = href.split("#");
+  if (path && path !== "/") return;
+  if (!hash) return;
+  const el = document.getElementById(hash);
+  if (!el) return;
+  const y = el.getBoundingClientRect().top + window.scrollY - 80;
+  window.scrollTo({ top: y, behavior: "smooth" });
+};
+
 const navLinks = [
   { href: "/#portafolio", label: "Portafolio" },
   { href: "/#info", label: "Agencia" },
@@ -52,6 +62,12 @@ export default function Header() {
             <Link
               key={link.href}
               href={link.href}
+              onClick={(e) => {
+                if (window.location.pathname === "/") {
+                  e.preventDefault();
+                  scrollToHash(link.href);
+                }
+              }}
               className="text-[13px] font-medium tracking-wider uppercase text-gold-dark hover:text-gold transition-colors"
             >
               {link.label}
@@ -111,7 +127,12 @@ export default function Header() {
                 >
                   <Link
                     href={link.href}
-                    onClick={() => setOpen(false)}
+                    onClick={() => {
+                      setOpen(false);
+                      if (window.location.pathname === "/") {
+                        scrollToHash(link.href);
+                      }
+                    }}
                     className="text-sm font-medium tracking-wider uppercase text-gold-dark hover:text-gold py-2 block transition-colors"
                   >
                     {link.label}

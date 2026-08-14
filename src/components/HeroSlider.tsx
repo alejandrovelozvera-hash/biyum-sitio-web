@@ -221,6 +221,16 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
               >
                 <Link
                   href="/#portafolio"
+                  onClick={(e) => {
+                    if (window.location.pathname === "/") {
+                      e.preventDefault();
+                      const el = document.getElementById("portafolio");
+                      if (el) {
+                        const y = el.getBoundingClientRect().top + window.scrollY - 80;
+                        window.scrollTo({ top: y, behavior: "smooth" });
+                      }
+                    }
+                  }}
                   className="inline-flex items-center gap-2 text-xs sm:text-sm text-on-gold bg-gold hover:bg-gold-light rounded-full px-5 sm:px-7 py-2.5 sm:py-3 transition-all hover:scale-[1.02] active:scale-[0.98]"
                 >
                   Ver Portafolio
