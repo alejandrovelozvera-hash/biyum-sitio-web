@@ -89,7 +89,7 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
       if (p < 1) raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
-    const timeout = setTimeout(next, TITLE_DURATION * 1000);
+    const timeout = setTimeout(next, TITLE_DURATION * 1000 + 150);
     return () => {
       cancelAnimationFrame(raf);
       clearTimeout(timeout);
