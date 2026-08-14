@@ -65,7 +65,11 @@ export default function AdminConfigForm({ initialSlides, initialCategories }: Pr
           categories: categories.map((c, i) => ({ ...c, order_index: c.order_index ?? i })),
         }),
       });
-      if (res.ok) { setMessage("Configuración guardada"); router.refresh(); } else { setMessage("Error al guardar"); }
+      let detail = "";
+      try { const data = await res.json(); detail = data?.error || ""; } catch { /* no body */ }
+      if (res.ok) { setMessage("Configuración guardada"); router.refresh(); }
+      else if (res.status === 401) { setMessage("Error de sesión: vuelve a ingresar al panel"); }
+      else { setMessage(`Error al guardar (${res.status}) ${detail}`.trim()); }
     } catch { setMessage("Error de conexión"); }
     setSaving(false);
   }
