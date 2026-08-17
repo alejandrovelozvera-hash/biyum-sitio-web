@@ -7,12 +7,13 @@ import Link from "next/link";
 
 const scrollToHash = (href: string) => {
   const [path, hash] = href.split("#");
-  if (path && path !== "/") return;
-  if (!hash) return;
+  if (path && path !== "/") return false;
+  if (!hash) return false;
   const el = document.getElementById(hash);
-  if (!el) return;
+  if (!el) return false;
   const y = el.getBoundingClientRect().top + window.scrollY - 80;
   window.scrollTo({ top: y, behavior: "smooth" });
+  return true;
 };
 
 const navLinks = [
@@ -63,7 +64,7 @@ export default function Header() {
               key={link.href}
               href={link.href}
               onClick={(e) => {
-                if (window.location.pathname === "/") {
+                if (window.location.pathname === "/" && link.href.includes("#")) {
                   e.preventDefault();
                   scrollToHash(link.href);
                 }
@@ -129,7 +130,7 @@ export default function Header() {
                     href={link.href}
                     onClick={() => {
                       setOpen(false);
-                      if (window.location.pathname === "/") {
+                      if (window.location.pathname === "/" && link.href.includes("#")) {
                         scrollToHash(link.href);
                       }
                     }}
