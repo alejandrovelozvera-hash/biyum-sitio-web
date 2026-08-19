@@ -16,7 +16,7 @@ const services = [
   { kind: "video", title: "Producción de Video", desc: "Contenido audiovisual moderno: spots, documentales y material para redes.", size: "small" as const },
   { kind: "branding", title: "Branding", desc: "Identidad visual estratégica: logotipo, papelería, manual de marca y más.", size: "large" as const },
   { kind: "social", title: "Social Media", desc: "Estrategias de contenido, diseño gráfico y pauta digital para tus redes.", size: "small" as const },
-  { kind: "web", title: "Diseño Web", desc: "Sitios web modernos, tiendas online y experiencias digitales a medida.", size: "small" as const },
+  { kind: "web", title: "Diseño Web", desc: "Páginas web modernas y landing pages a medida que convierten visitas en clientes.", size: "small" as const },
 ];
 
 function CameraVisual({ size, className }: any) {
