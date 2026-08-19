@@ -45,23 +45,87 @@ function Sparkle({ x, y, size = 14 }: { x: number; y: number; size?: number }) {
 
 function LogoDemo({ phase }: { phase: number }) {
   const ticks = Array.from({ length: 8 });
-  const draw = (t: number) => ({
-    pathLength: phase >= t ? 1 : 0,
-  });
-  const fillOpts = (t: number) => ({
-    opacity: phase >= t ? 1 : 0,
-  });
+  const draw = (t: number) => ({ pathLength: phase >= t ? 1 : 0 });
+  const exclusive = (p: number) => ({ opacity: phase === p ? 1 : 0 });
 
   return (
     <svg viewBox="0 0 400 280" className="w-full h-full" role="img" aria-label="Construcción de un logotipo">
-      {/* Construction grid (briefing) */}
+      {/* ---- FASE 1 · CONTACTO: esbozo a mano ---- */}
       <motion.g
         initial={false}
-        animate={fillOpts(1)}
-        transition={{ duration: 0.8, delay: 0.6 }}
+        animate={exclusive(0)}
+        transition={{ duration: 0.6 }}
       >
-        <motion.line x1="200" y1="-20" x2="200" y2="300" stroke="var(--gold)" strokeWidth="0.6" opacity="0.18" />
-        <motion.line x1="-20" y1="140" x2="420" y2="140" stroke="var(--gold)" strokeWidth="0.6" opacity="0.18" />
+        <motion.circle
+          cx="200"
+          cy="140"
+          r="76"
+          fill="none"
+          stroke="var(--gold)"
+          strokeWidth="1.8"
+          strokeDasharray="5 7"
+          initial={{ pathLength: 0 }}
+          animate={draw(0)}
+          transition={{ pathLength: { duration: 1.6, ease: [0.16, 1, 0.3, 1] } }}
+        />
+        <motion.path
+          d="M166 92 C186 78 218 78 234 94"
+          fill="none"
+          stroke="var(--gold)"
+          strokeWidth="1.4"
+          strokeDasharray="4 6"
+          initial={{ pathLength: 0 }}
+          animate={draw(0)}
+          transition={{ pathLength: { duration: 1.2, ease: "easeOut", delay: 0.35 } }}
+        />
+        <motion.path
+          d="M160 196 C180 208 220 208 240 194"
+          fill="none"
+          stroke="var(--gold)"
+          strokeWidth="1.4"
+          strokeDasharray="4 6"
+          initial={{ pathLength: 0 }}
+          animate={draw(0)}
+          transition={{ pathLength: { duration: 1.2, ease: "easeOut", delay: 0.5 } }}
+        />
+        <motion.ellipse
+          cx="132"
+          cy="176"
+          rx="10"
+          ry="7"
+          fill="none"
+          stroke="var(--gold)"
+          strokeWidth="1.2"
+          strokeDasharray="3 4"
+          opacity="0.5"
+          initial={{ pathLength: 0 }}
+          animate={draw(0)}
+          transition={{ pathLength: { duration: 0.9, ease: "easeOut", delay: 0.7 } }}
+        />
+        <motion.ellipse
+          cx="272"
+          cy="106"
+          rx="8"
+          ry="12"
+          fill="none"
+          stroke="var(--gold)"
+          strokeWidth="1.2"
+          strokeDasharray="3 4"
+          opacity="0.5"
+          initial={{ pathLength: 0 }}
+          animate={draw(0)}
+          transition={{ pathLength: { duration: 0.9, ease: "easeOut", delay: 0.8 } }}
+        />
+      </motion.g>
+
+      {/* ---- FASE 2 · BRIEFING: estructura y guías ---- */}
+      <motion.g
+        initial={false}
+        animate={exclusive(1)}
+        transition={{ duration: 0.6 }}
+      >
+        <motion.line x1="200" y1="-10" x2="200" y2="290" stroke="var(--gold)" strokeWidth="0.6" initial={false} animate={{ opacity: 0.18 }} />
+        <motion.line x1="-10" y1="140" x2="410" y2="140" stroke="var(--gold)" strokeWidth="0.6" initial={false} animate={{ opacity: 0.18 }} />
         <motion.rect
           x="131"
           y="71"
@@ -70,114 +134,180 @@ function LogoDemo({ phase }: { phase: number }) {
           fill="none"
           stroke="var(--gold)"
           strokeWidth="0.8"
-          opacity="0.22"
+          initial={false}
+          animate={{ opacity: 0.22 }}
         />
-        <motion.circle cx="200" cy="140" r="97" fill="none" stroke="var(--gold)" strokeWidth="0.8" opacity="0.12" />
-        <motion.circle cx="200" cy="140" r="49" fill="none" stroke="var(--gold)" strokeWidth="0.8" opacity="0.16" />
-        <motion.line x1="141" y1="81" x2="259" y2="81" stroke="var(--gold)" strokeWidth="0.6" opacity="0.4" />
-        <motion.path d="M140 120 L200 40 L260 120 L200 200 Z" fill="none" stroke="var(--gold)" strokeWidth="0.8" opacity="0.2" />
+        <motion.circle cx="200" cy="140" r="97" fill="none" stroke="var(--gold)" strokeWidth="0.8" initial={false} animate={{ opacity: 0.12 }} />
+        <motion.circle cx="200" cy="140" r="49" fill="none" stroke="var(--gold)" strokeWidth="0.8" initial={false} animate={{ opacity: 0.16 }} />
+        <motion.path d="M140 120 L200 40 L260 120 L200 200 Z" fill="none" stroke="var(--gold)" strokeWidth="0.8" initial={false} animate={{ opacity: 0.2 }} />
+        {[[143, 83], [257, 83], [143, 197], [257, 197]].map(([cx, cy], i) => (
+          <motion.circle
+            key={`m-${i}`}
+            cx={cx}
+            cy={cy}
+            r="3"
+            fill="none"
+            stroke="var(--gold)"
+            strokeWidth="1.2"
+            initial={false}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4, delay: 0.4 + i * 0.1 }}
+          />
+        ))}
+        {ticks.map((_, i) => (
+          <motion.line
+            key={`t-${i}`}
+            x1="200"
+            y1="48"
+            x2="200"
+            y2="58"
+            stroke="var(--gold)"
+            strokeWidth="3"
+            strokeLinecap="round"
+            initial={{ pathLength: 0 }}
+            animate={draw(1)}
+            transition={{ pathLength: { duration: 0.5, ease: "easeOut", delay: 0.1 + i * 0.08 } }}
+            transform={`rotate(${i * 45} 200 140)`}
+          />
+        ))}
+        <motion.circle
+          cx="200"
+          cy="140"
+          r="58"
+          fill="none"
+          stroke="var(--gold)"
+          strokeWidth="1.8"
+          initial={{ pathLength: 0 }}
+          animate={draw(1)}
+          transition={{ pathLength: { duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.2 } }}
+        />
       </motion.g>
 
-      {/* Corner construction markers */}
-      {[[143, 83], [257, 83], [143, 197], [257, 197]].map(([cx, cy], i) => (
+      {/* ---- FASE 3 · PROPUESTA: logo minimalista final ---- */}
+      <motion.g
+        initial={false}
+        animate={exclusive(2)}
+        transition={{ duration: 0.6 }}
+      >
+        {/* Anillo bold */}
         <motion.circle
-          key={`m-${i}`}
-          cx={cx}
-          cy={cy}
-          r="3"
+          cx="200"
+          cy="140"
+          r="58"
+          fill="none"
+          stroke="var(--gold)"
+          strokeWidth="3"
+          initial={{ pathLength: 0 }}
+          animate={draw(2)}
+          transition={{ pathLength: { duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.15 } }}
+        />
+        {/* Anillo exterior fino */}
+        <motion.circle
+          cx="200"
+          cy="140"
+          r="38"
           fill="none"
           stroke="var(--gold)"
           strokeWidth="1.2"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.5 }}
+          transition={{ duration: 0.6, delay: 0.7 }}
+        />
+        {/* Punto central */}
+        <motion.circle
+          cx="200"
+          cy="140"
+          r="12"
+          fill="var(--gold)"
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, delay: 1.05, ease: [0.16, 1, 0.3, 1] }}
+          style={{ transformOrigin: "200px 140px" }}
+        />
+        {/* Wordmark */}
+        <motion.g
           initial={false}
-          animate={fillOpts(1)}
-          transition={{ duration: 0.6, delay: 0.6 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 1.4 }}
+        >
+          <line x1="140" y1="222" x2="260" y2="222" stroke="var(--gold)" strokeWidth="2" strokeLinecap="round" />
+        </motion.g>
+        <motion.g
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 1.6, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <text
+            x="200"
+            y="216"
+            textAnchor="middle"
+            fill="var(--gold)"
+            fontSize="15"
+            letterSpacing="7"
+            fontFamily="var(--font-sans)"
+            fontWeight="700"
+          >
+            BIYUM
+          </text>
+        </motion.g>
+
+        {/* Shine sweep */}
+        <motion.rect
+          x="-80"
+          y="66"
+          width="70"
+          height="148"
+          fill="url(#shine)"
+          clipPath="url(#markClip)"
+          initial={{ x: -80, opacity: 0 }}
+          animate={{ x: 240, opacity: [0, 1, 1, 0] }}
+          transition={{ duration: 1.4, ease: "easeInOut", delay: 0.6 }}
         />
-      ))}
 
-      {/* Sketch (contacto) */}
-      <motion.circle
-        cx="200"
-        cy="140"
-        r="76"
-        fill="none"
-        stroke="var(--gold)"
-        strokeWidth="1.8"
-        strokeDasharray="5 7"
-        initial={{ pathLength: 0 }}
-        animate={draw(0)}
-        transition={{ pathLength: { duration: 1.6, ease: [0.16, 1, 0.3, 1] } }}
-      />
-      <motion.path
-        d="M166 92 C186 78 218 78 234 94"
-        fill="none"
-        stroke="var(--gold)"
-        strokeWidth="1.4"
-        strokeDasharray="4 6"
-        opacity="0.5"
-        initial={{ pathLength: 0 }}
-        animate={draw(0)}
-        transition={{ pathLength: { duration: 1.2, ease: "easeOut", delay: 0.35 } }}
-      />
-      <motion.path
-        d="M160 196 C180 208 220 208 240 194"
-        fill="none"
-        stroke="var(--gold)"
-        strokeWidth="1.4"
-        strokeDasharray="4 6"
-        opacity="0.5"
-        initial={{ pathLength: 0 }}
-        animate={draw(0)}
-        transition={{ pathLength: { duration: 1.2, ease: "easeOut", delay: 0.5 } }}
-      />
+        <Sparkle x={122} y={70} />
+        <Sparkle x={285} y={112} size={10} />
+        <Sparkle x={258} y={215} size={12} />
 
-      {/* Dial ticks */}
-      {ticks.map((_, i) => (
-        <motion.line
-          key={`t-${i}`}
-          x1="200"
-          y1="48"
-          x2="200"
-          y2="58"
+        {/* Sello */}
+        <motion.rect
+          x="286"
+          y="222"
+          width="86"
+          height="30"
+          rx="15"
+          fill="none"
           stroke="var(--gold)"
-          strokeWidth="3"
-          strokeLinecap="round"
-          initial={{ pathLength: 0 }}
-          animate={draw(0)}
-          transition={{ pathLength: { duration: 0.5, ease: "easeOut", delay: 0.1 + i * 0.08 } }}
-          transform={`rotate(${i * 45} 200 140)`}
+          strokeWidth="1.4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.9 }}
+          transition={{ duration: 0.5, delay: 1.35 }}
         />
-      ))}
-
-      {/* Solid ring (briefing) */}
-      <motion.circle
-        cx="200"
-        cy="140"
-        r="58"
-        fill="none"
-        stroke="var(--gold)"
-        strokeWidth="1.8"
-        initial={{ pathLength: 0 }}
-        animate={draw(1)}
-        transition={{ pathLength: { duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.2 } }}
-      />
-
-      {/* Core diamond fill (propuesta) */}
-      <motion.g
-        initial={false}
-        animate={fillOpts(2)}
-        transition={{ duration: 0.7, delay: 0.3 }}
-      >
-        <path
-          d="M200 88 L244 140 L200 192 L156 140 Z"
-          fill="var(--background)"
+        <motion.path
+          d="M299 238 L305 244 L318 231"
+          fill="none"
           stroke="var(--gold)"
           strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ pathLength: { duration: 0.5, ease: "easeOut", delay: 1.5 } }}
         />
-        <circle cx="200" cy="140" r="20" fill="var(--gold)" />
-        <circle cx="200" cy="140" r="20" fill="none" stroke="var(--gold)" strokeWidth="2" opacity="0.4" />
+        <motion.text
+          x="308"
+          y="241"
+          fill="var(--gold)"
+          fontSize="11"
+          letterSpacing="2"
+          fontFamily="var(--font-sans)"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4, delay: 1.6 }}
+        >
+          PROPUESTA
+        </motion.text>
       </motion.g>
 
-      {/* Shine sweep (propuesta) */}
       <motion.defs>
         <motion.linearGradient id="shine" x1="0" y1="0" x2="1" y2="0">
           <stop offset="0" stopColor="var(--gold)" stopOpacity="0" />
@@ -188,61 +318,6 @@ function LogoDemo({ phase }: { phase: number }) {
       <clipPath id="markClip">
         <rect x="126" y="66" width="148" height="148" rx="4" />
       </clipPath>
-      <motion.rect
-        x="-80"
-        y="66"
-        width="70"
-        height="148"
-        fill="url(#shine)"
-        clipPath="url(#markClip)"
-        initial={{ x: -80, opacity: 0 }}
-        animate={phase >= 2 ? { x: 240, opacity: [0, 1, 1, 0] } : { x: -80, opacity: 0 }}
-        transition={{ duration: 1.6, ease: "easeInOut", delay: 0.5 }}
-      />
-
-      <Sparkle x={122} y={70} />
-      <Sparkle x={285} y={112} size={10} />
-      <Sparkle x={258} y={215} size={12} />
-
-      {/* Entregado seal (propuesta) */}
-      <motion.g
-        initial={false}
-        animate={fillOpts(2)}
-        transition={{ duration: 0.5, delay: 0.9 }}
-      >
-        <rect
-          x="286"
-          y="222"
-          width="86"
-          height="30"
-          rx="15"
-          fill="none"
-          stroke="var(--gold)"
-          strokeWidth="1.4"
-          opacity="0.9"
-        />
-        <motion.path
-          d="M299 238 L305 244 L318 231"
-          fill="none"
-          stroke="var(--gold)"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: phase >= 2 ? 1 : 0 }}
-          transition={{ pathLength: { duration: 0.5, ease: "easeOut", delay: 1.1 } }}
-        />
-        <text
-          x="308"
-          y="241"
-          fill="var(--gold)"
-          fontSize="11"
-          letterSpacing="2"
-          fontFamily="var(--font-sans)"
-        >
-          PROPUESTA
-        </text>
-      </motion.g>
     </svg>
   );
 }
