@@ -84,12 +84,12 @@ function LogoDemo({ phase }: { phase: number }) {
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
         >
           <motion.path
-            d="M110 78 H274 Q288 78 288 92 V128 Q288 142 274 142 H196 C168 146 140 156 118 172 C110 160 102 150 96 140 V92 Q96 78 110 78 Z"
+            d="M110 92 Q110 78 124 78 H266 Q282 78 282 92 V136 Q282 150 266 150 H124 Q110 150 110 136 L92 128 Q88 125.5 92 123 L110 116 Z"
             fill="var(--gold)"
             fillOpacity="0.05"
           />
           <motion.path
-            d="M110 78 H274 Q288 78 288 92 V128 Q288 142 274 142 H196 C168 146 140 156 118 172 C110 160 102 150 96 140 V92 Q96 78 110 78 Z"
+            d="M110 92 Q110 78 124 78 H266 Q282 78 282 92 V136 Q282 150 266 150 H124 Q110 150 110 136 L92 128 Q88 125.5 92 123 L110 116 Z"
             fill="var(--surface)"
             stroke="var(--gold)"
             strokeWidth="1.4"
@@ -163,15 +163,7 @@ function LogoDemo({ phase }: { phase: number }) {
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 2.1 }}
         >
           <motion.path
-            d="M268 222 Q276 240 250 222 Z"
-            fill="var(--gold)"
-          />
-          <motion.rect
-            x="184"
-            y="166"
-            width="128"
-            height="56"
-            rx="14"
+            d="M198 166 H298 Q312 166 312 180 V208 L336 232 Q339 235 336 238 L306 222 H198 Q184 222 184 208 V180 Q184 166 198 166 Z"
             fill="var(--gold)"
           />
           <motion.text
