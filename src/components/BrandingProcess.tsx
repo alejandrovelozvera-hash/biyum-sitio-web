@@ -49,142 +49,154 @@ function LogoDemo({ phase }: { phase: number }) {
 
   return (
     <svg viewBox="0 0 400 280" className="w-full h-full" role="img" aria-label="Construcción de un logotipo">
-      {/* ---- FASE 1 · CONTACTO: esbozo a mano ---- */}
+      {/* ---- FASE 1 · CONTACTO: mensaje del cliente ---- */}
       <motion.g
         initial={false}
         animate={exclusive(0)}
         transition={{ duration: 0.6 }}
       >
-        <motion.circle
-          cx="200"
-          cy="140"
-          r="76"
+        {/* Globo de mensaje */}
+        <motion.g
+          initial={{ opacity: 0, scale: 0.85, y: 8 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <motion.rect
+            x="118"
+            y="104"
+            width="164"
+            height="70"
+            rx="18"
+            fill="var(--surface)"
+            stroke="var(--gold)"
+            strokeWidth="1.2"
+          />
+          <motion.path
+            d="M128 173 L150 173 L132 192 Z"
+            fill="var(--surface)"
+            strokeLinejoin="round"
+          />
+        </motion.g>
+        {/* Texto del mensaje */}
+        <motion.text
+          x="200"
+          y="134"
+          textAnchor="middle"
+          fill="var(--gold)"
+          fontSize="14"
+          fontWeight="600"
+          fontFamily="var(--font-sans)"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4, delay: 0.35 }}
+        >
+          Hola,
+        </motion.text>
+        <motion.text
+          x="200"
+          y="156"
+          textAnchor="middle"
+          fill="var(--gold)"
+          fontSize="13"
+          fontFamily="var(--font-sans)"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4, delay: 0.5 }}
+        >
+          necesito un logo
+        </motion.text>
+        {/* Doble check entregado */}
+        <motion.path
+          d="M269 164 L273 168 L280 159"
           fill="none"
           stroke="var(--gold)"
-          strokeWidth="1.8"
-          strokeDasharray="5 7"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           initial={{ pathLength: 0 }}
-          animate={draw(0)}
-          transition={{ pathLength: { duration: 1.6, ease: [0.16, 1, 0.3, 1] } }}
+          animate={{ pathLength: 1 }}
+          transition={{ pathLength: { duration: 0.35, delay: 0.95 } }}
         />
         <motion.path
-          d="M166 92 C186 78 218 78 234 94"
+          d="M255 164 L259 168 L266 159"
           fill="none"
           stroke="var(--gold)"
-          strokeWidth="1.4"
-          strokeDasharray="4 6"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           initial={{ pathLength: 0 }}
-          animate={draw(0)}
-          transition={{ pathLength: { duration: 1.2, ease: "easeOut", delay: 0.35 } }}
-        />
-        <motion.path
-          d="M160 196 C180 208 220 208 240 194"
-          fill="none"
-          stroke="var(--gold)"
-          strokeWidth="1.4"
-          strokeDasharray="4 6"
-          initial={{ pathLength: 0 }}
-          animate={draw(0)}
-          transition={{ pathLength: { duration: 1.2, ease: "easeOut", delay: 0.5 } }}
-        />
-        <motion.ellipse
-          cx="132"
-          cy="176"
-          rx="10"
-          ry="7"
-          fill="none"
-          stroke="var(--gold)"
-          strokeWidth="1.2"
-          strokeDasharray="3 4"
-          opacity="0.5"
-          initial={{ pathLength: 0 }}
-          animate={draw(0)}
-          transition={{ pathLength: { duration: 0.9, ease: "easeOut", delay: 0.7 } }}
-        />
-        <motion.ellipse
-          cx="272"
-          cy="106"
-          rx="8"
-          ry="12"
-          fill="none"
-          stroke="var(--gold)"
-          strokeWidth="1.2"
-          strokeDasharray="3 4"
-          opacity="0.5"
-          initial={{ pathLength: 0 }}
-          animate={draw(0)}
-          transition={{ pathLength: { duration: 0.9, ease: "easeOut", delay: 0.8 } }}
+          animate={{ pathLength: 1 }}
+          transition={{ pathLength: { duration: 0.35, delay: 1.1 } }}
         />
       </motion.g>
 
-      {/* ---- FASE 2 · BRIEFING: estructura y guías ---- */}
+      {/* ---- FASE 2 · BRIEFING: preguntas clave ---- */}
       <motion.g
         initial={false}
         animate={exclusive(1)}
         transition={{ duration: 0.6 }}
       >
-        {/* Reticula minima de puntos */}
-        {[120, 160, 200, 240, 280].map((x) =>
-          [72, 106, 140, 174, 208].map((y) => (
+        <motion.g
+          initial={{ opacity: 0, scale: 0.92 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <motion.rect
+            x="104"
+            y="78"
+            width="192"
+            height="124"
+            rx="16"
+            fill="var(--surface)"
+            fillOpacity="0.4"
+            stroke="var(--gold)"
+            strokeWidth="1"
+          />
+        </motion.g>
+        {/* Items del briefing */}
+        {[
+          { y: 113, label: "Objetivos del proyecto" },
+          { y: 145, label: "Paleta y estilo" },
+          { y: 177, label: "Público y referencias" },
+        ].map((row, i) => (
+          <motion.g
+            key={row.label}
+            initial={{ opacity: 0, x: -6 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.35, ease: "easeOut", delay: 0.25 + i * 0.45 }}
+          >
             <motion.circle
-              key={`p-${x}-${y}`}
-              cx={x}
-              cy={y}
-              r="2"
-              fill="var(--gold)"
+              cx="130"
+              cy={row.y}
+              r="9"
+              fill="none"
+              stroke="var(--gold)"
+              strokeWidth="1.2"
               initial={false}
-              animate={{ opacity: 0.22 }}
-              transition={{ duration: 0.4, delay: 0.1 + (x + y) / 400 }}
+              animate={{ opacity: 0.9 }}
             />
-          ))
-        )}
-        {/* Markers de guia */}
-        <motion.circle
-          cx="200"
-          cy="72"
-          r="3"
-          fill="none"
-          stroke="var(--gold)"
-          strokeWidth="1.2"
-          initial={false}
-          animate={{ opacity: 0.8 }}
-          transition={{ duration: 0.4, delay: 0.3 }}
-        />
-        <motion.line
-          x1="160"
-          y1="140"
-          x2="240"
-          y2="140"
-          stroke="var(--gold)"
-          strokeWidth="0.8"
-          initial={{ pathLength: 0 }}
-          animate={draw(1)}
-          transition={{ pathLength: { duration: 0.7, ease: "easeOut", delay: 0.2 } }}
-        />
-        {/* Anillo base */}
-        <motion.circle
-          cx="200"
-          cy="140"
-          r="58"
-          fill="none"
-          stroke="var(--gold)"
-          strokeWidth="2.2"
-          initial={{ pathLength: 0 }}
-          animate={draw(1)}
-          transition={{ pathLength: { duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.15 } }}
-        />
-        {/* Proporcion dorada */}
-        <motion.circle
-          cx="200"
-          cy="140"
-          r="34"
-          fill="none"
-          stroke="var(--gold)"
-          strokeWidth="1"
-          initial={{ pathLength: 0 }}
-          animate={draw(1)}
-          transition={{ pathLength: { duration: 0.8, ease: "easeOut", delay: 0.5 } }}
-        />
+            <motion.path
+              d={`M125.5 ${row.y} L129.5 ${row.y + 4.5} L135 ${row.y - 3}`}
+              fill="none"
+              stroke="var(--gold)"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: 1 }}
+              transition={{ pathLength: { duration: 0.3, ease: "easeOut", delay: 0.4 + i * 0.45 } }}
+            />
+            <text
+              x="148"
+              y={row.y + 4}
+              fill="var(--gold)"
+              fontSize="12.5"
+              fontFamily="var(--font-sans)"
+            >
+              {row.label}
+            </text>
+          </motion.g>
+        ))}
       </motion.g>
 
       {/* ---- FASE 3 · PROPUESTA: logo minimalista final ---- */}
@@ -228,32 +240,6 @@ function LogoDemo({ phase }: { phase: number }) {
           transition={{ duration: 0.5, delay: 1.05, ease: [0.16, 1, 0.3, 1] }}
           style={{ transformOrigin: "200px 140px" }}
         />
-        {/* Wordmark */}
-        <motion.g
-          initial={false}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 1.4 }}
-        >
-          <line x1="140" y1="222" x2="260" y2="222" stroke="var(--gold)" strokeWidth="2" strokeLinecap="round" />
-        </motion.g>
-        <motion.g
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 1.6, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <text
-            x="200"
-            y="216"
-            textAnchor="middle"
-            fill="var(--gold)"
-            fontSize="15"
-            letterSpacing="7"
-            fontFamily="var(--font-sans)"
-            fontWeight="700"
-          >
-            BIYUM
-          </text>
-        </motion.g>
 
         {/* Shine sweep */}
         <motion.rect
@@ -273,43 +259,62 @@ function LogoDemo({ phase }: { phase: number }) {
         <Sparkle x={258} y={215} size={12} />
 
         {/* Sello */}
-        <motion.rect
-          x="286"
-          y="222"
-          width="86"
-          height="30"
-          rx="15"
-          fill="none"
-          stroke="var(--gold)"
-          strokeWidth="1.4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.9 }}
-          transition={{ duration: 0.5, delay: 1.35 }}
-        />
-        <motion.path
-          d="M299 238 L305 244 L318 231"
-          fill="none"
-          stroke="var(--gold)"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ pathLength: { duration: 0.5, ease: "easeOut", delay: 1.5 } }}
-        />
-        <motion.text
-          x="308"
-          y="241"
-          fill="var(--gold)"
-          fontSize="11"
-          letterSpacing="2"
-          fontFamily="var(--font-sans)"
-          initial={{ opacity: 0 }}
+        <motion.g
+          initial={false}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.4, delay: 1.6 }}
+          transition={{ duration: 0.5, delay: 1.35 }}
         >
-          PROPUESTA
-        </motion.text>
+          <motion.rect
+            x="282"
+            y="222"
+            width="112"
+            height="30"
+            rx="15"
+            fill="var(--gold)"
+            fillOpacity="0.08"
+            stroke="var(--gold)"
+            strokeWidth="1.4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.9 }}
+            transition={{ duration: 0.5, delay: 1.35 }}
+          />
+          <motion.circle
+            cx="300"
+            cy="237"
+            r="7"
+            fill="var(--gold)"
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.35, delay: 1.5, ease: [0.16, 1, 0.3, 1] }}
+            style={{ transformOrigin: "300px 237px" }}
+          />
+          <motion.path
+            d="M296.5 237.5 L299.5 240.5 L304 234"
+            fill="none"
+            stroke="var(--on-gold)"
+            strokeWidth="1.6"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1 }}
+            transition={{ pathLength: { duration: 0.4, ease: "easeOut", delay: 1.55 } }}
+          />
+          <motion.text
+            x="336"
+            y="242"
+            textAnchor="middle"
+            fill="var(--gold)"
+            fontSize="10.5"
+            letterSpacing="1.4"
+            fontFamily="var(--font-sans)"
+            fontWeight="600"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4, delay: 1.6 }}
+          >
+            PROPUESTA
+          </motion.text>
+        </motion.g>
       </motion.g>
 
       <motion.defs>
