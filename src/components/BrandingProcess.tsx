@@ -69,17 +69,12 @@ function LogoDemo({ phase }: { phase: number }) {
             stroke="var(--gold)"
             strokeWidth="1.4"
           />
-          <motion.text
-            x="58"
-            y="118"
-            textAnchor="middle"
+          <motion.g
+            transform="translate(43 92) scale(1.25)"
             fill="var(--gold)"
-            fontSize="15"
-            fontWeight="700"
-            fontFamily="var(--font-sans)"
           >
-            B
-          </motion.text>
+            <motion.path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+          </motion.g>
         </motion.g>
 
         {/* Burbuja del cliente: cuerpo + pico integrado (estilo WhatsApp) */}
@@ -193,6 +188,28 @@ function LogoDemo({ phase }: { phase: number }) {
           >
             Pensaré en tu logo
           </motion.text>
+        </motion.g>
+
+        {/* Avatar de la agencia */}
+        <motion.g
+          initial={{ opacity: 0, scale: 0.7 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1], delay: 2.1 }}
+        >
+          <motion.circle
+            cx="342"
+            cy="194"
+            r="15"
+            fill="var(--surface)"
+            stroke="var(--gold)"
+            strokeWidth="1.4"
+          />
+          <motion.g
+            transform="translate(327 174) scale(1.25)"
+            fill="var(--gold)"
+          >
+            <motion.path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+          </motion.g>
         </motion.g>
       </motion.g>
 
