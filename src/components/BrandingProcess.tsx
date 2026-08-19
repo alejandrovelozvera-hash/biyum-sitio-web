@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion, AnimatePresence } from "motion/react";
-import { ChevronRight, Chat, PenTool, Calendar } from "./Icons";
+import { ChevronRight, Chat, FileText, Calendar } from "./Icons";
 
 const PHASE_MS = 4600;
 
@@ -16,7 +16,7 @@ const phases = [
   },
   {
     index: 1,
-    icon: PenTool,
+    icon: FileText,
     step: "02",
     title: "Briefing",
     caption: "Te enviamos una breve encuesta para conocer tu marca, tu público y tus objetivos. Con eso empezamos a bocetar.",
@@ -82,27 +82,24 @@ function LogoDemo({ phase }: { phase: number }) {
           </motion.text>
         </motion.g>
 
-        {/* Burbuja del cliente (cuerpo + pico en un solo trazo) */}
+        {/* Burbuja del cliente: cuerpo + pico integrado (estilo WhatsApp) */}
         <motion.g
           initial={{ opacity: 0, scale: 0.85, x: -8 }}
           animate={{ opacity: 1, scale: 1, x: 0 }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
         >
           <motion.path
-            d="M110 78 H274 Q288 78 288 92 V128 Q288 142 274 142 H132 Q104 164 100 142 H110 Q96 142 96 128 V92 Q96 78 110 78 Z"
+            d="M110 78 H274 Q288 78 288 92 V128 Q288 142 274 142 H196 C168 146 140 156 118 172 C110 160 102 150 96 140 V92 Q96 78 110 78 Z"
+            fill="var(--gold)"
+            fillOpacity="0.05"
+          />
+          <motion.path
+            d="M110 78 H274 Q288 78 288 92 V128 Q288 142 274 142 H196 C168 146 140 156 118 172 C110 160 102 150 96 140 V92 Q96 78 110 78 Z"
             fill="var(--surface)"
             stroke="var(--gold)"
             strokeWidth="1.4"
             strokeLinejoin="round"
-          />
-          <motion.rect
-            x="98"
-            y="80"
-            width="188"
-            height="60"
-            rx="12"
-            fill="var(--gold)"
-            fillOpacity="0.05"
+            strokeLinecap="round"
           />
         </motion.g>
 
@@ -499,7 +496,7 @@ export default function BrandingProcess() {
               <span className="w-8 h-px bg-gradient-to-r from-gold/60 to-transparent" />
               <p className="text-muted text-[10px] tracking-[0.2em] uppercase">¿Cómo trabajamos?</p>
             </div>
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gold tracking-[-0.04em] leading-[0.92]">
+            <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gold tracking-[-0.04em] leading-[0.92] pb-[0.18em] mb-[-0.18em]">
               Tu marca, paso a paso
             </h2>
           </motion.div>
