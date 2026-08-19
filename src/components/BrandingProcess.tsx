@@ -55,18 +55,6 @@ function LogoDemo({ phase }: { phase: number }) {
         animate={exclusive(0)}
         transition={{ duration: 0.6 }}
       >
-        {/* Sombra suave de la conversación */}
-        <motion.ellipse
-          cx="193"
-          cy="152"
-          rx="112"
-          ry="8"
-          fill="var(--gold)"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.08 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        />
-
         {/* Avatar del cliente */}
         <motion.g
           initial={{ opacity: 0, scale: 0.7 }}
@@ -94,35 +82,25 @@ function LogoDemo({ phase }: { phase: number }) {
           </motion.text>
         </motion.g>
 
-        {/* Burbuja del cliente (tinte dorado) */}
+        {/* Burbuja del cliente (cuerpo + pico en un solo trazo) */}
         <motion.g
           initial={{ opacity: 0, scale: 0.85, x: -8 }}
           animate={{ opacity: 1, scale: 1, x: 0 }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
         >
-          <motion.rect
-            x="96"
-            y="78"
-            width="192"
-            height="64"
-            rx="14"
-            fill="var(--surface)"
-            stroke="var(--gold)"
-            strokeWidth="1.4"
-          />
           <motion.path
-            d="M112 142 L100 160 L96 142 Z"
+            d="M110 78 H274 Q288 78 288 92 V128 Q288 142 274 142 H132 Q104 164 100 142 H110 Q96 142 96 128 V92 Q96 78 110 78 Z"
             fill="var(--surface)"
             stroke="var(--gold)"
             strokeWidth="1.4"
             strokeLinejoin="round"
           />
           <motion.rect
-            x="97.5"
-            y="79.5"
-            width="189"
-            height="61"
-            rx="12.5"
+            x="98"
+            y="80"
+            width="188"
+            height="60"
+            rx="12"
             fill="var(--gold)"
             fillOpacity="0.05"
           />
@@ -149,11 +127,11 @@ function LogoDemo({ phase }: { phase: number }) {
 
         {/* Texto del cliente */}
         <motion.text
-          x="114"
-          y="120"
+          x="112"
+          y="119"
           textAnchor="start"
           fill="var(--gold)"
-          fontSize="14.5"
+          fontSize="13.5"
           fontWeight="600"
           fontFamily="var(--font-sans)"
           initial={{ opacity: 0 }}
@@ -164,10 +142,10 @@ function LogoDemo({ phase }: { phase: number }) {
         </motion.text>
         {/* Doble check entregado */}
         <motion.path
-          d="M258 134 L262 138 L269 129"
+          d="M256 131 L260 135 L267 127"
           fill="none"
           stroke="var(--gold)"
-          strokeWidth="1.6"
+          strokeWidth="1.5"
           strokeLinecap="round"
           strokeLinejoin="round"
           initial={{ pathLength: 0 }}
@@ -175,10 +153,10 @@ function LogoDemo({ phase }: { phase: number }) {
           transition={{ pathLength: { duration: 0.35, delay: 1.7 } }}
         />
         <motion.path
-          d="M244 134 L248 138 L255 129"
+          d="M241 131 L245 135 L252 127"
           fill="none"
           stroke="var(--gold)"
-          strokeWidth="1.6"
+          strokeWidth="1.5"
           strokeLinecap="round"
           strokeLinejoin="round"
           initial={{ pathLength: 0 }}
@@ -193,7 +171,7 @@ function LogoDemo({ phase }: { phase: number }) {
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 2.1 }}
         >
           <motion.path
-            d="M268 222 L278 242 L250 222 Z"
+            d="M268 222 Q276 240 250 222 Z"
             fill="var(--gold)"
           />
           <motion.rect
