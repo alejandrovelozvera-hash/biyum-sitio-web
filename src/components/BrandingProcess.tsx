@@ -62,16 +62,17 @@ function LogoDemo({ phase }: { phase: number }) {
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         >
           <motion.path
-            d="M128 174 L150 174 L132 191 Z"
+            d="M104 178 L126 178 L108 195 Z"
             fill="var(--surface)"
-            strokeLinejoin="round"
+            stroke="var(--gold)"
+            strokeWidth="1.2"
           />
           <motion.rect
-            x="118"
-            y="104"
-            width="164"
-            height="70"
-            rx="18"
+            x="90"
+            y="92"
+            width="220"
+            height="86"
+            rx="22"
             fill="var(--surface)"
             stroke="var(--gold)"
             strokeWidth="1.2"
@@ -80,10 +81,10 @@ function LogoDemo({ phase }: { phase: number }) {
         {/* Texto del mensaje */}
         <motion.text
           x="200"
-          y="134"
+          y="128"
           textAnchor="middle"
           fill="var(--gold)"
-          fontSize="14"
+          fontSize="16"
           fontWeight="600"
           fontFamily="var(--font-sans)"
           initial={{ opacity: 0 }}
@@ -94,10 +95,10 @@ function LogoDemo({ phase }: { phase: number }) {
         </motion.text>
         <motion.text
           x="200"
-          y="156"
+          y="154"
           textAnchor="middle"
           fill="var(--gold)"
-          fontSize="13"
+          fontSize="15"
           fontFamily="var(--font-sans)"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -107,7 +108,7 @@ function LogoDemo({ phase }: { phase: number }) {
         </motion.text>
         {/* Doble check entregado */}
         <motion.path
-          d="M266 161 L270 165 L277 156"
+          d="M280 165 L284 169 L291 160"
           fill="none"
           stroke="var(--gold)"
           strokeWidth="1.6"
@@ -118,7 +119,7 @@ function LogoDemo({ phase }: { phase: number }) {
           transition={{ pathLength: { duration: 0.35, delay: 0.95 } }}
         />
         <motion.path
-          d="M252 161 L256 165 L263 156"
+          d="M266 165 L270 169 L277 160"
           fill="none"
           stroke="var(--gold)"
           strokeWidth="1.6"
@@ -262,9 +263,9 @@ function LogoDemo({ phase }: { phase: number }) {
         animate={exclusive(2)}
         transition={{ duration: 0.6 }}
       >
-        {/* Reticula de construccion con puntos */}
-        {[132, 164, 200, 236, 268].map((x) =>
-          [72, 104, 140, 176, 208].map((y) => (
+        {/* Reticula de construccion con puntos (unida al diametro del anillo) */}
+        {[142, 171, 200, 229, 258].map((x) =>
+          [82, 111, 140, 169, 198].map((y) => (
             <motion.circle
               key={`g-${x}-${y}`}
               cx={x}
@@ -337,7 +338,7 @@ function LogoDemo({ phase }: { phase: number }) {
           transition={{ duration: 0.5, delay: 1.35 }}
         >
           <motion.rect
-            x="250"
+            x="128"
             y="222"
             width="144"
             height="30"
@@ -351,17 +352,17 @@ function LogoDemo({ phase }: { phase: number }) {
             transition={{ duration: 0.5, delay: 1.35 }}
           />
           <motion.circle
-            cx="268"
+            cx="146"
             cy="237"
             r="7"
             fill="var(--gold)"
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.35, delay: 1.5, ease: [0.16, 1, 0.3, 1] }}
-            style={{ transformOrigin: "268px 237px" }}
+            style={{ transformOrigin: "146px 237px" }}
           />
           <motion.path
-            d="M265 237.5 L267.5 240 L272.5 234.5"
+            d="M143 237.5 L145.5 240 L150.5 234.5"
             fill="none"
             stroke="var(--on-gold)"
             strokeWidth="1.6"
@@ -372,7 +373,7 @@ function LogoDemo({ phase }: { phase: number }) {
             transition={{ pathLength: { duration: 0.4, ease: "easeOut", delay: 1.55 } }}
           />
           <motion.text
-            x="320"
+            x="212"
             y="242"
             textAnchor="middle"
             fill="var(--gold)"
