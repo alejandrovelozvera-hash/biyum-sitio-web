@@ -44,7 +44,6 @@ function Sparkle({ x, y, size = 14 }: { x: number; y: number; size?: number }) {
 }
 
 function LogoDemo({ phase }: { phase: number }) {
-  const ticks = Array.from({ length: 8 });
   const draw = (t: number) => ({ pathLength: phase >= t ? 1 : 0 });
   const exclusive = (p: number) => ({ opacity: phase === p ? 1 : 0 });
 
@@ -124,62 +123,67 @@ function LogoDemo({ phase }: { phase: number }) {
         animate={exclusive(1)}
         transition={{ duration: 0.6 }}
       >
-        <motion.line x1="200" y1="-10" x2="200" y2="290" stroke="var(--gold)" strokeWidth="0.6" initial={false} animate={{ opacity: 0.18 }} />
-        <motion.line x1="-10" y1="140" x2="410" y2="140" stroke="var(--gold)" strokeWidth="0.6" initial={false} animate={{ opacity: 0.18 }} />
-        <motion.rect
-          x="131"
-          y="71"
-          width="138"
-          height="138"
+        {/* Reticula minima de puntos */}
+        {[120, 160, 200, 240, 280].map((x) =>
+          [72, 106, 140, 174, 208].map((y) => (
+            <motion.circle
+              key={`p-${x}-${y}`}
+              cx={x}
+              cy={y}
+              r="2"
+              fill="var(--gold)"
+              initial={false}
+              animate={{ opacity: 0.22 }}
+              transition={{ duration: 0.4, delay: 0.1 + (x + y) / 400 }}
+            />
+          ))
+        )}
+        {/* Markers de guia */}
+        <motion.circle
+          cx="200"
+          cy="72"
+          r="3"
           fill="none"
           stroke="var(--gold)"
-          strokeWidth="0.8"
+          strokeWidth="1.2"
           initial={false}
-          animate={{ opacity: 0.22 }}
+          animate={{ opacity: 0.8 }}
+          transition={{ duration: 0.4, delay: 0.3 }}
         />
-        <motion.circle cx="200" cy="140" r="97" fill="none" stroke="var(--gold)" strokeWidth="0.8" initial={false} animate={{ opacity: 0.12 }} />
-        <motion.circle cx="200" cy="140" r="49" fill="none" stroke="var(--gold)" strokeWidth="0.8" initial={false} animate={{ opacity: 0.16 }} />
-        <motion.path d="M140 120 L200 40 L260 120 L200 200 Z" fill="none" stroke="var(--gold)" strokeWidth="0.8" initial={false} animate={{ opacity: 0.2 }} />
-        {[[143, 83], [257, 83], [143, 197], [257, 197]].map(([cx, cy], i) => (
-          <motion.circle
-            key={`m-${i}`}
-            cx={cx}
-            cy={cy}
-            r="3"
-            fill="none"
-            stroke="var(--gold)"
-            strokeWidth="1.2"
-            initial={false}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.4, delay: 0.4 + i * 0.1 }}
-          />
-        ))}
-        {ticks.map((_, i) => (
-          <motion.line
-            key={`t-${i}`}
-            x1="200"
-            y1="48"
-            x2="200"
-            y2="58"
-            stroke="var(--gold)"
-            strokeWidth="3"
-            strokeLinecap="round"
-            initial={{ pathLength: 0 }}
-            animate={draw(1)}
-            transition={{ pathLength: { duration: 0.5, ease: "easeOut", delay: 0.1 + i * 0.08 } }}
-            transform={`rotate(${i * 45} 200 140)`}
-          />
-        ))}
+        <motion.line
+          x1="160"
+          y1="140"
+          x2="240"
+          y2="140"
+          stroke="var(--gold)"
+          strokeWidth="0.8"
+          initial={{ pathLength: 0 }}
+          animate={draw(1)}
+          transition={{ pathLength: { duration: 0.7, ease: "easeOut", delay: 0.2 } }}
+        />
+        {/* Anillo base */}
         <motion.circle
           cx="200"
           cy="140"
           r="58"
           fill="none"
           stroke="var(--gold)"
-          strokeWidth="1.8"
+          strokeWidth="2.2"
           initial={{ pathLength: 0 }}
           animate={draw(1)}
-          transition={{ pathLength: { duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.2 } }}
+          transition={{ pathLength: { duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.15 } }}
+        />
+        {/* Proporcion dorada */}
+        <motion.circle
+          cx="200"
+          cy="140"
+          r="34"
+          fill="none"
+          stroke="var(--gold)"
+          strokeWidth="1"
+          initial={{ pathLength: 0 }}
+          animate={draw(1)}
+          transition={{ pathLength: { duration: 0.8, ease: "easeOut", delay: 0.5 } }}
         />
       </motion.g>
 
