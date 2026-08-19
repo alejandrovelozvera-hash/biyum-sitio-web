@@ -49,66 +49,122 @@ function LogoDemo({ phase }: { phase: number }) {
 
   return (
     <svg viewBox="0 0 400 280" className="w-full h-full" role="img" aria-label="Construcción de un logotipo">
-      {/* ---- FASE 1 · CONTACTO: mensaje del cliente ---- */}
+      {/* ---- FASE 1 · CONTACTO: conversación de chat ---- */}
       <motion.g
         initial={false}
         animate={exclusive(0)}
         transition={{ duration: 0.6 }}
       >
-        {/* Globo de mensaje */}
+        {/* Sombra suave de la conversación */}
+        <motion.ellipse
+          cx="193"
+          cy="152"
+          rx="112"
+          ry="8"
+          fill="var(--gold)"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.08 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        />
+
+        {/* Avatar del cliente */}
         <motion.g
-          initial={{ opacity: 0, scale: 0.85, y: 8 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          initial={{ opacity: 0, scale: 0.7 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
         >
-          <motion.path
-            d="M104 178 L126 178 L108 195 Z"
+          <motion.circle
+            cx="58"
+            cy="112"
+            r="15"
             fill="var(--surface)"
             stroke="var(--gold)"
-            strokeWidth="1.2"
+            strokeWidth="1.4"
+          />
+          <motion.text
+            x="58"
+            y="118"
+            textAnchor="middle"
+            fill="var(--gold)"
+            fontSize="15"
+            fontWeight="700"
+            fontFamily="var(--font-sans)"
+          >
+            B
+          </motion.text>
+        </motion.g>
+
+        {/* Burbuja del cliente (tinte dorado) */}
+        <motion.g
+          initial={{ opacity: 0, scale: 0.85, x: -8 }}
+          animate={{ opacity: 1, scale: 1, x: 0 }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+        >
+          <motion.rect
+            x="96"
+            y="78"
+            width="192"
+            height="64"
+            rx="14"
+            fill="var(--surface)"
+            stroke="var(--gold)"
+            strokeWidth="1.4"
+          />
+          <motion.path
+            d="M112 142 L100 160 L96 142 Z"
+            fill="var(--surface)"
+            stroke="var(--gold)"
+            strokeWidth="1.4"
+            strokeLinejoin="round"
           />
           <motion.rect
-            x="90"
-            y="92"
-            width="220"
-            height="86"
-            rx="22"
-            fill="var(--surface)"
-            stroke="var(--gold)"
-            strokeWidth="1.2"
+            x="97.5"
+            y="79.5"
+            width="189"
+            height="61"
+            rx="12.5"
+            fill="var(--gold)"
+            fillOpacity="0.05"
           />
         </motion.g>
-        {/* Texto del mensaje */}
+
+        {/* Indicador de escritura */}
+        <motion.g
+          initial={{ opacity: 0 }}
+          animate={{ opacity: [0, 1, 1, 0] }}
+          transition={{ duration: 0.9, times: [0, 0.15, 0.7, 1], delay: 0.35 }}
+        >
+          {[0, 1, 2].map((i) => (
+            <motion.circle
+              key={`typing-${i}`}
+              cx={126 + i * 14}
+              cy="122"
+              r="3"
+              fill="var(--gold)"
+              animate={{ opacity: [0.3, 1, 0.3] }}
+              transition={{ duration: 0.7, repeat: Infinity, delay: i * 0.15 }}
+            />
+          ))}
+        </motion.g>
+
+        {/* Texto del cliente */}
         <motion.text
-          x="200"
-          y="128"
-          textAnchor="middle"
+          x="114"
+          y="120"
+          textAnchor="start"
           fill="var(--gold)"
-          fontSize="16"
+          fontSize="14.5"
           fontWeight="600"
           fontFamily="var(--font-sans)"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.4, delay: 0.35 }}
+          transition={{ duration: 0.4, delay: 1.3 }}
         >
-          Hola,
-        </motion.text>
-        <motion.text
-          x="200"
-          y="154"
-          textAnchor="middle"
-          fill="var(--gold)"
-          fontSize="15"
-          fontFamily="var(--font-sans)"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.4, delay: 0.5 }}
-        >
-          necesito un logo
+          Hola, necesito un logo
         </motion.text>
         {/* Doble check entregado */}
         <motion.path
-          d="M280 165 L284 169 L291 160"
+          d="M258 134 L262 138 L269 129"
           fill="none"
           stroke="var(--gold)"
           strokeWidth="1.6"
@@ -116,10 +172,10 @@ function LogoDemo({ phase }: { phase: number }) {
           strokeLinejoin="round"
           initial={{ pathLength: 0 }}
           animate={{ pathLength: 1 }}
-          transition={{ pathLength: { duration: 0.35, delay: 0.95 } }}
+          transition={{ pathLength: { duration: 0.35, delay: 1.7 } }}
         />
         <motion.path
-          d="M266 165 L270 169 L277 160"
+          d="M244 134 L248 138 L255 129"
           fill="none"
           stroke="var(--gold)"
           strokeWidth="1.6"
@@ -127,8 +183,42 @@ function LogoDemo({ phase }: { phase: number }) {
           strokeLinejoin="round"
           initial={{ pathLength: 0 }}
           animate={{ pathLength: 1 }}
-          transition={{ pathLength: { duration: 0.35, delay: 1.1 } }}
+          transition={{ pathLength: { duration: 0.35, delay: 1.85 } }}
         />
+
+        {/* Respuesta de la agencia (dorada) */}
+        <motion.g
+          initial={{ opacity: 0, scale: 0.85, x: 8 }}
+          animate={{ opacity: 1, scale: 1, x: 0 }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 2.1 }}
+        >
+          <motion.path
+            d="M268 222 L278 242 L250 222 Z"
+            fill="var(--gold)"
+          />
+          <motion.rect
+            x="184"
+            y="166"
+            width="128"
+            height="56"
+            rx="14"
+            fill="var(--gold)"
+          />
+          <motion.text
+            x="248"
+            y="200"
+            textAnchor="middle"
+            fill="var(--on-gold)"
+            fontSize="12.5"
+            fontWeight="600"
+            fontFamily="var(--font-sans)"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4, delay: 2.55 }}
+          >
+            Pensaré en tu logo
+          </motion.text>
+        </motion.g>
       </motion.g>
 
       {/* ---- FASE 2 · BRIEFING: documento llenándose ---- */}
