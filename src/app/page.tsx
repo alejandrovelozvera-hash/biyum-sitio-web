@@ -2,6 +2,7 @@ import { getProjects, getHeroSlides } from "@/lib/wp-storage";
 import { demoProjects, demoHeroSlides, demoVideos } from "@/lib/demo-data";
 import Header from "@/components/Header";
 import HeroSlider from "@/components/HeroSlider";
+import BrandingProcess from "@/components/BrandingProcess";
 import PortfolioGrid from "@/components/PortfolioGrid";
 import VideoSection from "@/components/VideoSection";
 import ServicesSection from "@/components/ServicesSection";
@@ -38,6 +39,8 @@ export default async function HomePage() {
         <Cursor />
         <Header />
         <HeroSlider slides={heroSlides} />
+        <Divider />
+        <BrandingProcess />
         <Divider />
         <PortfolioGrid projects={projects} />
         <Divider />
