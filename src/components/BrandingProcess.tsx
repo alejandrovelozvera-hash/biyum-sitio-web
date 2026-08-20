@@ -70,7 +70,7 @@ function LogoDemo({ phase }: { phase: number }) {
             strokeWidth="1.4"
           />
           <motion.g
-            transform="translate(43 92) scale(1.25)"
+            transform="translate(43 97) scale(1.25)"
             fill="var(--gold)"
           >
             <motion.path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
@@ -85,13 +85,13 @@ function LogoDemo({ phase }: { phase: number }) {
         >
           <motion.path
             d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"
-            transform="translate(93 72.5) scale(8.5 3.75)"
+            transform="translate(77 79.75) scale(9.5 4.125)"
             fill="var(--gold)"
             fillOpacity="0.05"
           />
           <motion.path
             d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"
-            transform="translate(93 72.5) scale(8.5 3.75)"
+            transform="translate(77 79.75) scale(9.5 4.125)"
             fill="var(--surface)"
             stroke="var(--gold)"
             strokeWidth="1.4"
@@ -167,7 +167,7 @@ function LogoDemo({ phase }: { phase: number }) {
         >
           <motion.path
             d="M4 2H20c1.1 0 2 .9 2 2v18l-4-4H4c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2z"
-            transform="translate(171.2 160) scale(6.4 3)"
+            transform="translate(161.6 164) scale(7.2 3)"
             fill="var(--gold)"
           />
           <motion.text
@@ -201,7 +201,7 @@ function LogoDemo({ phase }: { phase: number }) {
             strokeWidth="1.4"
           />
           <motion.g
-            transform="translate(327 174) scale(1.25)"
+            transform="translate(327 179) scale(1.25)"
             fill="var(--gold)"
           >
             <motion.path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
