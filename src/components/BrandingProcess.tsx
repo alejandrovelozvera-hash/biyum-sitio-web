@@ -163,7 +163,7 @@ function LogoDemo({ phase }: { phase: number }) {
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 2.1 }}
         >
           <motion.path
-            d="M188 170 H306 Q320 170 320 184 V189 L334 192 Q337 194 334 196 L320 201 V206 Q320 220 306 220 H188 Q174 220 174 206 V184 Q174 170 188 170 Z"
+            d="M188 170 H306 Q320 170 320 184 V189 L331 192 Q334 194 331 196 L320 201 V206 Q320 220 306 220 H188 Q174 220 174 206 V184 Q174 170 188 170 Z"
             fill="var(--gold)"
           />
           <motion.text
@@ -189,7 +189,7 @@ function LogoDemo({ phase }: { phase: number }) {
           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1], delay: 2.1 }}
         >
           <motion.circle
-            cx="342"
+            cx="354"
             cy="194"
             r="15"
             fill="var(--surface)"
@@ -197,7 +197,7 @@ function LogoDemo({ phase }: { phase: number }) {
             strokeWidth="1.4"
           />
           <motion.g
-            transform="translate(329.4 181.4) scale(1.05)"
+            transform="translate(341.4 181.4) scale(1.05)"
             fill="var(--gold)"
           >
             <motion.path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
