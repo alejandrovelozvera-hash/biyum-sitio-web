@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion, useReducedMotion, AnimatePresence } from "motion/react";
+import { useEffect, useRef, useState } from "react";
+import { motion, useReducedMotion, useInView, AnimatePresence } from "motion/react";
 import { ChevronRight, Chat, FileText, Calendar } from "./Icons";
 
-const PHASE_MS = 4600;
+const DURATION_MS = [4600, 3400, 3800];
 
 const phases = [
   {
@@ -30,20 +30,20 @@ const phases = [
   },
 ];
 
-function Sparkle({ x, y, size = 14 }: { x: number; y: number; size?: number }) {
+function Sparkle({ x, y, size = 14, anim = true }: { x: number; y: number; size?: number; anim?: boolean }) {
   return (
     <motion.path
       d="M0 -12 C3 -3 3 -3 12 0 C3 3 3 3 0 12 C-3 3 -3 3 -12 0 C-3 -3 -3 -3 0 -12 Z"
       transform={`translate(${x} ${y}) scale(${size / 12})`}
       fill="var(--gold)"
-      initial={{ opacity: 0, scale: 0 }}
-      animate={{ opacity: [0, 1, 1, 0], scale: [0, 1.4, 1.2, 0] }}
-      transition={{ duration: 2.4, repeat: Infinity, repeatDelay: 1.2, times: [0, 0.2, 0.7, 1] }}
+      initial={anim ? { opacity: 0, scale: 0 } : false}
+      animate={anim ? { opacity: [0, 1, 1, 0], scale: [0, 1.4, 1.2, 0] } : undefined}
+      transition={anim ? { duration: 2.4, repeat: Infinity, repeatDelay: 1.2, times: [0, 0.2, 0.7, 1] } : undefined}
     />
   );
 }
 
-function LogoDemo({ phase }: { phase: number }) {
+function LogoDemo({ phase, anim }: { phase: number; anim: boolean }) {
   const draw = (t: number) => ({ pathLength: phase >= t ? 1 : 0 });
   const exclusive = (p: number) => ({ opacity: phase === p ? 1 : 0 });
 
@@ -102,7 +102,7 @@ function LogoDemo({ phase }: { phase: number }) {
         <motion.g
           initial={{ opacity: 0 }}
           animate={{ opacity: [0, 1, 1, 0] }}
-          transition={{ duration: 0.9, times: [0, 0.15, 0.7, 1], delay: 0.35 }}
+          transition={{ duration: 0.75, times: [0, 0.13, 0.55, 1], delay: 0.35 }}
         >
           {[0, 1, 2].map((i) => (
             <motion.circle
@@ -117,7 +117,7 @@ function LogoDemo({ phase }: { phase: number }) {
           ))}
         </motion.g>
 
-        {/* Texto del cliente */}
+        {/* Texto del cliente (efecto máquina de escribir) */}
         <motion.text
           x="112"
           y="119"
@@ -126,41 +126,51 @@ function LogoDemo({ phase }: { phase: number }) {
           fontSize="13.5"
           fontWeight="600"
           fontFamily="var(--font-sans)"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.4, delay: 1.3 }}
         >
-          Hola, necesito un logo
+          {"Hola, necesito un logo".split("").map((ch, i) => (
+            <motion.tspan
+              key={i}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.05, delay: 1.05 + i * 0.04 }}
+            >
+              {ch}
+            </motion.tspan>
+          ))}
         </motion.text>
-        {/* Doble check entregado */}
-        <motion.path
-          d="M256 131 L260 135 L267 127"
-          fill="none"
-          stroke="var(--gold)"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ pathLength: { duration: 0.35, delay: 1.7 } }}
-        />
-        <motion.path
-          d="M241 131 L245 135 L252 127"
-          fill="none"
-          stroke="var(--gold)"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ pathLength: { duration: 0.35, delay: 1.85 } }}
-        />
+        {/* Palomitas de lectura: enviado → entregado → leído */}
+        <motion.g
+          initial={{ stroke: "var(--gold)" }}
+          animate={{ stroke: "var(--gold-light)" }}
+          transition={{ duration: 0.5, delay: 2.6 }}
+        >
+          <motion.path
+            d="M256 131 L260 135 L267 127"
+            fill="none"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1 }}
+            transition={{ pathLength: { duration: 0.35, delay: 2.35 } }}
+          />
+          <motion.path
+            d="M241 131 L245 135 L252 127"
+            fill="none"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1 }}
+            transition={{ pathLength: { duration: 0.35, delay: 2 } }}
+          />
+        </motion.g>
 
         {/* Respuesta de la agencia (dorada) */}
         <motion.g
           initial={{ opacity: 0, scale: 0.85, x: 8 }}
           animate={{ opacity: 1, scale: 1, x: 0 }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 2.1 }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 2.85 }}
         >
           <motion.path
             d="M188 170 H306 Q320 170 320 184 V189 L331 192 Q334 194 331 196 L320 201 V206 Q320 220 306 220 H188 Q174 220 174 206 V184 Q174 170 188 170 Z"
@@ -174,11 +184,17 @@ function LogoDemo({ phase }: { phase: number }) {
             fontSize="12.5"
             fontWeight="600"
             fontFamily="var(--font-sans)"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.4, delay: 2.55 }}
           >
-            Pensaré en tu logo
+            {"Pensaré en tu logo".split("").map((ch, i) => (
+              <motion.tspan
+                key={i}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.05, delay: 3.3 + i * 0.04 }}
+              >
+                {ch}
+              </motion.tspan>
+            ))}
           </motion.text>
         </motion.g>
 
@@ -186,7 +202,7 @@ function LogoDemo({ phase }: { phase: number }) {
         <motion.g
           initial={{ opacity: 0, scale: 0.7 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1], delay: 2.1 }}
+          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1], delay: 2.85 }}
         >
           <motion.circle
             cx="354"
@@ -401,15 +417,16 @@ function LogoDemo({ phase }: { phase: number }) {
           transition={{ duration: 1.4, ease: "easeInOut", delay: 0.6 }}
         />
 
-        <Sparkle x={122} y={70} />
-        <Sparkle x={285} y={112} size={10} />
-        <Sparkle x={258} y={215} size={12} />
+        <Sparkle x={122} y={70} anim={anim} />
+        <Sparkle x={285} y={112} size={10} anim={anim} />
+        <Sparkle x={258} y={215} size={12} anim={anim} />
 
         {/* Sello */}
         <motion.g
           initial={false}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 1.35 }}
+          animate={anim ? { opacity: 1, scale: [1, 1.03, 1] } : { opacity: 1 }}
+          transition={anim ? { duration: 3, delay: 2.3, repeat: Infinity, ease: "easeInOut" } : { duration: 0.5, delay: 1.35 }}
+          style={{ transformOrigin: "200px 237px" }}
         >
           <motion.rect
             x="128"
@@ -482,14 +499,28 @@ export default function BrandingProcess() {
   const reduce = useReducedMotion();
   const anim = !reduce;
   const [phase, setPhase] = useState(0);
+  const demoRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(demoRef, { amount: 0.3 });
+  const wasInView = useRef(false);
 
   useEffect(() => {
     if (reduce) return;
-    const t = setTimeout(() => setPhase((p) => (p + 1) % phases.length), PHASE_MS);
-    return () => clearTimeout(t);
-  }, [phase, reduce]);
+    const entered = inView && !wasInView.current;
+    wasInView.current = inView;
+    if (entered) {
+      const t = setTimeout(() => setPhase(0), 0);
+      return () => clearTimeout(t);
+    }
+  }, [inView, reduce]);
 
-  const current = phases[phase];
+  useEffect(() => {
+    if (reduce || !inView) return;
+    const t = setTimeout(() => setPhase((p) => (p + 1) % phases.length), DURATION_MS[phase]);
+    return () => clearTimeout(t);
+  }, [phase, inView, reduce]);
+
+  const display = reduce ? 2 : phase;
+  const current = phases[display];
 
   return (
     <section id="proceso" className="py-24 md:py-32 bg-section-alt">
@@ -514,25 +545,42 @@ export default function BrandingProcess() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-stretch">
           {/* Logo demo canvas */}
           <motion.div
+            ref={demoRef}
             initial={anim ? { opacity: 0, y: 32 } : false}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="relative bg-surface-elevated rounded-2xl md:rounded-3xl ring-1 ring-gold/10 hover:ring-gold/30 transition-shadow duration-500 overflow-hidden p-2 md:p-3"
           >
-            <div className="relative aspect-[400/280] md:aspect-auto md:h-[520px]">
-              <LogoDemo phase={reduce ? 2 : phase} />
+            <div className="relative aspect-[400/280]">
+              <LogoDemo phase={display} anim={anim} />
             </div>
 
-            {/* Phase progress dots */}
+            {/* Barra de progreso del ciclo */}
+            <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gold/10" aria-hidden>
+              <motion.div
+                key={`prog-${display}`}
+                className="h-full bg-gold/70"
+                initial={anim ? { scaleX: 0 } : false}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: DURATION_MS[display] / 1000, ease: "linear" }}
+                style={{ transformOrigin: "0% 0%" }}
+              />
+            </div>
+
+            {/* Phase progress dots (clickeables) */}
             <div className="absolute bottom-4 right-6 flex items-center gap-3">
               {phases.map((p) => (
-                <span
+                <button
                   key={p.index}
-                  className={`w-2 h-2 rounded-full transition-colors duration-500 ${
-                    (reduce ? 2 : phase) === p.index ? "bg-gold" : "bg-gold/20"
+                  type="button"
+                  title={p.title}
+                  aria-label={`Ir a la fase ${p.title}`}
+                  disabled={!!reduce}
+                  onClick={() => setPhase(p.index)}
+                  className={`h-2 rounded-full transition-all duration-500 cursor-pointer ${
+                    display === p.index ? "bg-gold w-6" : "bg-gold/20 w-2 hover:bg-gold/40 disabled:cursor-default"
                   }`}
-                  aria-hidden
                 />
               ))}
             </div>
@@ -558,7 +606,7 @@ export default function BrandingProcess() {
                   Paso {current.step}
                 </motion.span>
                 <span className="w-6 h-px bg-gold/20" />
-                <span>{phase + 1} de 3</span>
+                <span>{display + 1} de 3</span>
               </div>
 
               <div className="flex items-center gap-4">
@@ -604,8 +652,8 @@ export default function BrandingProcess() {
               {/* Phase step pills */}
               <div className="flex flex-wrap gap-2 pt-2">
                 {phases.map((p) => {
-                  const active = (reduce ? 2 : phase) === p.index;
-                  const done = (reduce ? 2 : phase) > p.index;
+                  const active = display === p.index;
+                  const done = display > p.index;
                   return (
                     <span
                       key={p.index}
@@ -632,6 +680,9 @@ export default function BrandingProcess() {
                 </h3>
                 <p className="text-secondary text-sm mt-2">
                   Desde un logotipo hasta la identidad completa. Precios claros, sin sorpresas.
+                </p>
+                <p className="text-gold text-[11px] tracking-[0.14em] uppercase mt-3">
+                  1 llamada · 1 encuesta · 1 propuesta en 7 días
                 </p>
               </div>
               <a
