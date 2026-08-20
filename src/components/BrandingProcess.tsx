@@ -70,7 +70,7 @@ function LogoDemo({ phase }: { phase: number }) {
             strokeWidth="1.4"
           />
           <motion.g
-            transform="translate(43 97) scale(1.25)"
+            transform="translate(45.4 99.4) scale(1.05)"
             fill="var(--gold)"
           >
             <motion.path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
@@ -201,7 +201,7 @@ function LogoDemo({ phase }: { phase: number }) {
             strokeWidth="1.4"
           />
           <motion.g
-            transform="translate(327 179) scale(1.25)"
+            transform="translate(329.4 181.4) scale(1.05)"
             fill="var(--gold)"
           >
             <motion.path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
