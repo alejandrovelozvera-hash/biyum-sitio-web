@@ -84,20 +84,17 @@ function LogoDemo({ phase }: { phase: number }) {
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
         >
           <motion.path
-            d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"
-            transform="translate(77 79.75) scale(9.5 4.125)"
+            d="M110 86 H274 Q288 86 288 100 V140 Q288 152 274 152 H110 Q96 152 96 140 V133 L80 123 Q77 121 80 119 L96 113 V100 Q96 86 110 86 Z"
             fill="var(--gold)"
             fillOpacity="0.05"
           />
           <motion.path
-            d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"
-            transform="translate(77 79.75) scale(9.5 4.125)"
+            d="M110 86 H274 Q288 86 288 100 V140 Q288 152 274 152 H110 Q96 152 96 140 V133 L80 123 Q77 121 80 119 L96 113 V100 Q96 86 110 86 Z"
             fill="var(--surface)"
             stroke="var(--gold)"
             strokeWidth="1.4"
             strokeLinejoin="round"
             strokeLinecap="round"
-            vectorEffect="non-scaling-stroke"
           />
         </motion.g>
 
@@ -166,8 +163,7 @@ function LogoDemo({ phase }: { phase: number }) {
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 2.1 }}
         >
           <motion.path
-            d="M4 2H20c1.1 0 2 .9 2 2v18l-4-4H4c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2z"
-            transform="translate(161.6 164) scale(7.2 3)"
+            d="M188 170 H306 Q320 170 320 184 V189 L334 192 Q337 194 334 196 L320 201 V206 Q320 220 306 220 H188 Q174 220 174 206 V184 Q174 170 188 170 Z"
             fill="var(--gold)"
           />
           <motion.text
