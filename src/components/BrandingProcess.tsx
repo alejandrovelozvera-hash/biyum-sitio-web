@@ -655,18 +655,22 @@ export default function BrandingProcess() {
                   const active = display === p.index;
                   const done = display > p.index;
                   return (
-                    <span
+                    <button
                       key={p.index}
-                      className={`text-[10px] tracking-[0.15em] uppercase rounded-full px-4 py-2 border transition-all duration-500 ${
+                      type="button"
+                      onClick={() => setPhase(p.index)}
+                      disabled={!!reduce}
+                      aria-label={`Ir a la fase ${p.title}`}
+                      className={`text-[10px] tracking-[0.15em] uppercase rounded-full px-4 py-2 border transition-all duration-500 cursor-pointer disabled:cursor-default ${
                         active
                           ? "bg-gold text-on-gold border-gold"
                           : done
-                            ? "text-gold-dark border-gold/25"
-                            : "text-muted border-gold/15"
+                            ? "text-gold-dark border-gold/25 hover:border-gold/50 hover:text-gold"
+                            : "text-muted border-gold/15 hover:border-gold/40 hover:text-gold"
                       }`}
                     >
                       {p.title}
-                    </span>
+                    </button>
                   );
                 })}
               </div>
