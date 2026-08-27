@@ -53,10 +53,14 @@ export default function Footer() {
                 </div>
               </div>
               <div className="mt-auto pt-6">
-                <a href="https://wa.me/message/N3PW46LKUALOK1" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 w-full text-sm text-on-gold bg-gold hover:bg-gold-light rounded-full px-6 py-3 font-medium transition-all hover:scale-[1.02] active:scale-[0.98]">
-                  Chatea por WhatsApp
-                </a>
-                <p className="text-muted text-[10px] mt-2.5 text-center">Respuesta en menos de 2 horas · Sin compromiso</p>
+                <div className="rounded-2xl bg-gold/5 ring-1 ring-gold/10 p-4">
+                  <p className="text-gold-dark text-sm font-medium">¿Listo para tu proyecto?</p>
+                  <p className="text-muted text-xs mt-1">Cuéntanos tu idea hoy mismo.</p>
+                  <a href="https://wa.me/message/N3PW46LKUALOK1" target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center justify-center gap-2 w-full text-sm text-on-gold bg-gold hover:bg-gold-light rounded-full px-6 py-3 font-medium transition-all hover:scale-[1.02] active:scale-[0.98]">
+                    Chatea por WhatsApp
+                  </a>
+                  <p className="text-muted text-[10px] mt-2 text-center">Respuesta en menos de 2 horas · Sin compromiso</p>
+                </div>
               </div>
             </div>
           </div>
