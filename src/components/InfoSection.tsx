@@ -138,7 +138,7 @@ export default function InfoSection() {
             </form>
           </div>
 
-          <div className="relative flex flex-col justify-between">
+          <div className="relative flex flex-col gap-8">
             <div>
               <div className="flex items-center gap-2 mb-3">
                 <span className="w-8 h-px bg-gold/25" />
@@ -150,8 +150,10 @@ export default function InfoSection() {
                 <a href="https://wa.me/message/N3PW46LKUALOK1" target="_blank" rel="noopener noreferrer" className="rounded-full px-5 py-2.5 text-xs ring-1 ring-gold/15 text-gold hover:text-gold-light hover:ring-gold/40 transition-all hover:scale-[1.02] active:scale-[0.98]">WhatsApp</a>
               </div>
             </div>
-            <div className="flex gap-10 mt-10 text-4xl md:text-5xl font-bold text-gold/5 tracking-[-0.04em] leading-none select-none">
-              <span>BIYUM</span>
+            <div className="rounded-2xl bg-gold/5 ring-1 ring-gold/10 p-5">
+              <p className="text-gold-dark text-sm font-medium">¿Listo para tu proyecto?</p>
+              <p className="text-muted text-xs mt-1">Respuesta en menos de 2 horas · Sin compromiso</p>
+              <a href="https://wa.me/message/N3PW46LKUALOK1" target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center justify-center gap-2 w-full text-sm text-on-gold bg-gold hover:bg-gold-light rounded-full px-6 py-3 font-medium transition-all hover:scale-[1.02] active:scale-[0.98]">Chatea por WhatsApp</a>
             </div>
           </div>
         </motion.div>
