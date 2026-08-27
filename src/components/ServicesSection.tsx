@@ -30,6 +30,15 @@ const services = [
     size: "small" as const,
   },
   {
+    kind: "palette",
+    title: "Color Grading",
+    desc: "Etalonaje cinematográfico para unificar tono y emoción. Corrección primaria y secundaria con look a medida.",
+    deliverables: ["Corrección de color", "Look cinematográfico", "Entrega según metraje"],
+    ideal: "Videoclips, spots, documental",
+    price: "Precio según tu metraje",
+    size: "small" as const,
+  },
+  {
     kind: "branding",
     title: "Branding",
     desc: "De la idea al manual. Logotipo, paleta, tipografía y aplicaciones que hacen tu marca reconocible y coherente.",
@@ -204,6 +213,7 @@ function ServiceVisual({ kind, size, className }: { kind: string; size: number; 
     case "camera": return <CameraVisual size={size} className={className} />;
     case "food": return <FoodVisual size={size} className={className} />;
     case "video": return <VideoVisual size={size} className={className} />;
+    case "palette": return <Palette size={size} className={className} />;
     case "branding": return <BrandingVisual size={size} className={className} />;
     case "social": return <SocialVisual size={size} className={className} />;
     case "web": return <WebVisual size={size} className={className} />;
