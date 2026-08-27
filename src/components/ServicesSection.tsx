@@ -26,7 +26,7 @@ const services = [
     desc: "Spots, reels, documentales y cobertura de eventos con Sony FX30. Guion, rodaje y edición listos para publicar.",
     deliverables: ["Grabación 4K", "Edición + color + audio", "Entrega 7–12 días"],
     ideal: "Lanzamientos, redes, ads",
-    price: "Desde $180",
+    price: "Precio según tu idea",
     size: "small" as const,
   },
   {
