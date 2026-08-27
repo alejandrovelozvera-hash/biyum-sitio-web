@@ -79,7 +79,7 @@ export async function getCategories(revalidate = 300): Promise<Category[]> {
   return cfg?.categories || [];
 }
 
-export async function getHeroSlides(revalidate = 300): Promise<HeroSlide[]> {
+export async function getHeroSlides(revalidate = 60): Promise<HeroSlide[]> {
   const cfg = await wpFetch<ConfigData>(`/config`, undefined, revalidate);
   return cfg?.hero_slides || [];
 }
