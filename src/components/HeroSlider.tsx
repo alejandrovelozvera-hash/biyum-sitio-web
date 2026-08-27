@@ -142,8 +142,8 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
           ) : null}
           {(s?.image_url || vid) && (
             <>
-              <div className="absolute inset-0 bg-background/60" />
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-background/30" />
+              <div className="absolute inset-0 bg-background/35" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/50 via-background/10 to-transparent" />
             </>
           )}
         </motion.div>
