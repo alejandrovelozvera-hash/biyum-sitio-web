@@ -13,7 +13,7 @@ export interface VideoItem {
   category?: string;
 }
 
-const PREVIEW_MS = 15000;
+const PREVIEW_MS = 25000;
 
 function YtThumb({ id, alt, className, eager = false }: { id: string; alt: string; className?: string; eager?: boolean }) {
   const [src, setSrc] = useState(`https://img.youtube.com/vi/${id}/maxresdefault.jpg`);
@@ -161,26 +161,26 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
                   className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/60 via-transparent to-transparent" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <motion.div
-                    whileHover={{ scale: 1.15 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="w-16 h-16 md:w-20 md:h-20 rounded-full glass-strong flex items-center justify-center ring-1 ring-gold/30 shadow-[0_0_40px_rgba(201,168,76,0.25)] group-hover:shadow-[0_0_60px_rgba(201,168,76,0.45)] transition-shadow duration-500"
-                  >
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="text-white ml-1">
-                      <polygon points="5 3 19 12 5 21 5 3" />
-                    </svg>
-                  </motion.div>
-                </div>
-                {filteredCount > 1 && (
-                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-white/10">
-                    <div
-                      ref={progressBarRef}
-                      className="h-full bg-gold origin-left"
-                      style={{ transform: "scaleX(0)" }}
-                    />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <motion.div
+                      whileHover={{ scale: 1.15 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-gold/90 group-hover:bg-gold flex items-center justify-center ring-1 ring-gold/20 shadow-[0_0_40px_rgba(201,168,76,0.25)] group-hover:shadow-[0_0_60px_rgba(201,168,76,0.45)] transition-all duration-500"
+                    >
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="text-on-gold ml-1">
+                        <polygon points="5 3 19 12 5 21 5 3" />
+                      </svg>
+                    </motion.div>
                   </div>
-                )}
+                  {filteredCount > 1 && (
+                    <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gold/10">
+                      <div
+                        ref={progressBarRef}
+                        className="h-full bg-gold/60 origin-left"
+                        style={{ transform: "scaleX(0)" }}
+                      />
+                    </div>
+                  )}
               </div>
               <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
                 <p className="text-[#737373] text-[10px] tracking-[0.15em] uppercase mb-1.5">
@@ -195,7 +195,7 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
 
           {/* Sidebar / row of other videos */}
           <div
-            className="lg:w-[35%] flex lg:flex-col gap-3 md:gap-4 overflow-x-auto lg:overflow-y-auto lg:max-h-[calc((100vw-16rem)*0.5625)] pb-2 lg:pb-0 snap-x snap-mandatory lg:snap-none scroll-smooth"
+            className="lg:w-[35%] grid grid-cols-2 lg:flex lg:flex-col gap-3 md:gap-4 lg:overflow-y-auto lg:max-h-[calc((100vw-16rem)*0.5625)] pb-2 lg:pb-0"
             style={{ scrollbarWidth: "none" }}
           >
             {filtered.map((video, i) =>
@@ -207,24 +207,25 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: i * 0.06 }}
                   onClick={() => openVideo(i)}
-                  className="group flex-shrink-0 w-[70vw] sm:w-[45vw] lg:w-full text-left cursor-pointer focus:outline-none snap-start"
+                  className="group w-full text-left cursor-pointer focus:outline-none"
                 >
-                  <div className="relative overflow-hidden rounded-xl md:rounded-2xl bg-surface flex flex-row lg:flex-col ring-1 ring-gold/5 group-hover:ring-gold/15 transition-all duration-300">
-                    <div className="w-[40%] lg:w-full aspect-video lg:aspect-video relative overflow-hidden">
+                  <div className="relative overflow-hidden rounded-xl md:rounded-2xl bg-surface flex flex-col ring-1 ring-gold/5 group-hover:ring-gold/15 transition-all duration-300">
+                    <div className="w-full aspect-video relative overflow-hidden">
                       <YtThumb
                         id={video.youtubeId}
                         alt={video.title}
                         className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-black/60 flex items-center justify-center group-hover:bg-gold/80 transition-colors">
-                          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" className="text-white ml-0.5">
+                        <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-gold/90 group-hover:bg-gold flex items-center justify-center shadow-lg ring-1 ring-gold/20 transition-all">
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" className="text-on-gold ml-0.5">
                             <polygon points="5 3 19 12 5 21 5 3" />
                           </svg>
                         </div>
                       </div>
+                      <span className="absolute bottom-2 right-2 bg-black/70 backdrop-blur-sm text-white text-[10px] tracking-wider px-1.5 py-0.5 rounded">HD</span>
                     </div>
-                    <div className="flex-1 p-3 md:p-4 flex flex-col justify-center lg:p-3">
+                    <div className="p-3 md:p-4 flex flex-col justify-center">
                       <p className="text-muted text-[9px] tracking-[0.15em] uppercase mb-0.5 lg:hidden">
                         {video.category || "Audiovisual"}
                       </p>
