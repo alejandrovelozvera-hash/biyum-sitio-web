@@ -43,7 +43,7 @@ const services = [
   "Diseño Web",
 ];
 
-const TITLE_DURATION = 6;
+const TITLE_DURATION = 10;
 
 function KineticTitle({ text }: { text: string }) {
   return (
