@@ -121,16 +121,24 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
           className="absolute inset-0"
           style={{ y: parallaxY }}
         >
-          {(s?.is_video || s?.video_id || s?.image_url?.includes('youtube.com')) && s?.video_id ? (
-            <div className="absolute inset-0 overflow-hidden bg-black">
-              <iframe
-                src={`https://www.youtube.com/embed/${s.video_id}?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&playlist=${s.video_id}&iv_load_policy=3&disablekb=1&fs=0`}
-                className="absolute top-1/2 left-1/2 w-[177.77vh] h-[56.25vw] min-w-full min-h-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-                allow="autoplay; encrypted-media"
-                title={s.title}
+          {(() => {
+            const vid = s?.video_id || s?.image_url?.match(/\/vi\/([^/]+)\//)?.[1];
+            return vid ? (
+              <div className="absolute inset-0 overflow-hidden bg-black">
+                <iframe
+                  src={`https://www.youtube.com/embed/${vid}?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&playlist=${vid}&iv_load_policy=3&disablekb=1&fs=0`}
+                  className="absolute top-1/2 left-1/2 w-[177.77vh] h-[56.25vw] min-w-full min-h-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+                  allow="autoplay; encrypted-media"
+                  title={s.title}
+                />
+              </div>
+            ) : s?.image_url ? (
+              <div
+                className="absolute inset-0 bg-cover bg-center"
+                style={{ backgroundImage: `url(${s.image_url})` }}
               />
-            </div>
-          ) : s?.image_url ? (
+            ) : null;
+          })()}
             <div
               className="absolute inset-0 bg-cover bg-center"
               style={{ backgroundImage: `url(${s.image_url})` }}
