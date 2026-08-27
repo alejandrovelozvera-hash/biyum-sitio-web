@@ -12,15 +12,6 @@ const Food = ({ size = 20, className, ...rest }: any) => (
 
 const services = [
   {
-    kind: "camera",
-    title: "Fotografía Publicitaria",
-    desc: "Sesiones en estudio o locación para catálogos, campañas y e-commerce. Iluminación profesional y retoque incluido.",
-    deliverables: ["20–40 fotos editadas", "Entrega 5–7 días", "Uso web + impresión"],
-    ideal: "Marcas, productos, moda",
-    price: "Desde $120",
-    size: "large" as const,
-  },
-  {
     kind: "food",
     title: "Fotografía Gastronómica",
     desc: "Menús que provocan antojo. Estilismo de alimentos, vapor y texturas capturadas para que tu carta venda sola.",
@@ -42,7 +33,7 @@ const services = [
     kind: "branding",
     title: "Branding",
     desc: "De la idea al manual. Logotipo, paleta, tipografía y aplicaciones que hacen tu marca reconocible y coherente.",
-    deliverables: ["3 propuestas", "Manual básico", "Papelería esencial"],
+    deliverables: ["3 propuestas", "Manual básico", "Manual completo", "Papelería esencial"],
     ideal: "Emprendimientos, rebranding",
     price: "Desde $250",
     size: "large" as const,
@@ -51,9 +42,10 @@ const services = [
     kind: "social",
     title: "Social Media",
     desc: "Parrilla, copy y diseño para que tu feed no pare. Pauta segmentada para llegar a quien sí compra.",
-    deliverables: ["12–30 piezas/mes", "Copy + calendario", "Reporte mensual"],
+    deliverables: ["8 a 12 piezas/mes", "Copy + calendario", "Reporte mensual"],
     ideal: "Negocios locales, marcas",
-    price: "Desde $150/mes",
+    price: "Desde $96",
+    note: "Artes individuales $15 — incluye post + historia. Pago a fin de mes según posts realizados.",
     size: "small" as const,
   },
   {
@@ -281,6 +273,8 @@ function ServiceCard({ s, i }: { s: (typeof services)[number]; i: number }) {
             </li>
           ))}
         </ul>
+
+        {(s as any).note && <p className="text-[10px] leading-relaxed text-gold/70 bg-gold/5 ring-1 ring-gold/10 rounded-lg px-3 py-2 mt-3">{(s as any).note}</p>}
 
         <p className="text-[10px] tracking-[0.14em] uppercase text-gold/60 mt-3">Ideal: {s.ideal}</p>
 
