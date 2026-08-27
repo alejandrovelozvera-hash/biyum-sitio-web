@@ -108,6 +108,7 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
   }, [next, slides.length, current]);
 
   const s = slides[current];
+  const vid = s?.video_id || s?.image_url?.match(/\/vi\/([^/]+)\//)?.[1] || null;
 
   return (
     <section ref={sectionRef} className="relative h-dvh w-full overflow-hidden bg-background">
@@ -121,30 +122,22 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
           className="absolute inset-0"
           style={{ y: parallaxY }}
         >
-          {(() => {
-            const vid = s?.video_id || s?.image_url?.match(/\/vi\/([^/]+)\//)?.[1];
-            return vid ? (
-              <div className="absolute inset-0 overflow-hidden bg-black">
-                <iframe
-                  src={`https://www.youtube.com/embed/${vid}?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&playlist=${vid}&iv_load_policy=3&disablekb=1&fs=0`}
-                  className="absolute top-1/2 left-1/2 w-[177.77vh] h-[56.25vw] min-w-full min-h-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-                  allow="autoplay; encrypted-media"
-                  title={s.title}
-                />
-              </div>
-            ) : s?.image_url ? (
-              <div
-                className="absolute inset-0 bg-cover bg-center"
-                style={{ backgroundImage: `url(${s.image_url})` }}
+          {vid ? (
+            <div className="absolute inset-0 overflow-hidden bg-black">
+              <iframe
+                src={`https://www.youtube.com/embed/${vid}?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&playlist=${vid}&iv_load_policy=3&disablekb=1&fs=0`}
+                className="absolute top-1/2 left-1/2 w-[177.77vh] h-[56.25vw] min-w-full min-h-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+                allow="autoplay; encrypted-media"
+                title={s.title}
               />
-            ) : null;
-          })()}
+            </div>
+          ) : s?.image_url ? (
             <div
               className="absolute inset-0 bg-cover bg-center"
               style={{ backgroundImage: `url(${s.image_url})` }}
             />
           ) : null}
-          {(s?.image_url || s?.video_id) && (
+          {(s?.image_url || vid) && (
             <>
               <div className="absolute inset-0 bg-background/60" />
               <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-background/30" />
