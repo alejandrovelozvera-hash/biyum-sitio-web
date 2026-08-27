@@ -53,7 +53,7 @@ function KineticTitle({ text }: { text: string }) {
       {text.split(" ").map((word, wi) => (
         <span key={wi} className="inline-block whitespace-nowrap">
           {word.split("").map((char, ci) => (
-            <span key={ci} className="inline-block overflow-hidden align-bottom pb-[0.32em] mb-[-0.32em]">
+            <span key={ci} className="inline-block overflow-hidden align-bottom pb-[0.38em] mb-[-0.38em]">
               <motion.span
                 className="inline-block"
                 initial={{ y: "110%" }}
@@ -190,7 +190,7 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
                   <span className="w-6 h-px bg-gold/20" />
                   <span>Galería de Diseño</span>
                 </p>
-                <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold text-gold tracking-[-0.04em] leading-[0.92]">
+                <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold text-gold tracking-[-0.04em] leading-[0.95]">
                   <KineticTitle text={s?.title || ""} />
                 </h1>
                 <motion.span
