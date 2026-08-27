@@ -165,8 +165,8 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
         <span className="text-gold-dark text-[9px] tracking-wider uppercase">Disponible</span>
       </motion.div>
 
-      {/* Video badge */}
-      {s?.is_video && (
+      {/* Video badge - detecta video por is_video o thumbnail youtube */}
+      {(s?.is_video || s?.image_url?.includes('youtube.com')) && (
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -239,7 +239,7 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
                 transition={{ duration: 0.6, delay: 0.85 }}
                 className={`flex flex-col sm:flex-row gap-3 md:gap-4 mt-6 md:mt-8 ${current % 3 === 0 ? "justify-center" : "justify-center shrink-0 sm:justify-start sm:mt-0"}`}
               >
-                {s?.is_video ? (
+                {(s?.is_video || s?.image_url?.includes('youtube.com')) ? (
                   <>
                     <Link
                       href="/#video"
