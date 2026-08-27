@@ -15,9 +15,9 @@ const services = [
     kind: "food",
     title: "Fotografía Gastronómica",
     desc: "Menús que provocan antojo. Estilismo de alimentos, vapor y texturas capturadas para que tu carta venda sola.",
-    deliverables: ["15–30 fotos", "Styling + props", "Formato carta y redes"],
+    deliverables: ["Aprox. 6 fotos por plato", "Distintas perspectivas", "Styling + props"],
     ideal: "Restaurantes, cafés, delivery",
-    price: "Desde $95",
+    price: "$15 por plato",
     size: "small" as const,
   },
   {
