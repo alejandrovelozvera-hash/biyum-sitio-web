@@ -23,7 +23,7 @@ const services = [
   {
     kind: "video",
     title: "Producción de Video",
-    desc: "Spots, reels, documentales y cobertura de eventos con Sony FX30. Guion, rodaje y edición listos para publicar.",
+    desc: "Spots, reels, documentales y cobertura de eventos. Guion, rodaje y edición listos para publicar.",
     deliverables: ["Grabación 4K", "Edición + color + audio", "Entrega 7–12 días"],
     ideal: "Lanzamientos, redes, ads",
     price: "Precio según tu idea",
