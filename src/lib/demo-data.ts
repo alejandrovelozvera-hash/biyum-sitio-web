@@ -82,13 +82,6 @@ export const demoProjects: Project[] = [
 
 export const demoHeroSlides = [
   {
-    image_url: "https://picsum.photos/seed/biyum1/1920/1080",
-    title: "Fotografía Publicitaria",
-    subtitle: "Destaca tu marca con imágenes que hablan por sí solas.",
-    cta_text: "Escríbenos",
-    cta_link: "https://wa.me/message/N3PW46LKUALOK1",
-  },
-  {
     image_url: "https://img.youtube.com/vi/qyjZxlPQSZI/hqdefault.jpg",
     title: "Video Documental",
     subtitle: "Historias reales que conectan con tu audiencia.",
@@ -99,11 +92,11 @@ export const demoHeroSlides = [
     video_start: 10,
   },
   {
-    image_url: "https://picsum.photos/seed/biyum3/1920/1080",
-    title: "Branding & Diseño",
-    subtitle: "Creamos identidades visuales que conectan.",
-    cta_text: "Ver Portafolio",
-    cta_link: "/#portafolio",
+    image_url: "https://picsum.photos/seed/biyum1/1920/1080",
+    title: "Fotografía Publicitaria",
+    subtitle: "Destaca tu marca con imágenes que hablan por sí solas.",
+    cta_text: "Escríbenos",
+    cta_link: "https://wa.me/message/N3PW46LKUALOK1",
   },
   {
     image_url: "https://img.youtube.com/vi/3u6JWwtC0vE/hqdefault.jpg",
@@ -114,6 +107,13 @@ export const demoHeroSlides = [
     video_id: "3u6JWwtC0vE",
     is_video: true,
     video_start: 10,
+  },
+  {
+    image_url: "https://picsum.photos/seed/biyum3/1920/1080",
+    title: "Branding & Diseño",
+    subtitle: "Creamos identidades visuales que conectan.",
+    cta_text: "Ver Portafolio",
+    cta_link: "/#portafolio",
   },
   {
     image_url: "https://img.youtube.com/vi/SdcZdfb-na4/hqdefault.jpg",
