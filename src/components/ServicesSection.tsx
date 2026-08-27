@@ -11,12 +11,60 @@ const Food = ({ size = 20, className, ...rest }: any) => (
 );
 
 const services = [
-  { kind: "camera", title: "Fotografía Publicitaria", desc: "Imágenes profesionales que potencian tu marca y comunican tu mensaje con impacto visual.", size: "large" as const },
-  { kind: "food", title: "Fotografía Gastronómica", desc: "Deliciosas imágenes que despiertan los sentidos y abren el apetito.", size: "small" as const },
-  { kind: "video", title: "Producción de Video", desc: "Contenido audiovisual moderno: spots, documentales y material para redes.", size: "small" as const },
-  { kind: "branding", title: "Branding", desc: "Identidad visual estratégica: logotipo, papelería, manual de marca y más.", size: "large" as const },
-  { kind: "social", title: "Social Media", desc: "Estrategias de contenido, diseño gráfico y pauta digital para tus redes.", size: "small" as const },
-  { kind: "web", title: "Diseño Web", desc: "Páginas web modernas y landing pages a medida que convierten visitas en clientes.", size: "small" as const },
+  {
+    kind: "camera",
+    title: "Fotografía Publicitaria",
+    desc: "Sesiones en estudio o locación para catálogos, campañas y e-commerce. Iluminación profesional y retoque incluido.",
+    deliverables: ["20–40 fotos editadas", "Entrega 5–7 días", "Uso web + impresión"],
+    ideal: "Marcas, productos, moda",
+    price: "Desde $120",
+    size: "large" as const,
+  },
+  {
+    kind: "food",
+    title: "Fotografía Gastronómica",
+    desc: "Menús que provocan antojo. Estilismo de alimentos, vapor y texturas capturadas para que tu carta venda sola.",
+    deliverables: ["15–30 fotos", "Styling + props", "Formato carta y redes"],
+    ideal: "Restaurantes, cafés, delivery",
+    price: "Desde $95",
+    size: "small" as const,
+  },
+  {
+    kind: "video",
+    title: "Producción de Video",
+    desc: "Spots, reels, documentales y cobertura de eventos con Sony FX30. Guion, rodaje y edición listos para publicar.",
+    deliverables: ["Grabación 4K", "Edición + color + audio", "Entrega 7–12 días"],
+    ideal: "Lanzamientos, redes, ads",
+    price: "Desde $180",
+    size: "small" as const,
+  },
+  {
+    kind: "branding",
+    title: "Branding",
+    desc: "De la idea al manual. Logotipo, paleta, tipografía y aplicaciones que hacen tu marca reconocible y coherente.",
+    deliverables: ["3 propuestas", "Manual básico", "Papelería esencial"],
+    ideal: "Emprendimientos, rebranding",
+    price: "Desde $250",
+    size: "large" as const,
+  },
+  {
+    kind: "social",
+    title: "Social Media",
+    desc: "Parrilla, copy y diseño para que tu feed no pare. Pauta segmentada para llegar a quien sí compra.",
+    deliverables: ["12–30 piezas/mes", "Copy + calendario", "Reporte mensual"],
+    ideal: "Negocios locales, marcas",
+    price: "Desde $150/mes",
+    size: "small" as const,
+  },
+  {
+    kind: "web",
+    title: "Diseño Web",
+    desc: "Landing pages y webs rápidas que cargan en <2s y convierten visitas en contactos reales.",
+    deliverables: ["Diseño responsive", "SEO básico", "Entrega 10–15 días"],
+    ideal: "Servicios, reservas, ventas",
+    price: "Desde $300",
+    size: "small" as const,
+  },
 ];
 
 function CameraVisual({ size, className }: any) {
@@ -191,7 +239,7 @@ function ServiceCard({ s, i }: { s: (typeof services)[number]; i: number }) {
       viewport={{ once: true, amount: 0.2 }}
       whileHover={!reduce ? { y: -6 } : undefined}
       transition={{ duration: 0.7, delay: i * 0.06, ease: [0.16, 1, 0.3, 1] }}
-      className={`bg-surface-elevated rounded-2xl md:rounded-3xl p-8 md:p-10 group relative overflow-hidden ring-1 ring-gold/10 hover:ring-gold/30 shadow-[0_10px_40px_-20px_rgba(28,20,99,0.18)] transition-shadow duration-500`}
+      className={`bg-surface-elevated rounded-2xl md:rounded-3xl p-7 md:p-8 group relative overflow-hidden ring-1 ring-gold/10 hover:ring-gold/30 shadow-[0_10px_40px_-20px_rgba(28,20,99,0.18)] transition-shadow duration-500 flex flex-col ${s.size === "large" ? "md:min-h-[340px]" : "md:min-h-[320px]"}`}
     >
       <span className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-gold/0 via-gold to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -202,43 +250,47 @@ function ServiceCard({ s, i }: { s: (typeof services)[number]; i: number }) {
 
       <motion.div
         style={{ y: iconY, rotate: iconRotate }}
-        className="absolute -right-6 -bottom-8 text-[160px] text-gold/[0.05] transition-colors duration-500 group-hover:text-gold/[0.12]"
+        className="absolute -right-6 -bottom-8 text-[160px] text-gold/[0.04] transition-colors duration-500 group-hover:text-gold/[0.09]"
         aria-hidden
       >
         <ServiceVisual kind={s.kind} size={160} />
       </motion.div>
 
-      <div className="relative">
-        <div className="flex items-center justify-between mb-6">
+      <div className="relative flex flex-col flex-1">
+        <div className="flex items-start justify-between gap-4 mb-5">
           <div className="flex items-center gap-2">
             <span className="w-8 h-px bg-gold/25" />
-            <span className="text-gold text-[10px] tracking-[0.2em] uppercase">{s.title}</span>
+            <span className="text-gold text-[10px] tracking-[0.2em] uppercase leading-none">{s.title}</span>
           </div>
-          <motion.span
-            initial={!reduce ? { opacity: 0, x: 12 } : false}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.45 + i * 0.06 }}
-            className="text-gold text-[10px] tracking-[0.15em] uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300 inline-flex items-center gap-1.5 md:inline-flex hidden"
-          >
+          <span className="shrink-0 text-[10px] tracking-[0.12em] uppercase px-2.5 py-1 rounded-full bg-gold/10 text-gold ring-1 ring-gold/15">
+            {s.price}
+          </span>
+        </div>
+
+        <div className="w-11 h-11 flex items-center justify-center rounded-xl bg-gold/5 ring-1 ring-gold/10 text-gold/70 group-hover:text-gold group-hover:bg-gold/10 transition-colors duration-500 mb-4">
+          <ServiceVisual kind={s.kind} size={20} />
+        </div>
+
+        <p className="text-secondary text-[13px] leading-relaxed">{s.desc}</p>
+
+        <ul className="mt-4 space-y-1.5">
+          {s.deliverables.map((d) => (
+            <li key={d} className="flex items-center gap-2 text-[11px] text-muted">
+              <span className="w-1 h-1 rounded-full bg-gold/60 shrink-0" />
+              {d}
+            </li>
+          ))}
+        </ul>
+
+        <p className="text-[10px] tracking-[0.14em] uppercase text-gold/60 mt-3">Ideal: {s.ideal}</p>
+
+        <div className="mt-auto pt-5 flex items-center justify-between">
+          <span className="text-gold text-[11px] tracking-[0.14em] uppercase inline-flex items-center gap-1.5 opacity-60 group-hover:opacity-100 transition-opacity">
             Cotizar
             <ChevronRight size={12} className="group-hover:translate-x-0.5 transition-transform duration-300" />
-          </motion.span>
+          </span>
+          <span className="text-muted text-[10px]">→ WhatsApp</span>
         </div>
-
-        <div className="w-12 h-12 flex items-center justify-center mb-6 text-gold/70 group-hover:text-gold transition-colors duration-500">
-          <ServiceVisual kind={s.kind} size={22} />
-        </div>
-
-        <motion.p
-          initial={!reduce ? { opacity: 0 } : false}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.5 + i * 0.06 }}
-          className="text-secondary text-sm leading-relaxed max-w-md mt-6"
-        >
-          {s.desc}
-        </motion.p>
       </div>
     </motion.a>
   );
