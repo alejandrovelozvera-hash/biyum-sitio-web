@@ -5,7 +5,6 @@ export default function Footer() {
     <footer id="contacto" className="bg-background">
       <div className="max-w-[1400px] mx-auto px-8 py-24">
         <div className="bg-surface rounded-3xl p-10 md:p-16 ring-1 ring-gold/10 overflow-hidden relative">
-          <span aria-hidden className="pointer-events-none select-none absolute -bottom-6 -right-2 text-[18vw] md:text-[10vw] font-bold tracking-[-0.06em] leading-none text-transparent opacity-[0.04]" style={{ WebkitTextStroke: "1px var(--watermark-stroke)", color: "transparent" }}>BIYUM</span>
           <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 relative">
             <div className="md:col-span-5">
               <img src="/logo.svg" alt="Biyum" className="logo-theme h-8 w-auto mb-4" />
@@ -33,26 +32,32 @@ export default function Footer() {
                 ))}
               </div>
             </div>
-            <div className="md:col-span-3">
-              <p className="text-muted text-xs tracking-widest uppercase mb-5">Contacto</p>
-              <div className="flex flex-col gap-3 text-sm">
-                <a href="mailto:biyumdis@gmail.com" className="flex items-center gap-2 text-secondary hover:text-gold transition-colors"><Mail size={14} /> biyumdis@gmail.com</a>
-                <div className="flex items-start gap-2 text-secondary"><MapPin size={14} className="mt-0.5 shrink-0" /><span>Riobamba</span></div>
-                <a href="https://wa.me/message/N3PW46LKUALOK1" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-secondary hover:text-gold transition-colors text-xs">WhatsApp · Respuesta en &lt; 2h</a>
+            <div className="md:col-span-3 flex flex-col">
+              <div>
+                <p className="text-muted text-xs tracking-widest uppercase mb-5">Contacto</p>
+                <div className="flex flex-col gap-3 text-sm">
+                  <a href="mailto:biyumdis@gmail.com" className="flex items-center gap-2 text-secondary hover:text-gold transition-colors"><Mail size={14} /> biyumdis@gmail.com</a>
+                  <div className="flex items-start gap-2 text-secondary"><MapPin size={14} className="mt-0.5 shrink-0" /><span>Riobamba · Atención online a todo Ecuador</span></div>
+                  <a href="https://wa.me/message/N3PW46LKUALOK1" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-secondary hover:text-gold transition-colors text-xs">WhatsApp · Lun–Sáb 9am–7pm</a>
+                </div>
               </div>
-              <p className="text-muted text-[10px] tracking-[0.2em] uppercase mt-8 mb-3">Síguenos</p>
-              <div className="flex gap-3">
-                <a href="https://www.facebook.com/biyumec" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gold/10 hover:bg-gold text-gold hover:text-on-gold flex items-center justify-center ring-1 ring-gold/15 transition-all hover:scale-105">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
-                </a>
-                <a href="https://www.instagram.com/biyumecu/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gold/10 hover:bg-gold text-gold hover:text-on-gold flex items-center justify-center ring-1 ring-gold/15 transition-all hover:scale-105">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" /></svg>
-                </a>
+              <div className="mt-6">
+                <p className="text-muted text-[10px] tracking-[0.2em] uppercase mb-3">Síguenos</p>
+                <div className="flex gap-3">
+                  <a href="https://www.facebook.com/biyumec" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gold/10 hover:bg-gold text-gold hover:text-on-gold flex items-center justify-center ring-1 ring-gold/15 transition-all hover:scale-105">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
+                  </a>
+                  <a href="https://www.instagram.com/biyumecu/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gold/10 hover:bg-gold text-gold hover:text-on-gold flex items-center justify-center ring-1 ring-gold/15 transition-all hover:scale-105">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" /></svg>
+                  </a>
+                </div>
               </div>
-              <a href="https://wa.me/message/N3PW46LKUALOK1" target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center justify-center gap-2 w-full text-sm text-on-gold bg-gold hover:bg-gold-light rounded-full px-6 py-3 font-medium transition-all hover:scale-[1.02] active:scale-[0.98]">
-                Chatea por WhatsApp
-              </a>
-              <p className="text-muted text-[10px] mt-2.5 text-center">Respuesta en menos de 2 horas</p>
+              <div className="mt-auto pt-6">
+                <a href="https://wa.me/message/N3PW46LKUALOK1" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 w-full text-sm text-on-gold bg-gold hover:bg-gold-light rounded-full px-6 py-3 font-medium transition-all hover:scale-[1.02] active:scale-[0.98]">
+                  Chatea por WhatsApp
+                </a>
+                <p className="text-muted text-[10px] mt-2.5 text-center">Respuesta en menos de 2 horas · Sin compromiso</p>
+              </div>
             </div>
           </div>
         </div>
