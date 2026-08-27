@@ -113,13 +113,6 @@ export default function InfoSection() {
                 aria-hidden="true"
                 className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden opacity-0"
               />
-              <input
-                name="email"
-                type="email"
-                required
-                placeholder="Tu email"
-                className="w-full bg-surface/70 border border-gold/15 rounded-xl px-4 py-3 text-sm text-gold-dark placeholder:text-placeholder focus:outline-none focus:border-gold/50 transition-colors"
-              />
               <textarea
                 name="message"
                 required
