@@ -149,20 +149,7 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
         </motion.div>
       </AnimatePresence>
 
-      {/* Watermark */}
-      <motion.span
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.5, delay: 0.4 }}
-        aria-hidden
-        className="pointer-events-none select-none absolute -bottom-10 -right-4 text-[24vw] md:text-[20vw] font-bold tracking-[-0.06em] leading-none text-transparent"
-        style={{
-          WebkitTextStroke: "1px var(--watermark-stroke)",
-          color: "transparent",
-        }}
-      >
-        BIYUM
-      </motion.span>
+
 
       {/* Availability stamp */}
       <motion.div
