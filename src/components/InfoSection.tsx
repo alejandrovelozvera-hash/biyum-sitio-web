@@ -73,7 +73,7 @@ export default function InfoSection() {
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           id="contacto"
-          className="bg-surface-elevated rounded-2xl md:rounded-3xl p-8 md:p-10 grid md:grid-cols-2 gap-10 relative overflow-hidden ring-1 ring-gold/10 hover:ring-gold/30 shadow-[0_10px_40px_-20px_rgba(28,20,99,0.18)] transition-shadow duration-500 group"
+          className="bg-surface-elevated rounded-2xl md:rounded-3xl p-8 md:p-10 grid md:grid-cols-2 gap-10 items-start relative overflow-hidden ring-1 ring-gold/10 hover:ring-gold/30 shadow-[0_10px_40px_-20px_rgba(28,20,99,0.18)] transition-shadow duration-500 group"
         >
           <span className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-gold/0 via-gold to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
