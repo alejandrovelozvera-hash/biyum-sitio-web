@@ -174,20 +174,7 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
         <span className="text-gold-dark text-[9px] tracking-wider uppercase">Disponible</span>
       </motion.div>
 
-      {/* Video badge - detecta video por is_video o thumbnail youtube */}
-      {(s?.is_video || s?.image_url?.includes('youtube.com')) && (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 1.2 }}
-          className="absolute top-24 left-6 md:left-16 z-10"
-        >
-          <span className="flex items-center gap-2 bg-gold text-on-gold px-3 py-1.5 rounded-full text-[10px] tracking-wider uppercase">
-            <Play size={10} className="text-on-gold" />
-            Video
-          </span>
-        </motion.div>
-      )}
+
 
       <div className="relative h-full flex items-center px-4 sm:px-6 md:px-16 max-w-[1400px] mx-auto">
         <AnimatePresence mode="wait">
