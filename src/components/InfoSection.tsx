@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
-import { Mail, MapPin, ChevronRight } from "./Icons";
-import MagneticButton from "./MagneticButton";
+import { Mail, MapPin } from "./Icons";
 
 export default function InfoSection() {
   const reduce = useReducedMotion();
@@ -27,46 +26,7 @@ export default function InfoSection() {
   return (
     <section id="info" className="py-24 md:py-32 bg-section-alt">
       <div className="max-w-[1400px] mx-auto px-6 md:px-16">
-        {/* CTA ¿Tienes un proyecto en mente? */}
-        <motion.a
-          href="https://wa.me/message/N3PW46LKUALOK1"
-          target="_blank"
-          rel="noopener noreferrer"
-          initial={anim ? { opacity: 0, y: 32 } : false}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          whileHover={!reduce ? { y: -6 } : undefined}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="block bg-surface-elevated rounded-2xl md:rounded-3xl p-8 md:p-10 group relative overflow-hidden ring-1 ring-gold/10 hover:ring-gold/30 shadow-[0_10px_40px_-20px_rgba(28,20,99,0.18)] transition-shadow duration-500 mb-6"
-        >
-          <span className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-gold/0 via-gold to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-          <div
-            className="absolute -left-16 top-1/3 w-64 h-64 rounded-full bg-gold/[0.05] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-            aria-hidden
-          />
-
-          <div className="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <span className="w-8 h-px bg-gold/25" />
-                <span className="text-gold text-[10px] tracking-[0.2em] uppercase">Inicio</span>
-              </div>
-              <p className="text-gold-dark text-2xl md:text-4xl font-semibold tracking-tight">
-                ¿Tienes un proyecto en mente?
-              </p>
-              <p className="text-secondary text-sm mt-2">Hablemos y creemos algo increíble juntos.</p>
-            </div>
-            <MagneticButton>
-              <span className="inline-flex items-center gap-2 text-sm text-on-gold bg-gold group-hover:bg-gold-light hover:ring-1 hover:ring-gold/40 rounded-full px-6 py-3 transition-all hover:scale-[1.02] active:scale-[0.98]">
-                Empezar proyecto
-                <ChevronRight size={14} className="group-hover:translate-x-0.5 transition-transform duration-300" />
-              </span>
-            </MagneticButton>
-          </div>
-        </motion.a>
-
-        {/* Contacto */}
+        {/* Contacto - fusionado con CTA */}
         <motion.div
           initial={anim ? { opacity: 0, y: 32 } : false}
           whileInView={{ opacity: 1, y: 0 }}
@@ -87,9 +47,10 @@ export default function InfoSection() {
               <span className="w-8 h-px bg-gold/25" />
               <span className="text-gold text-[10px] tracking-[0.2em] uppercase">Contacto</span>
             </div>
-            <h3 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gold tracking-[-0.04em] leading-[0.92] mb-6">
-              Hablemos
+            <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gold tracking-[-0.04em] leading-[0.95] mb-2">
+              ¿Tienes un proyecto en mente?
             </h3>
+            <p className="text-secondary text-sm leading-relaxed mb-6">Hablemos y creemos algo increíble juntos.</p>
             <a href="mailto:biyumdis@gmail.com" className="flex items-center gap-2 text-gold-dark/70 hover:text-gold text-sm transition-colors">
               <Mail size={14} /> biyumdis@gmail.com
             </a>
