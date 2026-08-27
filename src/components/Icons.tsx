@@ -119,3 +119,9 @@ export const Calendar = ({ size = 20, className, ...rest }: IconProps) => (
     <path d="M16 2v4M8 2v4M3 10h18" />
   </svg>
 );
+
+export const Play = ({ size = 20, className, ...rest }: IconProps) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" stroke="none" className={className} {...rest}>
+    <polygon points="5 3 19 12 5 21 5 3" />
+  </svg>
+);

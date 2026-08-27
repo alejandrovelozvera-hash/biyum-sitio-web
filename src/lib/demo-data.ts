@@ -89,11 +89,13 @@ export const demoHeroSlides = [
     cta_link: "https://wa.me/message/N3PW46LKUALOK1",
   },
   {
-    image_url: "https://picsum.photos/seed/biyum2/1920/1080",
-    title: "Fotografía Gastronómica",
-    subtitle: "Potencia tu menú con imágenes de alta calidad.",
-    cta_text: "Escríbenos",
-    cta_link: "https://wa.me/message/N3PW46LKUALOK1",
+    image_url: "https://img.youtube.com/vi/qyjZxlPQSZI/hqdefault.jpg",
+    title: "Video Documental",
+    subtitle: "Historias reales que conectan con tu audiencia.",
+    cta_text: "Ver Video",
+    cta_link: "/#video",
+    video_id: "qyjZxlPQSZI",
+    is_video: true,
   },
   {
     image_url: "https://picsum.photos/seed/biyum3/1920/1080",
@@ -101,6 +103,24 @@ export const demoHeroSlides = [
     subtitle: "Creamos identidades visuales que conectan.",
     cta_text: "Ver Portafolio",
     cta_link: "/#portafolio",
+  },
+  {
+    image_url: "https://img.youtube.com/vi/3u6JWwtC0vE/hqdefault.jpg",
+    title: "Producción Cinemática",
+    subtitle: "Calidad de cine para tu marca.",
+    cta_text: "Ver Video",
+    cta_link: "/#video",
+    video_id: "3u6JWwtC0vE",
+    is_video: true,
+  },
+  {
+    image_url: "https://img.youtube.com/vi/SdcZdfb-na4/hqdefault.jpg",
+    title: "Videos Musicales",
+    subtitle: "Videoclips que hacen vibrar a tu audiencia.",
+    cta_text: "Ver Video",
+    cta_link: "/#video",
+    video_id: "SdcZdfb-na4",
+    is_video: true,
   },
 ];
 

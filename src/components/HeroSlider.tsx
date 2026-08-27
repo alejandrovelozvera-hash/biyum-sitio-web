@@ -2,13 +2,18 @@
 
 import { Fragment, useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "motion/react";
-import { ChevronLeft, ChevronRight } from "./Icons";
+import { ChevronLeft, ChevronRight, Play } from "./Icons";
 import Link from "next/link";
 
 interface Slide {
   image_url: string;
   title: string;
   subtitle: string;
+  cta_text?: string;
+  cta_link?: string;
+  video_url?: string;
+  video_id?: string;
+  is_video?: boolean;
 }
 
 const fallback: Slide[] = [
@@ -160,6 +165,21 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
         <span className="text-gold-dark text-[9px] tracking-wider uppercase">Disponible</span>
       </motion.div>
 
+      {/* Video badge */}
+      {s?.is_video && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 1.2 }}
+          className="absolute top-24 left-6 md:left-16 z-10"
+        >
+          <span className="flex items-center gap-2 bg-gold text-on-gold px-3 py-1.5 rounded-full text-[10px] tracking-wider uppercase">
+            <Play size={10} className="text-on-gold" />
+            Video
+          </span>
+        </motion.div>
+      )}
+
       <div className="relative h-full flex items-center px-4 sm:px-6 md:px-16 max-w-[1400px] mx-auto">
         <AnimatePresence mode="wait">
           <motion.div
@@ -213,36 +233,76 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
                     : null}
                 </motion.p>
               </div>
-              <motion.div
+               <motion.div
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.85 }}
                 className={`flex flex-col sm:flex-row gap-3 md:gap-4 mt-6 md:mt-8 ${current % 3 === 0 ? "justify-center" : "justify-center shrink-0 sm:justify-start sm:mt-0"}`}
               >
-                <Link
-                  href="/#portafolio"
-                  onClick={(e) => {
-                    if (window.location.pathname === "/") {
-                      e.preventDefault();
-                      const el = document.getElementById("portafolio");
-                      if (el) {
-                        const y = el.getBoundingClientRect().top + window.scrollY - 80;
-                        window.scrollTo({ top: y, behavior: "smooth" });
-                      }
-                    }
-                  }}
-                  className="inline-flex items-center gap-2 text-xs sm:text-sm text-on-gold bg-gold hover:bg-gold-light rounded-full px-5 sm:px-7 py-2.5 sm:py-3 transition-all hover:scale-[1.02] active:scale-[0.98]"
-                >
-                  Ver Portafolio
-                </Link>
-                <a
-                  href="https://wa.me/message/N3PW46LKUALOK1"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-xs sm:text-sm text-gold-dark hover:text-gold border border-gold/25 hover:border-gold/50 rounded-full px-5 sm:px-6 py-2.5 sm:py-3 transition-all hover:scale-[1.02] active:scale-[0.98]"
-                >
-                  Escríbenos
-                </a>
+                {s?.is_video ? (
+                  <>
+                    <Link
+                      href="/#video"
+                      onClick={(e) => {
+                        if (window.location.pathname === "/") {
+                          e.preventDefault();
+                          const el = document.getElementById("video");
+                          if (el) {
+                            const y = el.getBoundingClientRect().top + window.scrollY - 80;
+                            window.scrollTo({ top: y, behavior: "smooth" });
+                          }
+                        }
+                      }}
+                      className="inline-flex items-center gap-2 text-xs sm:text-sm text-on-gold bg-gold hover:bg-gold-light rounded-full px-5 sm:px-7 py-2.5 sm:py-3 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                    >
+                      <Play size={14} className="text-on-gold" />
+                      Ver Video
+                    </Link>
+                    <Link
+                      href="/#portafolio"
+                      onClick={(e) => {
+                        if (window.location.pathname === "/") {
+                          e.preventDefault();
+                          const el = document.getElementById("portafolio");
+                          if (el) {
+                            const y = el.getBoundingClientRect().top + window.scrollY - 80;
+                            window.scrollTo({ top: y, behavior: "smooth" });
+                          }
+                        }
+                      }}
+                      className="inline-flex items-center gap-2 text-xs sm:text-sm text-gold-dark hover:text-gold border border-gold/25 hover:border-gold/50 rounded-full px-5 sm:px-6 py-2.5 sm:py-3 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                    >
+                      Ver Portafolio
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      href="/#portafolio"
+                      onClick={(e) => {
+                        if (window.location.pathname === "/") {
+                          e.preventDefault();
+                          const el = document.getElementById("portafolio");
+                          if (el) {
+                            const y = el.getBoundingClientRect().top + window.scrollY - 80;
+                            window.scrollTo({ top: y, behavior: "smooth" });
+                          }
+                        }
+                      }}
+                      className="inline-flex items-center gap-2 text-xs sm:text-sm text-on-gold bg-gold hover:bg-gold-light rounded-full px-5 sm:px-7 py-2.5 sm:py-3 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                    >
+                      Ver Portafolio
+                    </Link>
+                    <a
+                      href="https://wa.me/message/N3PW46LKUALOK1"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-xs sm:text-sm text-gold-dark hover:text-gold border border-gold/25 hover:border-gold/50 rounded-full px-5 sm:px-6 py-2.5 sm:py-3 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                    >
+                      Escríbenos
+                    </a>
+                  </>
+                )}
               </motion.div>
             </div>
           </motion.div>
