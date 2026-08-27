@@ -151,9 +151,11 @@ export default function InfoSection() {
               </div>
             </div>
             <div className="rounded-2xl bg-gold/5 ring-1 ring-gold/10 p-5">
-              <p className="text-gold-dark text-sm font-medium">¿Listo para tu proyecto?</p>
-              <p className="text-muted text-xs mt-1">Respuesta en menos de 2 horas · Sin compromiso</p>
-              <a href="https://wa.me/message/N3PW46LKUALOK1" target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center justify-center gap-2 w-full text-sm text-on-gold bg-gold hover:bg-gold-light rounded-full px-6 py-3 font-medium transition-all hover:scale-[1.02] active:scale-[0.98]">Chatea por WhatsApp</a>
+              <div className="flex items-center gap-2 text-gold text-xs font-medium">
+                <span className="w-2 h-2 bg-gold rounded-full animate-pulse" />
+                Respuesta en menos de 2 horas
+              </div>
+              <p className="text-muted text-xs mt-2 leading-relaxed">Atención directa del equipo, sin compromiso. ¿Prefieres ir directo? <a href="https://wa.me/message/N3PW46LKUALOK1" target="_blank" rel="noopener noreferrer" className="text-gold hover:text-gold-light underline underline-offset-4">Escríbenos por WhatsApp →</a></p>
             </div>
           </div>
         </motion.div>
