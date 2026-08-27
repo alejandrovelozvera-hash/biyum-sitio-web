@@ -125,6 +125,26 @@ export const demoHeroSlides = [
     is_video: true,
     video_start: 10,
   },
+  {
+    image_url: "https://img.youtube.com/vi/pwWVLN0QHA4/hqdefault.jpg",
+    title: "Documental: Sisay Pacha",
+    subtitle: "Celebración ancestral andina del florecimiento.",
+    cta_text: "Ver Video",
+    cta_link: "/#video",
+    video_id: "pwWVLN0QHA4",
+    is_video: true,
+    video_start: 10,
+  },
+  {
+    image_url: "https://img.youtube.com/vi/t4OQGPbx2t4/hqdefault.jpg",
+    title: "Sesiones en Vivo",
+    subtitle: "La Perinola Live — música en directo.",
+    cta_text: "Ver Video",
+    cta_link: "/#video",
+    video_id: "t4OQGPbx2t4",
+    is_video: true,
+    video_start: 10,
+  },
 ];
 
 export const demoVideos = [
