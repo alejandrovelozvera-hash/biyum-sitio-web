@@ -45,6 +45,7 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
   const [loading, setLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [category, setCategory] = useState("Todos");
+  const [isHovered, setIsHovered] = useState(false);
   const progressBarRef = useRef<HTMLDivElement>(null);
 
   const categories = ["Todos", ...Array.from(new Set(videos.map((v) => v.category || "Otros")))];
@@ -68,7 +69,7 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
   };
 
   useEffect(() => {
-    if (filteredCount <= 1 || modalOpen) return;
+    if (filteredCount <= 1 || modalOpen || isHovered) return;
     const bar = progressBarRef.current;
     const start = performance.now();
     let raf = 0;
@@ -94,7 +95,7 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
         bar.style.transform = "scaleX(0)";
       }
     };
-  }, [active, category, modalOpen, filteredCount]);
+  }, [active, category, modalOpen, filteredCount, isHovered]);
 
   if (videos.length === 0) return null;
 
@@ -120,19 +121,20 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
       </div>
 
       {/* Category filter */}
-      <div className="max-w-[1400px] mx-auto px-6 md:px-16 mb-8 md:mb-10 flex gap-2 md:gap-3 flex-wrap">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-16 mb-8 md:mb-10 flex gap-2 md:gap-3 flex-wrap" role="group" aria-label="Filtrar videos por categoría">
         {categories.map((c) => (
           <button
             key={c}
             onClick={() => selectCategory(c)}
-            className={`text-[10px] md:text-xs tracking-[0.15em] uppercase rounded-full px-4 md:px-5 py-2 border transition-all ${
+            aria-pressed={category === c}
+            className={`text-[10px] md:text-xs tracking-[0.15em] uppercase rounded-full px-4 md:px-5 py-2 border transition-all hover:scale-[1.02] active:scale-[0.98] ${
               category === c
                 ? "bg-gold text-on-gold border-gold"
-                : "text-muted border-gold/20 hover:text-gold hover:border-gold/50"
+                : "bg-surface text-muted border-gold/15 hover:text-gold hover:border-gold/30"
             }`}
           >
             {c}
-            <span className="opacity-70 ml-1.5">({countFor(videos, c)})</span>
+            <span className="opacity-60 ml-1.5">({countFor(videos, c)})</span>
           </button>
         ))}
       </div>
@@ -146,8 +148,10 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
               initial={anim ? { opacity: 0 } : false}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.4 }}
-              className="relative overflow-hidden rounded-2xl md:rounded-3xl bg-surface cursor-pointer group ring-1 ring-gold/20"
+              className="relative overflow-hidden rounded-2xl md:rounded-3xl bg-surface cursor-pointer group ring-1 ring-gold/15 hover:ring-gold/30 transition-all duration-500"
               onClick={() => openVideo(active)}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
             >
               <div className="aspect-video relative">
                 <YtThumb
@@ -191,7 +195,7 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
 
           {/* Sidebar / row of other videos */}
           <div
-            className="lg:w-[35%] flex lg:flex-col gap-3 md:gap-4 overflow-x-auto lg:overflow-y-auto lg:max-h-[calc((100vw-16rem)*0.5625)] pb-2 lg:pb-0"
+            className="lg:w-[35%] flex lg:flex-col gap-3 md:gap-4 overflow-x-auto lg:overflow-y-auto lg:max-h-[calc((100vw-16rem)*0.5625)] pb-2 lg:pb-0 snap-x snap-mandatory lg:snap-none scroll-smooth"
             style={{ scrollbarWidth: "none" }}
           >
             {filtered.map((video, i) =>
@@ -203,9 +207,9 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: i * 0.06 }}
                   onClick={() => openVideo(i)}
-                  className="group flex-shrink-0 w-[70vw] sm:w-[45vw] lg:w-full text-left cursor-pointer focus:outline-none"
+                  className="group flex-shrink-0 w-[70vw] sm:w-[45vw] lg:w-full text-left cursor-pointer focus:outline-none snap-start"
                 >
-                  <div className="relative overflow-hidden rounded-xl md:rounded-2xl bg-surface flex flex-row lg:flex-col">
+                  <div className="relative overflow-hidden rounded-xl md:rounded-2xl bg-surface flex flex-row lg:flex-col ring-1 ring-gold/5 group-hover:ring-gold/15 transition-all duration-300">
                     <div className="w-[40%] lg:w-full aspect-video lg:aspect-video relative overflow-hidden">
                       <YtThumb
                         id={video.youtubeId}

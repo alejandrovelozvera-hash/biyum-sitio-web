@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useRef, useCallback, useMemo } from "react";
-import { motion, useReducedMotion, AnimatePresence, useScroll, useTransform } from "motion/react";
+import { useState, useMemo } from "react";
+import { motion, useReducedMotion, AnimatePresence } from "motion/react";
 import { Project } from "@/types";
 import ExhibitionDetail from "./Exhibition/ExhibitionDetail";
 
@@ -18,95 +18,48 @@ function TiltCard({ project, index, reduce, onSelect }: {
   reduce: boolean | null;
   onSelect: (p: Project) => void;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
-
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-  const parallaxY = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
-
-  const handleMouse = useCallback((e: React.MouseEvent) => {
-    const el = ref.current;
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    const cx = r.left + r.width / 2;
-    const cy = r.top + r.height / 2;
-    setTilt({
-      x: ((e.clientX - cx) / r.width) * 6,
-      y: ((e.clientY - cy) / r.height) * -6,
-    });
-  }, []);
-
-  const reset = useCallback(() => setTilt({ x: 0, y: 0 }), []);
-
   return (
     <motion.div
-      layout
-      initial={reduce ? false : { opacity: 0, y: 20 }}
+      initial={reduce ? false : { opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.1 }}
-      transition={{ duration: 0.5, delay: index * 0.04, ease: [0.16, 1, 0.3, 1] }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.45, delay: index * 0.03, ease: [0.16, 1, 0.3, 1] }}
     >
       <div
-        ref={ref}
         onClick={() => onSelect(project)}
-        onMouseMove={handleMouse}
-        onMouseLeave={reset}
-        className="group block relative overflow-hidden bg-surface cursor-pointer rounded-2xl"
-        style={{
-          perspective: "1200px",
-        }}
+        className="group block relative overflow-hidden bg-surface cursor-pointer rounded-2xl ring-1 ring-gold/5 hover:ring-gold/20 transition-all duration-500"
       >
-<div
-            className="aspect-[4/3] transition-transform duration-200 ease-out"
-            style={{
-              transform: reduce ? "none" : `rotateX(${tilt.y}deg) rotateY(${tilt.x}deg)`,
-            }}
-          >
-          <motion.div className="absolute inset-0 -top-[12%] h-[124%]" style={{ y: reduce ? 0 : parallaxY }}>
-            {project.cover_image_url && (
-              <img
-                src={project.cover_image_url}
-                alt={project.title}
-                className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
-              />
-            )}
-            {project.featured && (
-              <span className="absolute top-3 left-3 z-20 bg-gold text-[#0A0A0A] text-[9px] tracking-[0.15em] uppercase font-medium px-3 py-1.5 rounded-full">
-                Destacado
-              </span>
-            )}
-            {project.images && project.images.length > 0 && (
-              <img
-                src={project.images[0].url}
-                alt={`${project.title} - detalle`}
-                className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-              />
-            )}
-          </motion.div>
-          <div className="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-black/80 via-black/25 to-transparent transition-colors duration-500 group-hover:from-black/90" />
-          <div
-            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center"
-            style={{
-              background: "rgba(0,0,0,0.5)",
-              backdropFilter: "blur(8px)",
-              WebkitBackdropFilter: "blur(8px)",
-            }}
-          >
-            <span className="text-gold-dark text-xs tracking-widest uppercase border border-gold/20 rounded-full px-5 py-2.5 bg-surface/80">
-              Ver proyecto
+        <div className="aspect-[4/3] relative overflow-hidden">
+          {project.cover_image_url && (
+            <img
+              src={project.cover_image_url}
+              alt={project.title}
+              loading="lazy"
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+            />
+          )}
+          {project.featured && (
+            <span className="absolute top-4 left-4 z-20 bg-gold text-on-gold text-[9px] tracking-[0.14em] uppercase font-medium px-3 py-1.5 rounded-full shadow-sm">
+              Destacado
+            </span>
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent opacity-90 group-hover:from-black/85 transition-colors duration-500" />
+          <div className="absolute bottom-0 left-0 right-0 p-5 md:p-6 flex items-end justify-between gap-4">
+            <div className="min-w-0">
+              <p className="text-white/60 text-[10px] tracking-[0.16em] uppercase mb-1.5">
+                {categoryLabels[project.category] || project.category}
+              </p>
+              <h3 className="text-white text-[15px] md:text-[16px] font-semibold leading-tight break-words tracking-[-0.01em]">
+                {project.title}
+              </h3>
+              {project.client && (
+                <p className="text-white/50 text-[11px] mt-1 truncate">{project.client} · {project.year}</p>
+              )}
+            </div>
+            <span className="shrink-0 w-9 h-9 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-white flex items-center justify-center opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M9 18l6-6-6-6" /></svg>
             </span>
           </div>
-        </div>
-        <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5 z-10">
-          <p className="text-muted text-[10px] tracking-[0.15em] uppercase mb-1">
-            {categoryLabels[project.category] || project.category}
-          </p>
-          <h3 className="text-gold-dark text-sm md:text-base font-bold leading-tight break-words">
-            {project.title}
-          </h3>
         </div>
       </div>
     </motion.div>
@@ -150,13 +103,14 @@ export default function PortfolioGrid({ projects }: { projects: Project[] }) {
           </h2>
         </motion.div>
 
-        <div className="flex flex-wrap gap-2 md:gap-3 mt-8">
+        <div className="flex flex-wrap gap-2 md:gap-3 mt-8" role="group" aria-label="Filtrar por categoría">
           <button
             onClick={() => setFilter(null)}
-            className={`text-[11px] tracking-wider uppercase rounded-full px-4 py-2 transition-all hover:scale-[1.02] active:scale-[0.98] ${
+            aria-pressed={filter === null}
+            className={`text-[11px] tracking-wider uppercase rounded-full px-4 py-2 border transition-all hover:scale-[1.02] active:scale-[0.98] ${
               filter === null
-                ? "text-on-gold bg-gold"
-                : "text-muted hover:text-gold glass"
+                ? "text-on-gold bg-gold border-gold"
+                : "text-muted bg-surface border-gold/15 hover:text-gold hover:border-gold/30"
             }`}
           >
             Todos <span className="opacity-60 tabular-nums">({projects.length})</span>
@@ -167,10 +121,11 @@ export default function PortfolioGrid({ projects }: { projects: Project[] }) {
               <button
                 key={cat}
                 onClick={() => setFilter(filter === cat ? null : cat)}
-                className={`text-[11px] tracking-wider uppercase rounded-full px-4 py-2 transition-all hover:scale-[1.02] active:scale-[0.98] ${
+                aria-pressed={filter === cat}
+                className={`text-[11px] tracking-wider uppercase rounded-full px-4 py-2 border transition-all hover:scale-[1.02] active:scale-[0.98] ${
                   filter === cat
-                    ? "text-on-gold bg-gold"
-                    : "text-muted hover:text-gold glass"
+                    ? "text-on-gold bg-gold border-gold"
+                    : "text-muted bg-surface border-gold/15 hover:text-gold hover:border-gold/30"
                 }`}
               >
                 {categoryLabels[cat] || cat} <span className="opacity-60 tabular-nums">({count})</span>
@@ -181,7 +136,7 @@ export default function PortfolioGrid({ projects }: { projects: Project[] }) {
       </div>
 
       <AnimatePresence mode="popLayout">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5">
           {filtered.map((project, i) => (
             <TiltCard
               key={project.id}
