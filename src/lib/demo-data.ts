@@ -96,6 +96,7 @@ export const demoHeroSlides = [
     cta_link: "/#video",
     video_id: "qyjZxlPQSZI",
     is_video: true,
+    video_start: 10,
   },
   {
     image_url: "https://picsum.photos/seed/biyum3/1920/1080",
@@ -112,6 +113,7 @@ export const demoHeroSlides = [
     cta_link: "/#video",
     video_id: "3u6JWwtC0vE",
     is_video: true,
+    video_start: 10,
   },
   {
     image_url: "https://img.youtube.com/vi/SdcZdfb-na4/hqdefault.jpg",
@@ -121,6 +123,7 @@ export const demoHeroSlides = [
     cta_link: "/#video",
     video_id: "SdcZdfb-na4",
     is_video: true,
+    video_start: 10,
   },
 ];
 
