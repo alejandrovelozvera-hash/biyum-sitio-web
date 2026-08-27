@@ -98,13 +98,19 @@ export default function InfoSection() {
               <span>Riobamba, Ecuador</span>
             </div>
 
-            <form onSubmit={handleSubmit} className="mt-8 space-y-4">
-              <input
-                name="name"
-                required
-                placeholder="Tu nombre"
-                className="w-full bg-surface/70 border border-gold/15 rounded-xl px-4 py-3 text-sm text-gold-dark placeholder:text-placeholder focus:outline-none focus:border-gold/50 transition-colors"
-              />
+            <form onSubmit={handleSubmit} className="mt-8 space-y-4" aria-label="Formulario de contacto">
+              <div>
+                <label htmlFor="contact-name" className="sr-only">Tu nombre</label>
+                <input
+                  id="contact-name"
+                  name="name"
+                  required
+                  placeholder="Tu nombre"
+                  autoComplete="name"
+                  aria-label="Tu nombre"
+                  className="w-full bg-surface/70 border border-gold/15 rounded-xl px-4 py-3 text-sm text-gold-dark placeholder:text-placeholder focus:outline-none focus:border-gold/50 transition-colors"
+                />
+              </div>
               <input
                 name="website"
                 type="text"
@@ -113,21 +119,29 @@ export default function InfoSection() {
                 aria-hidden="true"
                 className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden opacity-0"
               />
-              <textarea
-                name="message"
-                required
-                rows={4}
-                placeholder="Cuéntanos tu idea..."
-                className="w-full bg-surface/70 border border-gold/15 rounded-xl px-4 py-3 text-sm text-gold-dark placeholder:text-placeholder focus:outline-none focus:border-gold/50 transition-colors resize-none"
-              />
+              <div>
+                <label htmlFor="contact-message" className="sr-only">Cuéntanos tu idea</label>
+                <textarea
+                  id="contact-message"
+                  name="message"
+                  required
+                  rows={4}
+                  placeholder="Cuéntanos tu idea..."
+                  aria-label="Cuéntanos tu idea"
+                  className="w-full bg-surface/70 border border-gold/15 rounded-xl px-4 py-3 text-sm text-gold-dark placeholder:text-placeholder focus:outline-none focus:border-gold/50 transition-colors resize-none"
+                />
+              </div>
               <button
                 type="submit"
+                aria-live="polite"
+                aria-label={sent ? "Enviando mensaje por WhatsApp" : "Enviar mensaje por WhatsApp"}
                 className={`inline-flex items-center gap-2 text-sm rounded-full px-6 py-3 transition-all hover:scale-[1.02] active:scale-[0.98] ${
                   sent ? "text-on-gold bg-gold" : "text-on-gold bg-gold hover:bg-gold-light"
                 }`}
               >
                 {sent ? "Enviando..." : "Enviar por WhatsApp"}
               </button>
+              <p className="sr-only" aria-live="polite" role="status">{sent ? "Abriendo WhatsApp con tu mensaje" : ""}</p>
             </form>
           </div>
 

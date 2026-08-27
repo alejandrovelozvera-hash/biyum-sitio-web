@@ -1,6 +1,7 @@
 "use client";
 
 import { Fragment, useState, useEffect, useCallback, useRef } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence, useScroll, useTransform } from "motion/react";
 import { ChevronLeft, ChevronRight, Play } from "./Icons";
 import Link from "next/link";
@@ -73,6 +74,7 @@ function KineticTitle({ text }: { text: string }) {
 
 export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) {
   const [current, setCurrent] = useState(0);
+  const [paused, setPaused] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
   const parallaxY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
@@ -87,8 +89,9 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
   }, [slides.length]);
 
   useEffect(() => {
-    if (slides.length <= 1) return;
+    if (slides.length <= 1 || paused) return;
     const bar = progressBarRef.current;
+    if (bar) bar.style.transform = "scaleX(0)";
     const start = performance.now();
     let raf: number;
     const tick = (t: number) => {
@@ -103,18 +106,22 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
     return () => {
       cancelAnimationFrame(raf);
       clearTimeout(timeout);
-      if (bar) {
-        bar.style.transform = "scaleX(0)";
-      }
     };
-  }, [next, slides.length, current]);
+  }, [next, slides.length, current, paused]);
 
   const s = slides[current];
   const vid = s?.video_id || s?.image_url?.match(/\/vi\/([^/]+)\//)?.[1] || null;
   const vStart = s?.video_start ?? 10;
 
   return (
-    <section ref={sectionRef} className="relative h-dvh w-full overflow-hidden bg-background">
+    <section
+      ref={sectionRef}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onTouchStart={() => setPaused(true)}
+      onTouchEnd={() => setPaused(false)}
+      className="relative h-dvh w-full overflow-hidden bg-background"
+    >
       <AnimatePresence mode="wait">
         <motion.div
           key={current}
@@ -136,9 +143,13 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
               <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-background via-background/90 to-transparent pointer-events-none md:hidden" />
             </div>
           ) : s?.image_url ? (
-            <div
-              className="absolute inset-0 bg-cover bg-center"
-              style={{ backgroundImage: `url(${s.image_url})` }}
+            <Image
+              src={s.image_url}
+              alt={s.title}
+              fill
+              priority={current === 0}
+              sizes="100vw"
+              className="object-cover"
             />
           ) : null}
           {(s?.image_url || vid) && (
@@ -320,24 +331,24 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
       </div>
 
       {slides.length > 1 && (
-        <div className="absolute bottom-8 left-6 md:left-16 flex items-center gap-8">
-          <span className="text-gold-dark/50 text-[10px] tracking-[0.2em] tabular-nums">
+        <div className="absolute bottom-6 md:bottom-8 left-6 md:left-16 flex items-center gap-6 md:gap-8">
+          <span className="text-white/70 md:text-gold-dark/50 text-[10px] tracking-[0.2em] tabular-nums">
             {String(current + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
           </span>
           <div className="flex items-center gap-3">
             <button
               onClick={prev}
-              className="glass rounded-full w-9 h-9 flex items-center justify-center text-muted hover:text-gold transition-all hover:scale-105 active:scale-95"
+              className="rounded-full w-11 h-11 md:w-9 md:h-9 flex items-center justify-center bg-black/30 backdrop-blur-md border border-white/15 text-white hover:text-gold hover:bg-black/40 transition-all hover:scale-105 active:scale-95 shadow-lg"
               aria-label="Anterior"
             >
-              <ChevronLeft size={14} />
+              <ChevronLeft size={16} />
             </button>
             <button
               onClick={next}
-              className="glass rounded-full w-9 h-9 flex items-center justify-center text-muted hover:text-gold transition-all hover:scale-105 active:scale-95"
+              className="rounded-full w-11 h-11 md:w-9 md:h-9 flex items-center justify-center bg-black/30 backdrop-blur-md border border-white/15 text-white hover:text-gold hover:bg-black/40 transition-all hover:scale-105 active:scale-95 shadow-lg"
               aria-label="Siguiente"
             >
-              <ChevronRight size={14} />
+              <ChevronRight size={16} />
             </button>
           </div>
         </div>

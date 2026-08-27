@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { Project } from "@/types";
 import { getProjects, getProjectByIdentifier } from "@/lib/wp-storage";
 import { demoProjects } from "@/lib/demo-data";
@@ -21,6 +22,30 @@ async function getProject(slug: string) {
 
   const demo = demoProjects.find((p) => p.slug === slug);
   return (demo as Project) || null;
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const project = await getProject(slug);
+  if (!project) return { title: "Proyecto no encontrado | Biyum" };
+  const desc = project.description.slice(0, 155);
+  return {
+    title: project.title,
+    description: desc,
+    openGraph: {
+      title: `${project.title} | Biyum`,
+      description: desc,
+      images: project.cover_image_url ? [{ url: project.cover_image_url, width: 1200, height: 630, alt: project.title }] : [],
+      type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: project.title,
+      description: desc,
+      images: project.cover_image_url ? [project.cover_image_url] : [],
+    },
+    alternates: { canonical: `/proyecto/${project.slug}` },
+  };
 }
 
 export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {

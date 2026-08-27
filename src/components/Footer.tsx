@@ -1,5 +1,3 @@
-import { Mail, MapPin } from "./Icons";
-
 export default function Footer() {
   return (
     <footer id="contacto" className="bg-background">
@@ -34,15 +32,7 @@ export default function Footer() {
             </div>
             <div className="md:col-span-3 flex flex-col">
               <div>
-                <p className="text-muted text-xs tracking-widest uppercase mb-5">Contacto</p>
-                <div className="flex flex-col gap-3 text-sm">
-                  <a href="mailto:biyumdis@gmail.com" className="flex items-center gap-2 text-secondary hover:text-gold transition-colors"><Mail size={14} /> biyumdis@gmail.com</a>
-                  <div className="flex items-start gap-2 text-secondary"><MapPin size={14} className="mt-0.5 shrink-0" /><span>Riobamba · Atención online a todo Ecuador</span></div>
-                  <a href="https://wa.me/message/N3PW46LKUALOK1" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-secondary hover:text-gold transition-colors text-xs">WhatsApp · Lun–Sáb 9am–7pm</a>
-                </div>
-              </div>
-              <div className="mt-6">
-                <p className="text-muted text-[10px] tracking-[0.2em] uppercase mb-3">Síguenos</p>
+                <p className="text-muted text-xs tracking-widest uppercase mb-5">Síguenos</p>
                 <div className="flex gap-3">
                   <a href="https://www.facebook.com/biyumec" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gold/10 hover:bg-gold text-gold hover:text-on-gold flex items-center justify-center ring-1 ring-gold/15 transition-all hover:scale-105">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
