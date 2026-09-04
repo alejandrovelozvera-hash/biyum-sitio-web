@@ -8,6 +8,7 @@ const photos = [
   "https://wp.biyum.agency/wp-content/uploads/2024/07/DSC01744-1-scaled.jpg",
   "https://wp.biyum.agency/wp-content/uploads/2024/07/DSC09352-scaled.jpg",
   "https://wp.biyum.agency/wp-content/uploads/2024/07/DSC03925-scaled.jpg",
+  "https://wp.biyum.agency/wp-content/uploads/2024/07/DSC01744-scaled.jpg",
   "https://wp.biyum.agency/wp-content/uploads/2024/07/DSC05606-scaled.jpg",
   "https://wp.biyum.agency/wp-content/uploads/2024/07/DSC03081-1-scaled.jpg",
   "https://wp.biyum.agency/wp-content/uploads/2024/07/DSC06920-scaled.jpg",
@@ -35,8 +36,23 @@ export default function GastronomicSection() {
     window.addEventListener("resize", upd);
     return () => window.removeEventListener("resize", upd);
   }, []);
-  const next = () => setCurrent((c) => (c + pageSize > maxIndex ? 0 : c + pageSize));
-  const prev = () => setCurrent((c) => (c - pageSize < 0 ? maxIndex : c - pageSize));
+  const goPage = (p: number) => {
+    if (p >= pageCount - 1) return maxIndex;
+    return p * pageSize;
+  };
+  const next = () =>
+    setCurrent((c) => {
+      const p = Math.floor(c / pageSize) + 1;
+      if (p >= pageCount) return 0;
+      if (p === pageCount - 1) return maxIndex;
+      return p * pageSize;
+    });
+  const prev = () =>
+    setCurrent((c) => {
+      const p = Math.floor(c / pageSize) - 1;
+      if (p < 0) return maxIndex;
+      return p * pageSize;
+    });
   React.useEffect(() => {
     if (reduce || paused) return;
     const id = setInterval(next, 3000);
@@ -91,9 +107,9 @@ export default function GastronomicSection() {
               {Array.from({ length: pageCount }).map((_, i) => (
                 <button
                   key={i}
-                  onClick={() => setCurrent(i * pageSize)}
+                  onClick={() => setCurrent(goPage(i))}
                   aria-label={`Ir a grupo ${i + 1}`}
-                  className={`h-1.5 rounded-full transition-all ${current === i * pageSize ? "w-6 bg-gold" : "w-1.5 bg-gold/20 hover:bg-gold/40"}`}
+                  className={`h-1.5 rounded-full transition-all ${current === goPage(i) ? "w-6 bg-gold" : "w-1.5 bg-gold/20 hover:bg-gold/40"}`}
                 />
               ))}
             </div>
