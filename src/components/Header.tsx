@@ -18,7 +18,10 @@ const scrollToHash = (href: string) => {
 
 const navLinks = [
   { href: "/#portafolio", label: "Portafolio" },
-  { href: "/#info", label: "Agencia" },
+  { href: "/#video", label: "Videos" },
+  { href: "/#gastronomica", label: "Gastronómica" },
+  { href: "/#servicios", label: "Servicios" },
+  { href: "/#proceso", label: "Proceso" },
   { href: "/#contacto", label: "Contacto" },
   { href: "/chimbuceros", label: "Chimbuceros" },
 ];
