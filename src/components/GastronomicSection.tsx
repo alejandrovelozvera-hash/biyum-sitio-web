@@ -21,21 +21,16 @@ export default function GastronomicSection() {
   const reduce = useReducedMotion();
   const anim = !reduce;
   const [current, setCurrent] = React.useState(0);
-  const [visible, setVisible] = React.useState(3);
+  const [currentM, setCurrentM] = React.useState(0);
   const [paused, setPaused] = React.useState(false);
+  const [pausedM, setPausedM] = React.useState(false);
+  const visible = 3;
+  const pageSize = 3;
   const maxIndex = Math.max(0, photos.length - visible);
-  const pageSize = visible;
   const pageCount = Math.ceil(photos.length / pageSize);
-  React.useEffect(() => {
-    const upd = () => {
-      const v = 3;
-      setVisible(v);
-      setCurrent((c) => Math.min(c, Math.max(0, photos.length - v)));
-    };
-    upd();
-    window.addEventListener("resize", upd);
-    return () => window.removeEventListener("resize", upd);
-  }, []);
+  const pageSizeM = 4;
+  const pageCountM = Math.ceil(photos.length / pageSizeM);
+  const pagesM: string[][] = Array.from({ length: pageCountM }, (_, i) => photos.slice(i * pageSizeM, i * pageSizeM + pageSizeM));
   const goPage = (p: number) => {
     if (p >= pageCount - 1) return maxIndex;
     return p * pageSize;
@@ -53,11 +48,18 @@ export default function GastronomicSection() {
       if (p < 0) return maxIndex;
       return p * pageSize;
     });
+  const nextM = () => setCurrentM((c) => (c + 1) % pageCountM);
+  const prevM = () => setCurrentM((c) => (c - 1 + pageCountM) % pageCountM);
   React.useEffect(() => {
     if (reduce || paused) return;
     const id = setInterval(next, 3000);
     return () => clearInterval(id);
   }, [reduce, paused, maxIndex]);
+  React.useEffect(() => {
+    if (reduce || pausedM) return;
+    const id = setInterval(nextM, 3000);
+    return () => clearInterval(id);
+  }, [reduce, pausedM, pageCountM]);
   return (
     <section id="gastronomica" className="py-24 md:py-32 bg-background">
       <div className="max-w-[1400px] mx-auto px-6 md:px-16">
@@ -80,12 +82,40 @@ export default function GastronomicSection() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-2 gap-3 md:hidden">
-          {photos.map((src, i) => (
-            <div key={`m-${src}-${i}`} className="relative overflow-hidden rounded-2xl bg-surface ring-1 ring-gold/5">
-              <Image src={src} alt={`Fotografía gastronómica ${i + 1}`} width={600} height={800} sizes="50vw" className="w-full h-auto object-contain block" />
+        <div className="md:hidden relative" onTouchStart={() => setPausedM(true)} onTouchEnd={() => setPausedM(false)}>
+          <div className="overflow-hidden rounded-2xl">
+            <motion.div
+              className="flex"
+              animate={{ x: `-${currentM * 100}%` }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              style={{ width: `${pageCountM * 100}%` }}
+            >
+              {pagesM.map((page, pi) => (
+                <div key={pi} className="grid grid-cols-2 gap-3 shrink-0 px-0.5" style={{ width: `${100 / pageCountM}%` }}>
+                  {page.map((src, i) => (
+                    <div key={`${src}-${i}`} className="relative overflow-hidden rounded-2xl bg-surface ring-1 ring-gold/5">
+                      <Image src={src} alt={`Fotografía gastronómica ${pi * pageSizeM + i + 1}`} width={600} height={800} sizes="50vw" className="w-full h-auto object-contain block" />
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </motion.div>
+          </div>
+          <div className="flex items-center justify-between mt-4">
+            <div className="flex gap-1.5">
+              {Array.from({ length: pageCountM }).map((_, i) => (
+                <button key={i} onClick={() => setCurrentM(i)} aria-label={`Ir a grupo ${i + 1}`} className={`h-1.5 rounded-full transition-all ${i === currentM ? "w-6 bg-gold" : "w-1.5 bg-gold/20 hover:bg-gold/40"}`} />
+              ))}
             </div>
-          ))}
+            <div className="flex gap-2">
+              <button onClick={prevM} aria-label="Anterior" className="w-8 h-8 rounded-full bg-surface border border-gold/10 flex items-center justify-center text-gold hover:bg-gold hover:text-on-gold transition-colors">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M15 18l-6-6 6-6" /></svg>
+              </button>
+              <button onClick={nextM} aria-label="Siguiente" className="w-8 h-8 rounded-full bg-surface border border-gold/10 flex items-center justify-center text-gold hover:bg-gold hover:text-on-gold transition-colors">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M9 18l6-6-6-6" /></svg>
+              </button>
+            </div>
+          </div>
         </div>
         <div className="hidden md:block relative group/slider" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
           <div className="overflow-hidden rounded-2xl">
