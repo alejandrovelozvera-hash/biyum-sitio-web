@@ -26,10 +26,25 @@ async function callLLM(messages: { role: string; content: string }[], knowledge:
     return j.choices?.[0]?.message?.content || "";
   } catch {
     const last = messages[messages.length - 1]?.content.toLowerCase() || "";
+    if (last.includes("logo") || last.includes("branding") || last.includes("marca") || last.includes("identidad")) {
+      return "¡Claro! Para **Branding / Logo**: Desde **$250** — incluye 3 propuestas, Manual básico, Manual completo y Papelería esencial. Ideal para emprendimientos y rebranding. ¿Te paso a WhatsApp para ver ejemplos y cotizar tu caso?";
+    }
     if (last.includes("social") || last.includes("post") || last.includes("redes")) {
       return "¡Claro! Para **Social Media / diseño de posts para redes sociales**: Planes desde **$96 al mes (8 a 12 piezas)** — incluye copy + calendario y reporte. Si solo necesitas artes sueltas, cada arte cuesta **$15 e incluye post + historia**. Puedes pagar a fin de mes según los posts que hagamos, o pago inmediato si es solo uno. ¿Te paso a WhatsApp para cotizar tu caso?";
     }
-    if (last.includes("precio") || last.includes("cuanto") || last.includes("cuánto") || last.includes("cuesta")) {
+    if (last.includes("gastronomica") || last.includes("gastronómica") || last.includes("plato") || last.includes("comida") || last.includes("restaurante")) {
+      return "¡Claro! Para **Fotografía Gastronómica**: **$15 por plato** — aprox. 6 fotos por plato desde distintas perspectivas, con styling y props. Sesión en tu local. ¿Te paso a WhatsApp para agendar?";
+    }
+    if (last.includes("web") || last.includes("pagina") || last.includes("página") || last.includes("landing")) {
+      return "¡Claro! Para **Diseño Web**: Desde **$200 la landing page** — responsive, SEO básico, entrega 10–15 días. El precio sube si necesitas varias pestañas, reservas o tienda. ¿Te paso a WhatsApp para cotizar tu caso?";
+    }
+    if (last.includes("video") || last.includes("filmar") || last.includes("grabar") || last.includes("spot") || last.includes("reel")) {
+      return "¡Claro! Para **Producción de Video**: Precio **según tu idea** — grabación 4K, edición + color + audio, entrega 7–12 días. Cuéntame tu idea y te cotizo exacto por WhatsApp.";
+    }
+    if (last.includes("color") || last.includes("grading") || last.includes("etalonaje") || last.includes("davinci")) {
+      return "¡Claro! Para **Color Grading**: Precio **según tu metraje** — corrección y look cinematográfico en Davinci Resolve (requiere LOG). ¿Me cuentas tu metraje para cotizar?";
+    }
+    if (last.includes("precio") || last.includes("cuanto") || last.includes("cuánto") || last.includes("cuesta") || last.includes("cotizar") || last.includes("presupuesto")) {
       return "¡Claro! Te cuento precios: Gastronómica $15 por plato (6 fotos), Social desde $96 (8-12 piezas, artes sueltas $15 post+historia), Branding desde $250, Web desde $200 landing, Video y Color Grading según idea/metraje. ¿Cuál te interesa? Puedo pasarte a WhatsApp para cotizar exacto.";
     }
     if (last.includes("horario") || last.includes("ubicacion")) return "Estamos en Riobamba, atención online a todo Ecuador. Lun–Sáb 9am–7pm. ¿Te paso a WhatsApp?";
