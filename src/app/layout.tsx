@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import ScrollProgress from "@/components/ScrollProgress";
+import AiChatWidget from "@/components/AiChatWidget";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://biyum.agency"),
@@ -68,6 +69,7 @@ export default function RootLayout({
         <ScrollProgress />
         <div className="grain-overlay" />
         {children}
+        <AiChatWidget />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
