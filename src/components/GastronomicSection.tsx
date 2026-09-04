@@ -40,11 +40,11 @@ export default function GastronomicSection() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-12 gap-3 md:gap-4 auto-rows-[160px] md:auto-rows-[220px]">
+        <div className="grid grid-cols-2 md:grid-cols-12 gap-3 md:gap-4">
           {photos.map((src, i) => {
             const span =
               i === 0
-                ? "col-span-2 md:col-span-8 row-span-1 md:row-span-2"
+                ? "col-span-2 md:col-span-8"
                 : i === 1
                 ? "col-span-1 md:col-span-4"
                 : i === 2
@@ -67,14 +67,14 @@ export default function GastronomicSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.5, delay: i * 0.04, ease: [0.16, 1, 0.3, 1] }}
-                className={`relative overflow-hidden rounded-2xl bg-surface ring-1 ring-gold/5 group ${span}`}
+                className={`relative overflow-hidden rounded-2xl bg-surface ring-1 ring-gold/5 group aspect-[4/3] ${span}`}
               >
                 <Image
                   src={src}
                   alt={`Fotografía gastronómica ${i + 1}`}
                   fill
                   sizes="(max-width: 768px) 50vw, 33vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                  className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.02]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </motion.div>
