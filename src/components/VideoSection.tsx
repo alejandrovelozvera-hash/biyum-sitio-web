@@ -13,7 +13,7 @@ export interface VideoItem {
   category?: string;
 }
 
-const PREVIEW_MS = 25000;
+const PREVIEW_MS = 5000;
 
 function YtThumb({ id, alt, className, eager = false }: { id: string; alt: string; className?: string; eager?: boolean }) {
   const [src, setSrc] = useState(`https://img.youtube.com/vi/${id}/maxresdefault.jpg`);

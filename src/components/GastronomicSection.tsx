@@ -23,9 +23,11 @@ export default function GastronomicSection() {
   const [visible, setVisible] = React.useState(3);
   const [paused, setPaused] = React.useState(false);
   const maxIndex = Math.max(0, photos.length - visible);
+  const pageSize = visible;
+  const pageCount = Math.ceil(photos.length / pageSize);
   React.useEffect(() => {
     const upd = () => {
-      const v = window.innerWidth < 768 ? 1 : 3;
+      const v = 3;
       setVisible(v);
       setCurrent((c) => Math.min(c, Math.max(0, photos.length - v)));
     };
@@ -33,8 +35,8 @@ export default function GastronomicSection() {
     window.addEventListener("resize", upd);
     return () => window.removeEventListener("resize", upd);
   }, []);
-  const next = () => setCurrent((c) => (c >= maxIndex ? 0 : c + 1));
-  const prev = () => setCurrent((c) => (c <= 0 ? maxIndex : c - 1));
+  const next = () => setCurrent((c) => (c + pageSize > maxIndex ? 0 : c + pageSize));
+  const prev = () => setCurrent((c) => (c - pageSize < 0 ? maxIndex : c - pageSize));
   React.useEffect(() => {
     if (reduce || paused) return;
     const id = setInterval(next, 3000);
@@ -86,8 +88,13 @@ export default function GastronomicSection() {
           </div>
           <div className="flex items-center justify-between mt-4">
             <div className="flex gap-1.5">
-              {Array.from({ length: maxIndex + 1 }).map((_, i) => (
-                <button key={i} onClick={() => setCurrent(i)} aria-label={`Ir a grupo ${i + 1}`} className={`h-1.5 rounded-full transition-all ${i === current ? "w-6 bg-gold" : "w-1.5 bg-gold/20 hover:bg-gold/40"}`} />
+              {Array.from({ length: pageCount }).map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrent(i * pageSize)}
+                  aria-label={`Ir a grupo ${i + 1}`}
+                  className={`h-1.5 rounded-full transition-all ${current === i * pageSize ? "w-6 bg-gold" : "w-1.5 bg-gold/20 hover:bg-gold/40"}`}
+                />
               ))}
             </div>
             <div className="flex gap-2">
