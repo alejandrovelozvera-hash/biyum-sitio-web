@@ -22,19 +22,24 @@ export default function GastronomicSection() {
   const [current, setCurrent] = React.useState(0);
   const [visible, setVisible] = React.useState(3);
   const [paused, setPaused] = React.useState(false);
+  const maxIndex = Math.max(0, photos.length - visible);
   React.useEffect(() => {
-    const upd = () => setVisible(window.innerWidth < 768 ? 1 : 3);
+    const upd = () => {
+      const v = window.innerWidth < 768 ? 1 : 3;
+      setVisible(v);
+      setCurrent((c) => Math.min(c, Math.max(0, photos.length - v)));
+    };
     upd();
     window.addEventListener("resize", upd);
     return () => window.removeEventListener("resize", upd);
   }, []);
-  const next = () => setCurrent((c) => (c + 1) % photos.length);
-  const prev = () => setCurrent((c) => (c - 1 + photos.length) % photos.length);
+  const next = () => setCurrent((c) => (c >= maxIndex ? 0 : c + 1));
+  const prev = () => setCurrent((c) => (c <= 0 ? maxIndex : c - 1));
   React.useEffect(() => {
     if (reduce || paused) return;
     const id = setInterval(next, 3000);
     return () => clearInterval(id);
-  }, [reduce, paused]);
+  }, [reduce, paused, maxIndex]);
   return (
     <section id="gastronomica" className="py-24 md:py-32 bg-background">
       <div className="max-w-[1400px] mx-auto px-6 md:px-16">
@@ -57,30 +62,32 @@ export default function GastronomicSection() {
           </p>
         </motion.div>
 
-        <div className="relative group/slider">
+        <div className="grid grid-cols-2 gap-3 md:hidden">
+          {photos.map((src, i) => (
+            <div key={`m-${src}-${i}`} className="relative overflow-hidden rounded-2xl bg-surface ring-1 ring-gold/5">
+              <Image src={src} alt={`Fotografía gastronómica ${i + 1}`} width={600} height={800} sizes="50vw" className="w-full h-auto object-contain block" />
+            </div>
+          ))}
+        </div>
+        <div className="hidden md:block relative group/slider" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
           <div className="overflow-hidden rounded-2xl">
             <motion.div
-              className="flex gap-3 md:gap-4"
+              className="flex gap-4 items-start"
               animate={{ x: `-${current * (100 / visible)}%` }}
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
               style={{ width: `${(photos.length * 100) / visible}%` }}
             >
               {photos.map((src, i) => (
-                <div key={`${src}-${i}`} className="relative overflow-hidden rounded-2xl bg-surface ring-1 ring-gold/5 aspect-[4/3] shrink-0" style={{ width: `${100 / photos.length}%` }}>
-                  <Image src={src} alt={`Fotografía gastronómica ${i + 1}`} fill sizes="(max-width: 768px) 85vw, 33vw" className="object-cover object-center" />
+                <div key={`${src}-${i}`} className="relative overflow-hidden rounded-2xl bg-surface ring-1 ring-gold/5 shrink-0" style={{ width: `${100 / photos.length}%` }}>
+                  <Image src={src} alt={`Fotografía gastronómica ${i + 1}`} width={800} height={600} sizes="33vw" className="w-full h-auto object-contain block" />
                 </div>
               ))}
             </motion.div>
           </div>
           <div className="flex items-center justify-between mt-4">
             <div className="flex gap-1.5">
-              {photos.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setCurrent(i)}
-                  aria-label={`Ir a foto ${i + 1}`}
-                  className={`h-1.5 rounded-full transition-all ${i === current ? "w-6 bg-gold" : "w-1.5 bg-gold/20 hover:bg-gold/40"}`}
-                />
+              {Array.from({ length: maxIndex + 1 }).map((_, i) => (
+                <button key={i} onClick={() => setCurrent(i)} aria-label={`Ir a grupo ${i + 1}`} className={`h-1.5 rounded-full transition-all ${i === current ? "w-6 bg-gold" : "w-1.5 bg-gold/20 hover:bg-gold/40"}`} />
               ))}
             </div>
             <div className="flex gap-2">

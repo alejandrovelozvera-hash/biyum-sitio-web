@@ -140,124 +140,113 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
       </div>
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-16">
-        <div className="flex flex-col lg:flex-row gap-4 md:gap-5">
-          {/* Featured / Main video */}
-          <div className="lg:w-[65%]">
-            <motion.div
-              key={current.id}
-              initial={anim ? { opacity: 0 } : false}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.4 }}
-              className="relative overflow-hidden rounded-2xl md:rounded-3xl bg-surface cursor-pointer group ring-1 ring-gold/15 hover:ring-gold/30 transition-all duration-500"
-              onClick={() => openVideo(active)}
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-            >
-              <div className="aspect-video relative">
-                <YtThumb
-                  id={current.youtubeId}
-                  alt={current.title}
-                  eager
-                  className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/60 via-transparent to-transparent" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <motion.div
-                      whileHover={{ scale: 1.15 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-gold/90 group-hover:bg-gold flex items-center justify-center ring-1 ring-gold/20 shadow-[0_0_40px_rgba(201,168,76,0.25)] group-hover:shadow-[0_0_60px_rgba(201,168,76,0.45)] transition-all duration-500"
-                    >
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="text-on-gold ml-1">
-                        <polygon points="5 3 19 12 5 21 5 3" />
-                      </svg>
-                    </motion.div>
-                  </div>
-                  {filteredCount > 1 && (
-                    <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gold/10">
-                      <div
-                        ref={progressBarRef}
-                        className="h-full bg-gold/60 origin-left"
-                        style={{ transform: "scaleX(0)" }}
-                      />
-                    </div>
-                  )}
-              </div>
-              <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-                <p className="text-[#737373] text-[10px] tracking-[0.15em] uppercase mb-1.5">
-                  {current.category || "Audiovisual"}
-                </p>
-                <h3 className="text-white text-xl md:text-2xl lg:text-3xl font-bold tracking-[-0.02em]">
-                  {current.title}
-                </h3>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Sidebar / row of other videos */}
-          <div
-            className="lg:w-[35%] grid grid-cols-2 lg:flex lg:flex-col gap-3 md:gap-4 lg:overflow-y-auto lg:max-h-[calc((100vw-16rem)*0.5625)] pb-2 lg:pb-0"
-            style={{ scrollbarWidth: "none" }}
+        <div className="flex flex-col gap-6 md:gap-8">
+          <motion.div
+            key={current.id}
+            initial={anim ? { opacity: 0 } : false}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4 }}
+            className="relative overflow-hidden rounded-2xl md:rounded-3xl bg-surface cursor-pointer group ring-1 ring-gold/15 hover:ring-gold/30 transition-all duration-500"
+            onClick={() => openVideo(active)}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
           >
-            {filtered.map((video, i) =>
-              i === active ? null : (
-                <motion.button
-                  key={video.id}
-                  initial={anim ? { opacity: 0, x: 20 } : false}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.06 }}
-                  onClick={() => openVideo(i)}
-                  className="group w-full text-left cursor-pointer focus:outline-none"
+            <div className="aspect-video relative">
+              <YtThumb
+                id={current.youtubeId}
+                alt={current.title}
+                eager
+                className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/60 via-transparent to-transparent" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <motion.div
+                  whileHover={{ scale: 1.15 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-gold/90 group-hover:bg-gold flex items-center justify-center ring-1 ring-gold/20 shadow-[0_0_40px_rgba(201,168,76,0.25)] group-hover:shadow-[0_0_60px_rgba(201,168,76,0.45)] transition-all duration-500"
                 >
-                  <div className="relative overflow-hidden rounded-xl md:rounded-2xl bg-surface flex flex-col ring-1 ring-gold/5 group-hover:ring-gold/15 transition-all duration-300">
-                    <div className="w-full aspect-video relative overflow-hidden">
-                      <YtThumb
-                        id={video.youtubeId}
-                        alt={video.title}
-                        className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-gold/90 group-hover:bg-gold flex items-center justify-center shadow-lg ring-1 ring-gold/20 transition-all">
-                          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" className="text-on-gold ml-0.5">
-                            <polygon points="5 3 19 12 5 21 5 3" />
-                          </svg>
-                        </div>
-                      </div>
-                      <span className="absolute bottom-2 right-2 bg-black/70 backdrop-blur-sm text-white text-[10px] tracking-wider px-1.5 py-0.5 rounded">HD</span>
-                    </div>
-                    <div className="p-3 md:p-4 flex flex-col justify-center">
-                      <p className="text-muted text-[9px] tracking-[0.15em] uppercase mb-0.5 lg:hidden">
-                        {video.category || "Audiovisual"}
-                      </p>
-                      <h4 className="text-gold-dark text-xs md:text-sm font-semibold tracking-tight line-clamp-2 leading-snug">
-                        {video.title}
-                      </h4>
-                      <p className="text-secondary text-[10px] mt-1 leading-relaxed line-clamp-1 hidden lg:block">
-                        {video.description}
-                      </p>
-                    </div>
-                  </div>
-                </motion.button>
-              )
-            )}
-
-            {/* Empty state / CTA when the category has only one video */}
-            {filteredCount <= 1 && (
-              <div className="hidden lg:flex flex-1 flex-col items-center justify-center text-center rounded-xl bg-surface/60 border border-gold/10 p-6">
-                <p className="text-muted text-[10px] tracking-[0.2em] uppercase mb-3">¿Tienes un proyecto audiovisual?</p>
-                <p className="text-secondary text-xs leading-relaxed mb-4">
-                  Cuéntanos tu idea y creemos el video que tu marca necesita.
-                </p>
-                <a
-                  href="https://wa.me/message/N3PW46LKUALOK1"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[10px] tracking-[0.15em] uppercase text-gold hover:text-gold-light border border-gold/30 hover:border-gold/60 rounded-full px-5 py-2 transition-all"
-                >
-                  Escríbenos
-                </a>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="text-on-gold ml-1">
+                    <polygon points="5 3 19 12 5 21 5 3" />
+                  </svg>
+                </motion.div>
               </div>
-            )}
+              {filteredCount > 1 && (
+                <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gold/10">
+                  <div ref={progressBarRef} className="h-full bg-gold/60 origin-left" style={{ transform: "scaleX(0)" }} />
+                </div>
+              )}
+            </div>
+            <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
+              <p className="text-[#737373] text-[10px] tracking-[0.15em] uppercase mb-1.5">{current.category || "Audiovisual"}</p>
+              <h3 className="text-white text-xl md:text-2xl lg:text-3xl font-bold tracking-[-0.02em]">{current.title}</h3>
+            </div>
+          </motion.div>
+
+          <div className="relative">
+            <div className="flex items-center justify-between mb-3 md:mb-4">
+              <p className="text-muted text-[10px] tracking-[0.2em] uppercase">Más videos · {filteredCount - 1} disponibles</p>
+              {filteredCount > 2 && (
+                <div className="hidden md:flex gap-2">
+                  <button
+                    onClick={() => document.getElementById("video-scroller")?.scrollBy({ left: -360, behavior: "smooth" })}
+                    aria-label="Anterior"
+                    className="w-8 h-8 rounded-full bg-surface border border-gold/10 flex items-center justify-center text-gold hover:bg-gold hover:text-on-gold transition-colors"
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M15 18l-6-6 6-6" /></svg>
+                  </button>
+                  <button
+                    onClick={() => document.getElementById("video-scroller")?.scrollBy({ left: 360, behavior: "smooth" })}
+                    aria-label="Siguiente"
+                    className="w-8 h-8 rounded-full bg-surface border border-gold/10 flex items-center justify-center text-gold hover:bg-gold hover:text-on-gold transition-colors"
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M9 18l6-6-6-6" /></svg>
+                  </button>
+                </div>
+              )}
+            </div>
+            <div
+              id="video-scroller"
+              className="flex gap-3 md:gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-3 -mx-6 px-6 md:mx-0 md:px-0"
+              style={{ scrollbarWidth: "none" }}
+            >
+              {filtered.map((video, i) =>
+                i === active ? null : (
+                  <motion.button
+                    key={video.id}
+                    initial={anim ? { opacity: 0, y: 12 } : false}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.35, delay: i * 0.04 }}
+                    onClick={() => openVideo(i)}
+                    className="group text-left cursor-pointer focus:outline-none shrink-0 snap-start w-[78%] sm:w-[44%] md:w-[32%] lg:w-[24%] xl:w-[22%]"
+                  >
+                    <div className="relative overflow-hidden rounded-xl md:rounded-2xl bg-surface flex flex-col ring-1 ring-gold/5 group-hover:ring-gold/15 transition-all duration-300">
+                      <div className="w-full aspect-video relative overflow-hidden">
+                        <YtThumb id={video.youtubeId} alt={video.title} className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105" />
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-gold/90 group-hover:bg-gold flex items-center justify-center shadow-lg ring-1 ring-gold/20 transition-all">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" className="text-on-gold ml-0.5"><polygon points="5 3 19 12 5 21 5 3" /></svg>
+                          </div>
+                        </div>
+                        <span className="absolute bottom-2 right-2 bg-black/70 backdrop-blur-sm text-white text-[10px] tracking-wider px-1.5 py-0.5 rounded">HD</span>
+                      </div>
+                      <div className="p-3 md:p-4 flex flex-col justify-center">
+                        <p className="text-muted text-[9px] tracking-[0.15em] uppercase mb-0.5">{video.category || "Audiovisual"}</p>
+                        <h4 className="text-gold-dark text-xs md:text-sm font-semibold tracking-tight line-clamp-2 leading-snug">{video.title}</h4>
+                        <p className="text-secondary text-[10px] mt-1 leading-relaxed line-clamp-1 hidden md:block">{video.description}</p>
+                      </div>
+                    </div>
+                  </motion.button>
+                )
+              )}
+              {filteredCount <= 1 && (
+                <div className="shrink-0 w-[78%] sm:w-[44%] md:w-[32%] flex flex-col items-center justify-center text-center rounded-xl bg-surface/60 border border-gold/10 p-6 aspect-video md:aspect-auto md:min-h-[180px]">
+                  <p className="text-muted text-[10px] tracking-[0.2em] uppercase mb-2">¿Proyecto audiovisual?</p>
+                  <p className="text-secondary text-xs leading-relaxed mb-3">Cuéntanos tu idea.</p>
+                  <a href="https://wa.me/message/N3PW46LKUALOK1" target="_blank" rel="noopener noreferrer" className="text-[10px] tracking-[0.15em] uppercase text-gold border border-gold/30 rounded-full px-5 py-2">Escríbenos</a>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
