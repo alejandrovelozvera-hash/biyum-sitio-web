@@ -1,5 +1,6 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
+import { Chat } from "./Icons";
 
 type Msg = { role: "user" | "assistant"; content: string };
 
@@ -11,12 +12,21 @@ export default function AiChatWidget() {
   ]);
   const [loading, setLoading] = useState(false);
   const [showWa, setShowWa] = useState(false);
+  const [showHint, setShowHint] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
   const sessionId = useRef(Math.random().toString(36).slice(2, 8));
 
   useEffect(() => {
     listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, loading]);
+
+  useEffect(() => {
+    const t = setTimeout(() => setShowHint(true), 2500);
+    return () => clearTimeout(t);
+  }, []);
+  useEffect(() => {
+    if (open) setShowHint(false);
+  }, [open]);
 
   const send = async (text = input) => {
     if (!text.trim() || loading) return;
@@ -42,12 +52,22 @@ export default function AiChatWidget() {
 
   return (
     <>
+      {!open && showHint && (
+        <div className="fixed bottom-6 right-20 z-50 max-w-[220px] bg-surface-elevated border border-gold/15 rounded-2xl rounded-br-sm shadow-xl p-3 pr-8 animate-[fadeIn_0.4s_ease]">
+          <button onClick={() => setShowHint(false)} aria-label="Cerrar aviso" className="absolute top-2 right-2 text-muted hover:text-gold text-xs">×</button>
+          <p className="text-gold-dark text-sm font-medium leading-tight">¿Quieres algún servicio?</p>
+          <p className="text-muted text-xs mt-1">Pregunta por tu servicio aquí →</p>
+        </div>
+      )}
       <button
         onClick={() => setOpen((o) => !o)}
-        aria-label="Abrir chat"
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-gold text-on-gold shadow-xl flex items-center justify-center hover:bg-gold-light transition-all hover:scale-105"
+        aria-label={open ? "Cerrar chat" : "Abrir chat de Biyum"}
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-gold text-on-gold shadow-xl flex items-center justify-center hover:bg-gold-light transition-all hover:scale-105 ring-4 ring-gold/20"
       >
-        {open ? "×" : "💬"}
+        <span className="absolute inset-0 rounded-full bg-gold/30 animate-ping pointer-events-none" aria-hidden />
+        <span className="relative">
+          {open ? <span className="text-xl leading-none">×</span> : <Chat size={22} className="text-on-gold" />}
+        </span>
       </button>
       {open && (
         <div className="fixed bottom-20 right-6 z-50 w-[92vw] max-w-[360px] h-[480px] bg-surface-elevated rounded-2xl shadow-2xl ring-1 ring-gold/10 flex flex-col overflow-hidden">
