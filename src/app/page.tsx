@@ -26,7 +26,7 @@ async function getHeroData() {
 function Divider({ alt = false }: { alt?: boolean }) {
   return (
     <div className={`flex justify-center py-6 md:py-8 ${alt ? "bg-section-alt" : "bg-background"}`}>
-      <div className="w-0.5 h-12 md:h-16 bg-gradient-to-b from-transparent via-gold/20 to-transparent" />
+      <div className="w-1.5 h-1.5 rounded-full bg-gold/50" />
     </div>
   );
 }
@@ -42,8 +42,6 @@ export default async function HomePage() {
         <Header />
         <HeroSlider slides={heroSlides} />
         <Divider />
-        <BrandingProcess />
-        <Divider />
         <PortfolioGrid projects={projects} />
         <Divider />
         <VideoSection videos={demoVideos} />
@@ -51,6 +49,8 @@ export default async function HomePage() {
         <GastronomicSection />
         <Divider alt />
         <ServicesSection />
+        <Divider alt />
+        <BrandingProcess />
         <Divider alt />
         <InfoSection />
         <Footer />
