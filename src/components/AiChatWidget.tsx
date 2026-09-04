@@ -63,7 +63,7 @@ export default function AiChatWidget() {
   return (
     <>
       {!open && showHint && (
-        <div className="fixed bottom-6 right-20 z-50 max-w-[220px] bg-surface-elevated border border-gold/15 rounded-2xl rounded-br-sm shadow-xl p-3 pr-8 animate-[fadeIn_0.4s_ease]">
+        <div className="fixed bottom-20 right-20 z-50 max-w-[220px] bg-surface-elevated border border-gold/15 rounded-2xl rounded-br-sm shadow-xl p-3 pr-8 animate-[fadeIn_0.4s_ease]">
           <button onClick={() => setShowHint(false)} aria-label="Cerrar aviso" className="absolute top-2 right-2 text-muted hover:text-gold text-xs">×</button>
           <p className="text-gold-dark text-sm font-medium leading-tight">¿Quieres algún servicio?</p>
           <p className="text-muted text-xs mt-1">Pregunta por tu servicio aquí →</p>
@@ -76,7 +76,7 @@ export default function AiChatWidget() {
           if (n) openAt.current = Date.now();
         }}
         aria-label={open ? "Cerrar chat" : "Abrir chat de Biyum"}
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-gold text-on-gold shadow-xl flex items-center justify-center hover:bg-gold-light transition-all hover:scale-105 ring-4 ring-gold/20"
+        className="fixed bottom-20 right-6 z-50 w-14 h-14 rounded-full bg-gold text-on-gold shadow-xl flex items-center justify-center hover:bg-gold-light transition-all hover:scale-105 ring-4 ring-gold/20"
       >
         <span className="absolute inset-0 rounded-full bg-gold/30 animate-ping pointer-events-none" aria-hidden />
         <span className="relative">
@@ -84,7 +84,7 @@ export default function AiChatWidget() {
         </span>
       </button>
       {open && (
-        <div className="fixed bottom-20 right-6 z-50 w-[92vw] max-w-[360px] h-[480px] bg-surface-elevated rounded-2xl shadow-2xl ring-1 ring-gold/10 flex flex-col overflow-hidden">
+        <div className="fixed bottom-36 right-6 z-50 w-[92vw] max-w-[360px] h-[480px] bg-surface-elevated rounded-2xl shadow-2xl ring-1 ring-gold/10 flex flex-col overflow-hidden">
           <div className="px-4 py-3 bg-gold text-on-gold flex items-center justify-between">
             <span className="text-sm font-medium">Biyum Asistente</span>
             <span className="w-2 h-2 bg-white/80 rounded-full animate-pulse" aria-hidden />
