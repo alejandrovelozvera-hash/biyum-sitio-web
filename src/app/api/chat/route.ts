@@ -76,6 +76,18 @@ export async function POST(req: Request) {
   }
   if (last.trim().length < 2) return Response.json({ answer: "Escribe tu pregunta.", escalate: false }, { status: 400 });
 
+  const lower = last.toLowerCase();
+  const hasSpecific = ["logo", "branding", "marca", "social", "post", "redes", "gastronom", "plato", "web", "landing", "video", "color", "grading"].some((k) => lower.includes(k));
+  const isGenericPrice = (lower.includes("precio") || lower.includes("cuanto") || lower.includes("cuánto") || lower.includes("cuesta") || lower.includes("cotizar")) && !hasSpecific;
+  if (isGenericPrice) {
+    return Response.json({
+      answer: "¿De qué servicio quieres saber el precio? Elige uno y te doy el detalle exacto:",
+      quickReplies: ["Gastronómica $15 por plato", "Social desde $96", "Branding desde $250", "Web desde $200", "Video / Color Grading"],
+      escalate: false,
+      waLink: "https://wa.me/message/N3PW46LKUALOK1",
+    });
+  }
+
   const fullKnowledge = getKnowledge();
   const relevant = retrieveRelevant(last);
   const knowledge = relevant || fullKnowledge;

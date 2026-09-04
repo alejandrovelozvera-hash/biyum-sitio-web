@@ -13,6 +13,7 @@ export default function AiChatWidget() {
   const [loading, setLoading] = useState(false);
   const [showWa, setShowWa] = useState(false);
   const [showHint, setShowHint] = useState(false);
+  const [quickReplies, setQuickReplies] = useState<string[]>([]);
   const listRef = useRef<HTMLDivElement>(null);
   const sessionId = useRef(Math.random().toString(36).slice(2, 8));
   const openAt = useRef<number>(0);
@@ -40,6 +41,7 @@ export default function AiChatWidget() {
     setInput("");
     setLoading(true);
     setShowWa(false);
+    setQuickReplies([]);
     const placeholder: Msg = { role: "assistant", content: "" };
     setMessages((m) => [...m, placeholder]);
     try {
@@ -84,11 +86,14 @@ export default function AiChatWidget() {
         if (!acc) {
           const j = await r.json().catch(() => null);
           if (j?.answer) setMessages((m) => { const c = [...m]; c[c.length - 1] = { role: "assistant", content: j.answer }; return c; });
+          if (j?.quickReplies?.length) setQuickReplies(j.quickReplies);
+          if (j?.escalate) setShowWa(true);
         }
       } else {
         const j = await r.json();
         setMessages((m) => { const c = [...m]; c[c.length - 1] = { role: "assistant", content: j.answer }; return c; });
         if (j.escalate) setShowWa(true);
+        if (j.quickReplies?.length) setQuickReplies(j.quickReplies);
       }
     } catch {
       setMessages((m) => { const c = [...m]; c[c.length - 1] = { role: "assistant", content: "Hubo un error. Escríbenos directo por WhatsApp y te ayudamos." }; return c; });
@@ -137,6 +142,15 @@ export default function AiChatWidget() {
               <a href="https://wa.me/message/N3PW46LKUALOK1" target="_blank" rel="noopener noreferrer" className="block text-center text-sm bg-gold text-on-gold rounded-full px-4 py-2 mt-2">
                 Continuar por WhatsApp →
               </a>
+            )}
+            {quickReplies.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {quickReplies.map((q) => (
+                  <button key={q} onClick={() => send(q)} className="text-[11px] bg-gold/10 border border-gold/20 rounded-full px-3 py-1.5 hover:bg-gold/20 text-gold-dark">
+                    {q}
+                  </button>
+                ))}
+              </div>
             )}
           </div>
           <div className="p-3 border-t border-gold/10 flex gap-2">
