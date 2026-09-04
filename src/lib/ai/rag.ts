@@ -19,11 +19,14 @@ function scoreChunk(query: string, chunk: string): number {
   return s;
 }
 
-export function retrieveRelevant(query: string, topK = 3): string {
+export function retrieveRelevant(query: string, topK = 2): string {
   const kb = getKnowledge();
   const chunks = chunkKnowledge(kb);
   const scored = chunks.map((ch) => ({ ch, score: scoreChunk(query, ch) })).sort((a, b) => b.score - a.score);
-  const top = scored.filter((s) => s.score > 0).slice(0, topK).map((s) => s.ch);
-  if (top.length === 0) return chunks.slice(0, 2).join("\n\n");
+  const top = scored.filter((s) => s.score >= 2).slice(0, topK).map((s) => s.ch);
+  if (top.length === 0) {
+    const fallback = scored.filter((s) => s.score > 0).slice(0, 1).map((s) => s.ch);
+    return fallback.length ? fallback.join("\n\n") : chunks.slice(0, 1).join("\n\n");
+  }
   return top.join("\n\n---\n\n");
 }

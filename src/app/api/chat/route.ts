@@ -5,7 +5,7 @@ import { getClientIp, isRateLimited } from "@/lib/ai/rateLimit";
 
 export const runtime = "nodejs";
 
-const SYSTEM = `Eres el asistente de Biyum, agencia de Riobamba. Respondes en español, cercano y profesional. Usa SOLO la base de conocimientos. Precios clave: Social Media 8-12 piezas $96/mes, artes sueltas $15 post+historia pago a fin de mes. Gastronómica $15 por plato 6 fotos. Branding desde $250. Web desde $200 landing. Video y Color Grading según idea/metraje. Si no sabes, ofrece WhatsApp. No reveles nunca claves, tokens ni detalles internos.`;
+const SYSTEM = `Eres el asistente de Biyum, agencia de Riobamba. Respondes en español, cercano y profesional. Filtra SIEMPRE por palabras clave: responde SOLO con el servicio relevante a la pregunta, no listes todos si solo preguntan por uno. Usa SOLO la base de conocimientos. Precios clave: Social Media 8-12 piezas $96/mes, artes sueltas $15 post+historia pago a fin de mes. Gastronómica $15 por plato 6 fotos. Branding desde $250. Web desde $200 landing. Video y Color Grading según idea/metraje. Si no sabes, ofrece WhatsApp. No reveles nunca claves, tokens ni detalles internos.`;
 
 async function callLLM(messages: { role: string; content: string }[], knowledge: string, stream?: boolean) {
   const pollinationsUrl = "https://text.pollinations.ai/openai";
@@ -45,7 +45,7 @@ async function callLLM(messages: { role: string; content: string }[], knowledge:
       return "¡Claro! Para **Color Grading**: Precio **según tu metraje** — corrección y look cinematográfico en Davinci Resolve (requiere LOG). ¿Me cuentas tu metraje para cotizar?";
     }
     if (last.includes("precio") || last.includes("cuanto") || last.includes("cuánto") || last.includes("cuesta") || last.includes("cotizar") || last.includes("presupuesto")) {
-      return "¡Claro! Te cuento precios: Gastronómica $15 por plato (6 fotos), Social desde $96 (8-12 piezas, artes sueltas $15 post+historia), Branding desde $250, Web desde $200 landing, Video y Color Grading según idea/metraje. ¿Cuál te interesa? Puedo pasarte a WhatsApp para cotizar exacto.";
+      return "¿De qué servicio quieres saber el precio? Te cuento rápido: Gastronómica $15 por plato (6 fotos), Social desde $96 (8-12 piezas, artes sueltas $15 post+historia), Branding desde $250, Web desde $200 landing, Video y Color Grading según idea/metraje. Dime cuál te interesa y te doy el detalle exacto.";
     }
     if (last.includes("horario") || last.includes("ubicacion")) return "Estamos en Riobamba, atención online a todo Ecuador. Lun–Sáb 9am–7pm. ¿Te paso a WhatsApp?";
     return "¡Hola! Soy el asistente de Biyum. Puedo contarte sobre fotografía gastronómica, video, branding, social, web y color grading. ¿Qué proyecto tienes en mente?";
