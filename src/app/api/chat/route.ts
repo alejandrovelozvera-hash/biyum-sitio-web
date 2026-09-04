@@ -93,7 +93,12 @@ export async function POST(req: Request) {
   const knowledge = relevant || fullKnowledge;
   const wantsStream = req.headers.get("accept")?.includes("text/event-stream");
   const escalate = shouldEscalate(last);
+  const isFirstMessage = messages.length === 1;
 
+  if (isFirstMessage) {
+    const preview = last.slice(0, 150).replace(/`/g, "'");
+    notifyTelegram(`Nueva conversacion - Biyum Asistente\nSesion: ${sessionId}\nMensaje: "${preview}"`);
+  }
   if (escalate) {
     const preview = last.slice(0, 200).replace(/`/g, "'");
     notifyTelegram(`LEAD Biyum - intencion de contratar\nSesion: ${sessionId}\nMensaje: "${preview}"`);
