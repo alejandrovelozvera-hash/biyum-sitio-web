@@ -42,6 +42,7 @@ export interface WpMediaItem {
   alt: string
   width: number
   height: number
+  filename?: string
 }
 
 export interface SiteConfig {
@@ -65,4 +66,8 @@ export interface HeroSlide {
   subtitle: string
   cta_text: string
   cta_link: string
+  video_id?: string
+  is_video?: boolean
+  video_start?: number
+  video_end?: number
 }

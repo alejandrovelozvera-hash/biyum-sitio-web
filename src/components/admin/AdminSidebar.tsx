@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Dashboard, Folder, Settings, LogOut, Eye } from "../Icons";
+import { Dashboard, Folder, Settings, LogOut, Eye, Image } from "../Icons";
 
 const links = [
   { href: "/admin", label: "Dashboard", icon: Dashboard },
   { href: "/admin/proyectos", label: "Proyectos", icon: Folder },
+  { href: "/admin/media", label: "Media", icon: Image },
   { href: "/admin/config", label: "Configuración", icon: Settings },
   { href: "/admin/chat", label: "Chat IA", icon: Settings },
 ];

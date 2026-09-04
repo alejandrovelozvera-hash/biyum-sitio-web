@@ -7,7 +7,7 @@ import { Category } from "@/types";
 import { demoHeroSlides } from "@/lib/demo-data";
 import MediaPicker from "./MediaPicker";
 
-interface Slide { image_url: string; title: string; subtitle: string; cta_text: string; cta_link: string; }
+interface Slide { image_url: string; title: string; subtitle: string; cta_text: string; cta_link: string; video_id?: string; is_video?: boolean; }
 interface CategoryInput { id: string; name: string; slug: string; order_index: number; }
 interface Props {
   initialSlides: Slide[] | null;
@@ -89,25 +89,40 @@ export default function AdminConfigForm({ initialSlides, initialCategories }: Pr
             {slides.length > 1 && <button type="button" onClick={() => removeSlide(index)} className="text-[#525252] hover:text-red-400"><Trash size={15} /></button>}
           </div>
           <div>
-            <label className="text-[#525252] text-xs block mb-2">Preview del slide</label>
+            <label className="text-[#525252] text-xs block mb-2">Preview del slide {slide.is_video ? "· Video" : ""}</label>
             <div className="relative aspect-[16/7] bg-black/40 border border-[#1F1F1F] overflow-hidden">
-              {slide.image_url ? (
+              {slide.is_video && slide.video_id ? (
+                <iframe src={`https://www.youtube.com/embed/${slide.video_id}?mute=1&controls=0&modestbranding=1`} className="w-full h-full" allow="autoplay; encrypted-media" title={slide.title} />
+              ) : slide.image_url ? (
                 <img src={slide.image_url} alt={`Slide ${index + 1}`} className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.opacity = "0.2"; }} />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-[#525252] text-xs">Sin imagen — pega una URL abajo</div>
               )}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-              <div className="absolute bottom-3 left-4">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent pointer-events-none" />
+              <div className="absolute bottom-3 left-4 pointer-events-none">
                 <p className="text-[#9CA3AF] text-[9px] tracking-[0.15em] uppercase mb-0.5">{slide.title || "Título"}</p>
                 <p className="text-white text-xs">{slide.subtitle || "Subtítulo"}</p>
               </div>
             </div>
           </div>
           <div>
-            <label className="text-[#525252] text-xs block mb-2">URL de imagen</label>
-            <input type="text" value={slide.image_url} onChange={(e) => updateSlide(index, "image_url", e.target.value)} className="w-full bg-black/30 border border-[#1F1F1F] px-4 py-3 text-white text-sm focus:outline-none focus:border-white/20" placeholder="https://biyum.agency/wp-content/uploads/..." />
+            <label className="text-[#525252] text-xs block mb-2">URL de imagen {slide.is_video && "(usada como poster si falla el video)"}</label>
+            <input type="text" value={slide.image_url} onChange={(e) => updateSlide(index, "image_url", e.target.value)} className="w-full bg-black/30 border border-[#1F1F1F] px-4 py-3 text-white text-sm focus:outline-none focus:border-white/20" placeholder="https://biyum.agency/wp-content/uploads/... o https://img.youtube.com/vi/ID/hqdefault.jpg" />
           </div>
           <MediaPicker value={slide.image_url} onPick={(url) => updateSlide(index, "image_url", url)} />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <label className="flex items-center gap-2 text-sm text-white cursor-pointer">
+              <input type="checkbox" checked={!!slide.is_video} onChange={(e) => updateSlide(index, "is_video" as any, e.target.checked as any)} className="rounded border-white/20 bg-black/30" />
+              Es video
+            </label>
+            <div>
+              <label className="text-[#525252] text-xs block mb-2">YouTube ID (si es video)</label>
+              <input type="text" value={slide.video_id || ""} onChange={(e) => updateSlide(index, "video_id" as any, e.target.value as any)} placeholder="qyjZxlPQSZI" className="w-full bg-black/30 border border-[#1F1F1F] px-4 py-3 text-white text-sm focus:outline-none focus:border-white/20" />
+            </div>
+            <div className="flex items-end">
+              <p className="text-[#525252] text-xs">Si es video, se reproduce autoplay muteado. Deja vacío para slide de imagen.</p>
+            </div>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="text-[#525252] text-xs block mb-2">Título</label>

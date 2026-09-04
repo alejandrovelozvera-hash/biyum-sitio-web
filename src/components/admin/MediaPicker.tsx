@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { WpMediaItem } from "@/types";
-import { Search, X, Spinner, Upload } from "../Icons";
+import { Search, X, Spinner, Upload, Trash2 } from "../Icons";
 
 interface Props {
   value: string;
@@ -19,6 +19,8 @@ export default function MediaPicker({ value, onPick, label = "Elegir de WordPres
   const [total, setTotal] = useState(0);
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState("");
+  const [deletingIds, setDeletingIds] = useState<Set<string>>(new Set());
+  const [deleteMsg, setDeleteMsg] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -60,6 +62,33 @@ export default function MediaPicker({ value, onPick, label = "Elegir de WordPres
     setUploading(false);
   }
 
+  async function handleDelete(id: string | number) {
+    if (!confirm("¿Eliminar esta imagen de WordPress Media? Esta acción no se puede deshacer.")) return;
+    const sid = String(id);
+    setDeletingIds((prev) => new Set(prev).add(sid));
+    setDeleteMsg("");
+    try {
+      const res = await fetch(`/api/wordpress/media?id=${sid}`, { method: "DELETE" });
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        setDeleteMsg(data?.error || "No se pudo eliminar");
+        return;
+      }
+      setImages((prev) => prev.filter((i) => String(i.id) !== sid));
+      setTotal((t) => Math.max(0, t - 1));
+      setDeleteMsg("Imagen eliminada");
+      setTimeout(() => setDeleteMsg(""), 2000);
+    } catch {
+      setDeleteMsg("Error de conexión al eliminar");
+    } finally {
+      setDeletingIds((prev) => {
+        const n = new Set(prev);
+        n.delete(sid);
+        return n;
+      });
+    }
+  }
+
   return (
     <div className="space-y-3">
       <button
@@ -97,6 +126,7 @@ export default function MediaPicker({ value, onPick, label = "Elegir de WordPres
           </div>
 
           {uploadError && <p className="text-red-400 text-sm">{uploadError}</p>}
+          {deleteMsg && <p className="text-[#9CA3AF] text-xs">{deleteMsg}</p>}
 
           <div className="relative">
             <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#9CA3AF]" />
@@ -117,16 +147,29 @@ export default function MediaPicker({ value, onPick, label = "Elegir de WordPres
             <>
               <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2 max-h-[40vh] overflow-y-auto pr-1">
                 {images.map((img) => (
-                  <button
+                  <div
                     key={img.id}
-                    type="button"
-                    onClick={() => { onPick(img.url); setOpen(false); }}
                     className={`relative group aspect-square bg-[#1A1A1A] overflow-hidden border transition-all ${value === img.url ? "border-gold ring-1 ring-gold/40" : "border-white/10 hover:border-white/30"}`}
                     title={img.title}
                   >
-                    <img src={img.thumb} alt={img.alt || img.title} className="w-full h-full object-cover" />
-                    {value === img.url && <span className="absolute top-1 left-1 text-[8px] bg-gold text-[#0A0A0A] px-1 py-0.5">✓</span>}
-                  </button>
+                    <button
+                      type="button"
+                      onClick={() => { onPick(img.url); setOpen(false); }}
+                      className="w-full h-full"
+                    >
+                      <img src={img.thumb} alt={img.alt || img.title} className="w-full h-full object-cover" />
+                    </button>
+                    {value === img.url && <span className="absolute top-1 left-1 text-[8px] bg-gold text-[#0A0A0A] px-1 py-0.5 pointer-events-none">✓</span>}
+                    <button
+                      type="button"
+                      onClick={(e) => { e.stopPropagation(); handleDelete(img.id); }}
+                      disabled={deletingIds.has(String(img.id))}
+                      className="absolute top-1 right-1 bg-black/70 hover:bg-red-500 text-white p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-50"
+                      title="Eliminar de WordPress"
+                    >
+                      <Trash2 size={10} />
+                    </button>
+                  </div>
                 ))}
               </div>
               {total > images.length && (

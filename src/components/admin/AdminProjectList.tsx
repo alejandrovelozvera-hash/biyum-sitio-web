@@ -13,7 +13,16 @@ export default function AdminProjectList({
 }) {
   const [projects, setProjects] = useState(initial);
   const [deleting, setDeleting] = useState<string | null>(null);
+  const [search, setSearch] = useState("");
+  const [filterCat, setFilterCat] = useState<string>("todos");
   const router = useRouter();
+
+  const categories = Array.from(new Set(initial.map((p) => p.category).filter(Boolean))) as string[];
+  const filtered = projects.filter((p) => {
+    const mSearch = !search || p.title.toLowerCase().includes(search.toLowerCase()) || p.client?.toLowerCase().includes(search.toLowerCase());
+    const mCat = filterCat === "todos" || p.category === filterCat;
+    return mSearch && mCat;
+  });
 
   async function handleDelete(id: string) {
     if (!confirm("¿Eliminar este proyecto?")) return;
@@ -56,9 +65,24 @@ export default function AdminProjectList({
     );
   }
 
+  const toggleFeatured = async (p: Project) => {
+    const updated = { ...p, featured: !p.featured };
+    setProjects((prev) => prev.map((x) => (x.id === p.id ? updated : x)));
+    await fetch("/api/proyectos", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: p.id, featured: updated.featured }) });
+    router.refresh();
+  };
+
   return (
-    <div className="bg-[#141414] border border-[#1F1F1F] overflow-hidden">
-      {projects.length === 0 ? (
+    <div className="space-y-4">
+      <div className="flex flex-col sm:flex-row gap-3">
+        <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Buscar por título o cliente..." className="flex-1 bg-[#141414] border border-[#1F1F1F] px-4 py-2.5 text-white text-sm placeholder:text-[#525252] focus:outline-none focus:border-white/20" />
+        <select value={filterCat} onChange={(e) => setFilterCat(e.target.value)} className="bg-[#141414] border border-[#1F1F1F] px-4 py-2.5 text-white text-sm focus:outline-none">
+          <option value="todos">Todas las categorías</option>
+          {categories.map((c) => <option key={c} value={c}>{c}</option>)}
+        </select>
+      </div>
+      <div className="bg-[#141414] border border-[#1F1F1F] overflow-hidden">
+      {filtered.length === 0 ? (
         <div className="py-20 text-center">
           <p className="text-[#9CA3AF] text-sm">No hay proyectos todavía</p>
           <Link href="/admin/proyectos/nuevo" className="inline-block mt-4 bg-gold text-[#0A0A0A] px-5 py-2.5 text-sm font-medium hover:bg-gold-light transition-colors">
@@ -66,7 +90,7 @@ export default function AdminProjectList({
           </Link>
         </div>
       ) : (
-      <table className="w-full">
+        <table className="w-full">
         <thead>
           <tr className="border-b border-[#1F1F1F] text-left">
             <th className="p-4 text-[#525252] text-xs font-medium w-16"></th>
@@ -74,11 +98,14 @@ export default function AdminProjectList({
             <th className="p-4 text-[#525252] text-xs font-medium hidden md:table-cell">Categoría</th>
             <th className="p-4 text-[#525252] text-xs font-medium hidden md:table-cell">Cliente</th>
             <th className="p-4 text-[#525252] text-xs font-medium">Imágenes</th>
+            <th className="p-4 text-[#525252] text-xs font-medium w-20">Destacado</th>
             <th className="p-4 text-[#525252] text-xs font-medium w-28">Acciones</th>
           </tr>
         </thead>
         <tbody>
-          {projects.map((project, index) => (
+          {filtered.map((project, index) => {
+            const realIndex = projects.findIndex((p) => p.id === project.id);
+            return (
             <tr key={project.id} className="border-b border-[#1F1F1F] hover:bg-white/[0.02] transition-colors">
               <td className="p-2 text-center">
                 <div className="flex flex-col items-center gap-0.5">
@@ -114,6 +141,14 @@ export default function AdminProjectList({
               <td className="p-4 text-[#9CA3AF] text-sm hidden md:table-cell">{project.client || "—"}</td>
               <td className="p-4 text-[#9CA3AF] text-sm">{project.images?.length || 0}</td>
               <td className="p-4">
+                <button
+                  onClick={() => toggleFeatured(project)}
+                  className={`text-xs px-2 py-1 rounded border ${project.featured ? "bg-gold text-[#0A0A0A] border-gold" : "bg-transparent text-[#525252] border-white/10 hover:text-white"}`}
+                >
+                  {project.featured ? "Sí" : "No"}
+                </button>
+              </td>
+              <td className="p-4">
                 <div className="flex items-center gap-1">
                   <Link href={`/admin/proyectos/${project.id}`} className="p-2 text-[#525252] hover:text-white transition-colors">
                     <Pencil size={15} />
@@ -127,10 +162,12 @@ export default function AdminProjectList({
                 </div>
               </td>
             </tr>
-          ))}
+          );
+          })}
         </tbody>
       </table>
       )}
+      </div>
     </div>
   );
 }
