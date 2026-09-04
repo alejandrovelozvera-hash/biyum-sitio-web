@@ -37,16 +37,15 @@ export default function GastronomicSection() {
   };
   const next = () =>
     setCurrent((c) => {
-      const p = Math.floor(c / pageSize) + 1;
-      if (p >= pageCount) return 0;
-      if (p === pageCount - 1) return maxIndex;
-      return p * pageSize;
+      if (c >= maxIndex) return 0;
+      const nxt = c + pageSize;
+      return nxt > maxIndex ? maxIndex : nxt;
     });
   const prev = () =>
     setCurrent((c) => {
-      const p = Math.floor(c / pageSize) - 1;
-      if (p < 0) return maxIndex;
-      return p * pageSize;
+      if (c <= 0) return maxIndex;
+      const prv = c - pageSize;
+      return prv < 0 ? 0 : prv;
     });
   const nextM = () => setCurrentM((c) => (c + 1) % pageCountM);
   const prevM = () => setCurrentM((c) => (c - 1 + pageCountM) % pageCountM);
