@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import { motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
 
@@ -18,6 +19,22 @@ const photos = [
 export default function GastronomicSection() {
   const reduce = useReducedMotion();
   const anim = !reduce;
+  const [current, setCurrent] = React.useState(0);
+  const [visible, setVisible] = React.useState(3);
+  const [paused, setPaused] = React.useState(false);
+  React.useEffect(() => {
+    const upd = () => setVisible(window.innerWidth < 768 ? 1 : 3);
+    upd();
+    window.addEventListener("resize", upd);
+    return () => window.removeEventListener("resize", upd);
+  }, []);
+  const next = () => setCurrent((c) => (c + 1) % photos.length);
+  const prev = () => setCurrent((c) => (c - 1 + photos.length) % photos.length);
+  React.useEffect(() => {
+    if (reduce || paused) return;
+    const id = setInterval(next, 3000);
+    return () => clearInterval(id);
+  }, [reduce, paused]);
   return (
     <section id="gastronomica" className="py-24 md:py-32 bg-background">
       <div className="max-w-[1400px] mx-auto px-6 md:px-16">
@@ -40,46 +57,41 @@ export default function GastronomicSection() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-12 gap-3 md:gap-4">
-          {photos.map((src, i) => {
-            const span =
-              i === 0
-                ? "col-span-2 md:col-span-8"
-                : i === 1
-                ? "col-span-1 md:col-span-4"
-                : i === 2
-                ? "col-span-1 md:col-span-4"
-                : i === 3
-                ? "col-span-2 md:col-span-5"
-                : i === 4
-                ? "col-span-1 md:col-span-7"
-                : i === 5
-                ? "col-span-1 md:col-span-6"
-                : i === 6
-                ? "col-span-1 md:col-span-6"
-                : i === 7
-                ? "col-span-2 md:col-span-5"
-                : "col-span-2 md:col-span-7";
-            return (
-              <motion.div
-                key={`${src}-${i}`}
-                initial={anim ? { opacity: 0, y: 16 } : false}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.5, delay: i * 0.04, ease: [0.16, 1, 0.3, 1] }}
-                className={`relative overflow-hidden rounded-2xl bg-surface ring-1 ring-gold/5 group aspect-[4/3] ${span}`}
-              >
-                <Image
-                  src={src}
-                  alt={`Fotografía gastronómica ${i + 1}`}
-                  fill
-                  sizes="(max-width: 768px) 50vw, 33vw"
-                  className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.02]"
+        <div className="relative group/slider">
+          <div className="overflow-hidden rounded-2xl">
+            <motion.div
+              className="flex gap-3 md:gap-4"
+              animate={{ x: `-${current * (100 / visible)}%` }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              style={{ width: `${(photos.length * 100) / visible}%` }}
+            >
+              {photos.map((src, i) => (
+                <div key={`${src}-${i}`} className="relative overflow-hidden rounded-2xl bg-surface ring-1 ring-gold/5 aspect-[4/3] shrink-0" style={{ width: `${100 / photos.length}%` }}>
+                  <Image src={src} alt={`Fotografía gastronómica ${i + 1}`} fill sizes="(max-width: 768px) 85vw, 33vw" className="object-cover object-center" />
+                </div>
+              ))}
+            </motion.div>
+          </div>
+          <div className="flex items-center justify-between mt-4">
+            <div className="flex gap-1.5">
+              {photos.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrent(i)}
+                  aria-label={`Ir a foto ${i + 1}`}
+                  className={`h-1.5 rounded-full transition-all ${i === current ? "w-6 bg-gold" : "w-1.5 bg-gold/20 hover:bg-gold/40"}`}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </motion.div>
-            );
-          })}
+              ))}
+            </div>
+            <div className="flex gap-2">
+              <button onClick={prev} aria-label="Anterior" className="w-8 h-8 rounded-full bg-surface border border-gold/10 flex items-center justify-center text-gold hover:bg-gold hover:text-on-gold transition-colors">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M15 18l-6-6 6-6" /></svg>
+              </button>
+              <button onClick={next} aria-label="Siguiente" className="w-8 h-8 rounded-full bg-surface border border-gold/10 flex items-center justify-center text-gold hover:bg-gold hover:text-on-gold transition-colors">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M9 18l6-6-6-6" /></svg>
+              </button>
+            </div>
+          </div>
         </div>
 
         <div className="mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-4">
