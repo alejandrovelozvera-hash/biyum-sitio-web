@@ -24,29 +24,21 @@ export default function GastronomicSection() {
   const [pageM, setPageM] = React.useState(0);
   const [paused, setPaused] = React.useState(false);
   const [pausedM, setPausedM] = React.useState(false);
-  const visible = 3;
-  const pageSize = 3;
-  const maxIndex = photos.length - visible;
-  const pageCount = 4;
+  const pages: string[][] = [
+    photos.slice(0, 3),
+    photos.slice(3, 6),
+    photos.slice(6, 9),
+    photos.slice(7, 10),
+  ];
+  const pageCount = pages.length;
   const pagesM: string[][] = [
     photos.slice(0, 4),
     photos.slice(4, 8),
     photos.slice(6, 10),
   ];
   const pageCountM = pagesM.length;
-  const next = () =>
-    setCurrent((c) => {
-      if (c >= maxIndex) return 0;
-      const n = c + pageSize;
-      return n > maxIndex ? maxIndex : n;
-    });
-  const prev = () =>
-    setCurrent((c) => {
-      if (c <= 0) return maxIndex;
-      const p = c - pageSize;
-      return p < 0 ? 0 : p;
-    });
-  const goPage = (p: number) => (p === 3 ? maxIndex : p * pageSize);
+  const next = () => setCurrent((p) => (p + 1) % pageCount);
+  const prev = () => setCurrent((p) => (p - 1 + pageCount) % pageCount);
   const nextM = () => setPageM((p) => (p + 1) % pageCountM);
   const prevM = () => setPageM((p) => (p - 1 + pageCountM) % pageCountM);
   React.useEffect(() => {
@@ -78,7 +70,7 @@ export default function GastronomicSection() {
                 <div key={pi} className="grid grid-cols-2 gap-3 shrink-0 p-0.5" style={{ width: `${100 / pageCountM}%` }}>
                   {pg.map((src, i) => (
                     <div key={`${src}-${i}`} className="relative overflow-hidden rounded-2xl bg-surface ring-1 ring-gold/5">
-                      <Image src={src} alt={`Gastronomica ${pi * 4 + i + 1}`} width={600} height={600} sizes="50vw" className="w-full h-auto block" />
+                      <Image src={src} alt={`Gastronomica ${pi * 4 + i + 1}`} width={600} height={600} sizes="50vw" className="w-full h-auto block" unoptimized />
                     </div>
                   ))}
                 </div>
@@ -100,10 +92,14 @@ export default function GastronomicSection() {
 
         <div className="hidden md:block relative" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
           <div className="overflow-hidden rounded-2xl">
-            <motion.div className="flex gap-4 items-start" animate={{ x: `-${current * (100 / visible)}%` }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} style={{ width: `${(photos.length * 100) / visible}%` }}>
-              {photos.map((src, i) => (
-                <div key={`${src}-${i}`} className="relative overflow-hidden rounded-2xl bg-surface ring-1 ring-gold/5 shrink-0" style={{ width: `${100 / photos.length}%` }}>
-                  <Image src={src} alt={`Gastronomica ${i + 1}`} width={800} height={800} sizes="33vw" className="w-full h-auto block" />
+            <motion.div className="flex" animate={{ x: `-${current * 100}%` }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} style={{ width: `${pageCount * 100}%` }}>
+              {pages.map((pg, pi) => (
+                <div key={pi} className="grid grid-cols-3 gap-4 shrink-0" style={{ width: `${100 / pageCount}%` }}>
+                  {pg.map((src, i) => (
+                    <div key={`${src}-${i}`} className="relative overflow-hidden rounded-2xl bg-surface ring-1 ring-gold/5">
+                      <Image src={src} alt={`Gastronomica ${pi * 3 + i + 1}`} width={800} height={800} sizes="33vw" className="w-full h-auto block" unoptimized />
+                    </div>
+                  ))}
                 </div>
               ))}
             </motion.div>
@@ -111,7 +107,7 @@ export default function GastronomicSection() {
           <div className="flex items-center justify-between mt-4">
             <div className="flex gap-1.5">
               {Array.from({ length: pageCount }).map((_, i) => (
-                <button key={i} onClick={() => setCurrent(goPage(i))} aria-label={`Ir ${i + 1}`} className={`h-1.5 rounded-full transition-all ${current === goPage(i) ? "w-6 bg-gold" : "w-1.5 bg-gold/20"}`} />
+                <button key={i} onClick={() => setCurrent(i)} aria-label={`Ir ${i + 1}`} className={`h-1.5 rounded-full transition-all ${current === i ? "w-6 bg-gold" : "w-1.5 bg-gold/20"}`} />
               ))}
             </div>
             <div className="flex gap-2">
