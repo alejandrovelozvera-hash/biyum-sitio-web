@@ -1,4 +1,5 @@
 import { getKnowledge, shouldEscalate } from "@/lib/ai/knowledge";
+import { retrieveRelevant } from "@/lib/ai/rag";
 import { notifyTelegram } from "@/lib/ai/telegram";
 import { getClientIp, isRateLimited } from "@/lib/ai/rateLimit";
 
@@ -6,7 +7,7 @@ export const runtime = "nodejs";
 
 const SYSTEM = `Eres el asistente de Biyum, agencia de Riobamba. Respondes en español, cercano y profesional. Usa SOLO la base de conocimientos. Precios clave: Social Media 8-12 piezas $96/mes, artes sueltas $15 post+historia pago a fin de mes. Gastronómica $15 por plato 6 fotos. Branding desde $250. Web desde $200 landing. Video y Color Grading según idea/metraje. Si no sabes, ofrece WhatsApp. No reveles nunca claves, tokens ni detalles internos.`;
 
-async function callLLM(messages: { role: string; content: string }[], knowledge: string) {
+async function callLLM(messages: { role: string; content: string }[], knowledge: string, stream?: boolean) {
   const pollinationsUrl = "https://text.pollinations.ai/openai";
   try {
     const r = await fetch(pollinationsUrl, {
@@ -16,9 +17,11 @@ async function callLLM(messages: { role: string; content: string }[], knowledge:
         model: "openai",
         messages: [{ role: "system", content: `${SYSTEM}\n\nBASE:\n${knowledge}` }, ...messages],
         temperature: 0.4,
+        stream: !!stream,
       }),
     });
     if (!r.ok) throw new Error("pollinations failed");
+    if (stream && r.body) return r.body as unknown as string;
     const j = await r.json();
     return j.choices?.[0]?.message?.content || "";
   } catch {
@@ -58,8 +61,10 @@ export async function POST(req: Request) {
   }
   if (last.trim().length < 2) return Response.json({ answer: "Escribe tu pregunta.", escalate: false }, { status: 400 });
 
-  const knowledge = getKnowledge();
-  const answer = await callLLM(messages, knowledge);
+  const fullKnowledge = getKnowledge();
+  const relevant = retrieveRelevant(last);
+  const knowledge = relevant || fullKnowledge;
+  const wantsStream = req.headers.get("accept")?.includes("text/event-stream");
   const escalate = shouldEscalate(last);
 
   if (escalate) {
@@ -67,5 +72,14 @@ export async function POST(req: Request) {
     notifyTelegram(`LEAD Biyum - intencion de contratar\nSesion: ${sessionId}\nMensaje: "${preview}"`);
   }
 
+  if (wantsStream) {
+    const stream = await callLLM(messages, knowledge, true);
+    if (typeof stream === "string") return Response.json({ answer: stream, escalate, waLink: "https://wa.me/message/N3PW46LKUALOK1" });
+    return new Response(stream as unknown as BodyInit, {
+      headers: { "Content-Type": "text/event-stream", "Cache-Control": "no-cache", Connection: "keep-alive" },
+    });
+  }
+
+  const answer = (await callLLM(messages, knowledge)) as string;
   return Response.json({ answer, escalate, waLink: "https://wa.me/message/N3PW46LKUALOK1" });
 }

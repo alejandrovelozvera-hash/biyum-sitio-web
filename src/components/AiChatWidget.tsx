@@ -39,10 +39,13 @@ export default function AiChatWidget() {
     setMessages((m) => [...m, userMsg]);
     setInput("");
     setLoading(true);
+    setShowWa(false);
+    const placeholder: Msg = { role: "assistant", content: "" };
+    setMessages((m) => [...m, placeholder]);
     try {
       const r = await fetch("/api/chat", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { Accept: "text/event-stream", "Content-Type": "application/json" },
         body: JSON.stringify({
           messages: [...messages, userMsg].map((m) => ({ role: m.role, content: m.content })),
           sessionId: sessionId.current,
@@ -50,11 +53,45 @@ export default function AiChatWidget() {
           ts: openAt.current,
         }),
       });
-      const j = await r.json();
-      setMessages((m) => [...m, { role: "assistant", content: j.answer }]);
-      if (j.escalate) setShowWa(true);
+      const ct = r.headers.get("content-type") || "";
+      if (ct.includes("text/event-stream") && r.body) {
+        const reader = r.body.getReader();
+        const decoder = new TextDecoder();
+        let acc = "";
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          const chunk = decoder.decode(value, { stream: true });
+          for (const line of chunk.split("\n")) {
+            if (!line.startsWith("data: ")) continue;
+            const d = line.slice(6).trim();
+            if (d === "[DONE]") break;
+            try {
+              const j = JSON.parse(d);
+              const delta = j.choices?.[0]?.delta?.content || "";
+              if (delta) {
+                acc += delta;
+                setMessages((m) => {
+                  const copy = [...m];
+                  copy[copy.length - 1] = { role: "assistant", content: acc };
+                  return copy;
+                });
+              }
+              if (j.choices?.[0]?.finish_reason) setShowWa(true);
+            } catch {}
+          }
+        }
+        if (!acc) {
+          const j = await r.json().catch(() => null);
+          if (j?.answer) setMessages((m) => { const c = [...m]; c[c.length - 1] = { role: "assistant", content: j.answer }; return c; });
+        }
+      } else {
+        const j = await r.json();
+        setMessages((m) => { const c = [...m]; c[c.length - 1] = { role: "assistant", content: j.answer }; return c; });
+        if (j.escalate) setShowWa(true);
+      }
     } catch {
-      setMessages((m) => [...m, { role: "assistant", content: "Hubo un error. Escríbenos directo por WhatsApp y te ayudamos." }]);
+      setMessages((m) => { const c = [...m]; c[c.length - 1] = { role: "assistant", content: "Hubo un error. Escríbenos directo por WhatsApp y te ayudamos." }; return c; });
       setShowWa(true);
     }
     setLoading(false);
@@ -95,7 +132,7 @@ export default function AiChatWidget() {
                 {m.content}
               </div>
             ))}
-            {loading && <div className="text-xs text-muted">Escribiendo…</div>}
+            {loading && messages[messages.length - 1]?.content === "" && <div className="flex items-center gap-1 text-muted text-xs"><span className="w-1.5 h-1.5 bg-gold rounded-full animate-bounce" /><span className="w-1.5 h-1.5 bg-gold rounded-full animate-bounce [animation-delay:0.15s]" /><span className="w-1.5 h-1.5 bg-gold rounded-full animate-bounce [animation-delay:0.3s]" /></div>}
             {showWa && (
               <a href="https://wa.me/message/N3PW46LKUALOK1" target="_blank" rel="noopener noreferrer" className="block text-center text-sm bg-gold text-on-gold rounded-full px-4 py-2 mt-2">
                 Continuar por WhatsApp →

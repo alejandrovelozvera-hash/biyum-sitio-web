@@ -8,6 +8,7 @@ const links = [
   { href: "/admin", label: "Dashboard", icon: Dashboard },
   { href: "/admin/proyectos", label: "Proyectos", icon: Folder },
   { href: "/admin/config", label: "Configuración", icon: Settings },
+  { href: "/admin/chat", label: "Chat IA", icon: Settings },
 ];
 
 export default function AdminSidebar() {
