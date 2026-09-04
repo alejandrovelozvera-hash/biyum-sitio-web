@@ -73,7 +73,7 @@ export default function AiChatWidget() {
         <div className="fixed bottom-20 right-6 z-50 w-[92vw] max-w-[360px] h-[480px] bg-surface-elevated rounded-2xl shadow-2xl ring-1 ring-gold/10 flex flex-col overflow-hidden">
           <div className="px-4 py-3 bg-gold text-on-gold flex items-center justify-between">
             <span className="text-sm font-medium">Biyum Asistente</span>
-            <span className="text-[10px] opacity-80">Entrenable · kb/biyum.md</span>
+            <span className="w-2 h-2 bg-white/80 rounded-full animate-pulse" aria-hidden />
           </div>
           <div ref={listRef} className="flex-1 overflow-y-auto p-4 space-y-3">
             {messages.map((m, i) => (
