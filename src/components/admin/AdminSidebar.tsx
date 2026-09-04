@@ -16,25 +16,29 @@ export default function AdminSidebar() {
   const path = usePathname();
 
   return (
-    <aside className="fixed left-0 top-0 bottom-0 w-64 bg-[#0A0A0A] border-r border-[#1F1F1F] flex flex-col z-50">
+    <aside className="fixed left-0 top-0 bottom-0 w-64 bg-[#0F0F0F] border-r border-[#1F1F1F] flex flex-col z-50">
       <div className="p-6 border-b border-[#1F1F1F]">
-        <Link href="/" className="text-lg font-semibold tracking-tight text-white">
-          Biyum <span className="text-[#525252] text-xs ml-1">Admin</span>
+        <Link href="/" className="flex items-baseline gap-2">
+          <span className="text-[22px] font-bold tracking-[-0.03em] text-white">Biyum</span>
+          <span className="text-[10px] tracking-[0.2em] uppercase text-gold">Studio</span>
         </Link>
+        <p className="text-[#525252] text-[11px] mt-1 tracking-wide">Panel de control</p>
       </div>
 
-      <nav className="flex-1 p-4 flex flex-col gap-1">
+      <nav className="flex-1 p-4 flex flex-col gap-1.5">
         {links.map((link) => {
-          const active = path === link.href;
+          const active = path === link.href || (link.href !== "/admin" && path.startsWith(link.href));
           return (
             <Link
               key={link.href}
               href={link.href}
-              className={`flex items-center gap-3 px-4 py-2.5 rounded text-sm transition-all ${
-                active ? "bg-white/5 text-white" : "text-[#525252] hover:text-white hover:bg-white/[0.02]"
+              className={`group flex items-center gap-3 px-4 py-2.5 rounded-xl text-[13px] font-medium transition-all ${
+                active
+                  ? "bg-white text-[#0A0A0A] shadow-sm"
+                  : "text-[#9CA3AF] hover:text-white hover:bg-white/[0.04] border border-transparent hover:border-white/5"
               }`}
             >
-              <link.icon size={16} />
+              <link.icon size={16} className={active ? "text-[#0A0A0A]" : "text-[#525252] group-hover:text-white"} />
               {link.label}
             </Link>
           );

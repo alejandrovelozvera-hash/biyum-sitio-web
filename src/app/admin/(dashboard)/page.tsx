@@ -35,26 +35,19 @@ export default async function AdminDashboard() {
         <p className="text-[#525252] text-sm mt-1">Panel de administración</p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-[#141414] border border-[#1F1F1F] p-6">
-          <Folder size={20} className="text-[#525252] mb-3" />
-          <p className="text-2xl font-bold text-white">{projects.length}</p>
-          <p className="text-[#525252] text-xs mt-1">Proyectos</p>
-        </div>
-        <div className="bg-[#141414] border border-[#1F1F1F] p-6">
-          <Image size={20} className="text-[#525252] mb-3" />
-          <p className="text-2xl font-bold text-white">{mediaTotal || "—"}</p>
-          <p className="text-[#525252] text-xs mt-1">Imágenes en Media</p>
-        </div>
-        <div className="bg-[#141414] border border-[#1F1F1F] p-6">
-          <Video size={20} className="text-[#525252] mb-3" />
-          <p className="text-2xl font-bold text-white">{heroCount}</p>
-          <p className="text-[#525252] text-xs mt-1">Slides del hero</p>
-        </div>
-        <div className="bg-[#141414] border border-[#1F1F1F] p-6">
-          <Settings size={20} className="text-[#525252] mb-3" />
-          <p className="text-2xl font-bold text-white">{catCount}</p>
-          <p className="text-[#525252] text-xs mt-1">Categorías</p>
-        </div>
+        {[
+          { icon: Folder, label: "Proyectos", value: projects.length, sub: `${projects.filter((p) => p.featured).length} destacados` },
+          { icon: Image, label: "Media", value: mediaTotal || "—", sub: "Imágenes" },
+          { icon: Video, label: "Hero", value: heroCount, sub: "Slides" },
+          { icon: Settings, label: "Categorías", value: catCount, sub: "Activas" },
+        ].map((stat) => (
+          <div key={stat.label} className="group bg-gradient-to-br from-[#141414] to-[#0F0F0F] border border-[#1F1F1F] p-6 rounded-2xl hover:border-white/10 transition-all hover:translate-y-[-2px] hover:shadow-lg">
+            <stat.icon size={18} className="text-gold/60 group-hover:text-gold mb-4 transition-colors" />
+            <p className="text-[28px] font-bold tracking-[-0.02em] text-white leading-none">{stat.value}</p>
+            <p className="text-[#9CA3AF] text-xs mt-1.5 tracking-wide">{stat.label}</p>
+            <p className="text-[#525252] text-[11px] mt-1">{stat.sub}</p>
+          </div>
+        ))}
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-8">
         <div className="bg-[#141414] border border-[#1F1F1F] p-6">

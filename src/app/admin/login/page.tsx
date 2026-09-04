@@ -30,21 +30,27 @@ function LoginForm() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center p-6">
-      <div className="w-full max-w-sm">
+    <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center p-6 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-[#0A0A0A] via-[#0F0F0F] to-[#141414] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gold/[0.03] rounded-full blur-3xl pointer-events-none" />
+      <div className="w-full max-w-sm relative">
         <div className="text-center mb-10">
-          <span className="text-2xl font-semibold tracking-tight text-white">Biyum</span>
+          <div className="inline-flex items-baseline gap-2">
+            <span className="text-[28px] font-bold tracking-[-0.03em] text-white">Biyum</span>
+            <span className="text-[10px] tracking-[0.2em] uppercase text-gold">Studio</span>
+          </div>
           <p className="text-[#525252] text-sm mt-2">Panel de Administración</p>
         </div>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="bg-[#141414] border border-[#1F1F1F] rounded-2xl p-8 space-y-5 shadow-2xl">
           <div>
-            <label className="text-[#525252] text-xs block mb-2">Contraseña</label>
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full bg-[#141414] border border-[#1F1F1F] px-4 py-3 text-white text-sm focus:outline-none focus:border-white/20" placeholder="Ingresa la contraseña" autoFocus />
+            <label className="text-[#9CA3AF] text-xs block mb-2 tracking-wide">Contraseña</label>
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full bg-[#0A0A0A] border border-[#1F1F1F] rounded-xl px-4 py-3 text-white text-sm placeholder:text-[#525252] focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/20 transition-all" placeholder="Ingresa la contraseña" autoFocus />
           </div>
-          {error && <p className="text-red-400 text-xs">{error}</p>}
-          <button type="submit" disabled={loading || !password} className="w-full flex items-center justify-center gap-2 bg-gold text-[#0A0A0A] px-6 py-3 text-sm font-medium hover:bg-gold-light transition-colors disabled:opacity-50">
+          {error && <p className="text-red-400 text-xs bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-2">{error}</p>}
+          <button type="submit" disabled={loading || !password} className="w-full flex items-center justify-center gap-2 bg-gold text-[#0A0A0A] px-6 py-3.5 rounded-xl text-sm font-medium hover:bg-gold-light transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 shadow-lg">
             <LogIn size={16} /> {loading ? "Ingresando..." : "Ingresar"}
           </button>
+          <p className="text-center text-[#525252] text-[11px]">Acceso restringido · Biyum Studio</p>
         </form>
       </div>
     </div>
