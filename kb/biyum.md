@@ -5,31 +5,34 @@ Edita este archivo para entrenar a la IA. Cada servicio, precio o FAQ que añada
 ## Servicios
 
 ### Fotografía Gastronómica — $15 por plato
-- Aprox. 6 fotos por plato, distintas perspectivas
-- Styling + props, formato carta y redes
+- Aprox. 6 fotos por plato, distintas perspectivas. La sesión se hace en el lugar del negocio, es decir el fotógrafo se moviliza hacia el restaurante o cafetería. Se organiza un set básico en una mesa del lugar. En caso de requerir objetos o props se debe analizar según las referencias que el cliente nos disponga.
 - Ideal: Restaurantes, cafés, delivery
 
 ### Producción de Video — Precio según tu idea
 - Grabación 4K, edición + color + audio
-- Entrega 7–12 días
+- Si requieres información a cerca de los equipos con los que se hace las producciones escríbeme directamente a Whatsapp.
+- No se hace ningun tipo de alquiler de equipos.
+- Entrega, dependría del tipo de proyecto.
 - Ideal: Lanzamientos, redes, ads
 - Nota: El precio depende del proyecto/idea.
 
 ### Branding — Desde $250
-- 3 propuestas, Manual básico, Manual completo, Papelería esencial
+- 3 propuestas de logo, Manual básico, Manual completo, Papelería esencial
 - Ideal: Emprendimientos, rebranding
 
-### Social Media — Desde $96 (8 a 12 piezas/mes)
+### Social Media o diseño de posts para redes sociales — Planes desde $96 (8 a 12 piezas/mes)
 - Copy + calendario, Reporte mensual
 - Ideal: Negocios locales, marcas
-- Nota: Artes individuales $15 — incluye post + historia. Pago a fin de mes según posts realizados.
+- Nota: Artes individuales $15 — incluye diseño en tamaño post + historia. Pago a fin de mes según posts realizados o pago inmediato si solo requieres un diseño.
 
-### Diseño Web — Desde $300
-- Diseño responsive, SEO básico, Entrega 10–15 días
-- Ideal: Servicios, reservas, ventas
+### Diseño Web — Desde $200 si es una landing page. El precio incrementa si requieres varias pestañas, enlaces, reservas, compras.
+- Diseño responsive, SEO básico, Entre 10–15 días
+- Ideal: Servicios, reservas.
 
 ### Color Grading — Precio según tu metraje
 - Corrección de color, Look cinematográfico, Entrega según metraje
+- Se requieren videos grabados en LOG.
+- Hago el proceso en Davinci Resolve
 - Ideal: Videoclips, spots, documental
 
 ## Flujo de trabajo
