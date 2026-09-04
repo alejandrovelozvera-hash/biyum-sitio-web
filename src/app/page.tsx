@@ -5,6 +5,7 @@ import HeroSlider from "@/components/HeroSlider";
 import BrandingProcess from "@/components/BrandingProcess";
 import PortfolioGrid from "@/components/PortfolioGrid";
 import VideoSection from "@/components/VideoSection";
+import GastronomicSection from "@/components/GastronomicSection";
 import ServicesSection from "@/components/ServicesSection";
 import InfoSection from "@/components/InfoSection";
 import Footer from "@/components/Footer";
@@ -46,6 +47,8 @@ export default async function HomePage() {
         <PortfolioGrid projects={projects} />
         <Divider />
         <VideoSection videos={demoVideos} />
+        <Divider />
+        <GastronomicSection />
         <Divider alt />
         <ServicesSection />
         <Divider alt />
