@@ -65,7 +65,7 @@ export default function GastronomicSection() {
 
         <div className="md:hidden relative" onTouchStart={() => setPausedM(true)} onTouchEnd={() => setPausedM(false)}>
           <div className="overflow-hidden rounded-2xl">
-            <motion.div className="flex" animate={{ x: `-${pageM * 100}%` }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} style={{ width: `${pageCountM * 100}%` }}>
+            <motion.div className="flex" animate={{ x: `-${(pageM * 100) / pageCountM}%` }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} style={{ width: `${pageCountM * 100}%` }}>
               {pagesM.map((pg, pi) => (
                 <div key={pi} className="grid grid-cols-2 gap-3 shrink-0 p-0.5" style={{ width: `${100 / pageCountM}%` }}>
                   {pg.map((src, i) => (
@@ -92,7 +92,7 @@ export default function GastronomicSection() {
 
         <div className="hidden md:block relative" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
           <div className="overflow-hidden rounded-2xl">
-            <motion.div className="flex" animate={{ x: `-${current * 100}%` }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} style={{ width: `${pageCount * 100}%` }}>
+            <motion.div className="flex" animate={{ x: `-${(current * 100) / pageCount}%` }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} style={{ width: `${pageCount * 100}%` }}>
               {pages.map((pg, pi) => (
                 <div key={pi} className="grid grid-cols-3 gap-4 shrink-0" style={{ width: `${100 / pageCount}%` }}>
                   {pg.map((src, i) => (
