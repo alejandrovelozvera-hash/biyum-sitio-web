@@ -15,6 +15,8 @@ export default function AiChatWidget() {
   const [showHint, setShowHint] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
   const sessionId = useRef(Math.random().toString(36).slice(2, 8));
+  const openAt = useRef<number>(0);
+  const lastSendAt = useRef<number>(0);
 
   useEffect(() => {
     listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: "smooth" });
@@ -30,6 +32,9 @@ export default function AiChatWidget() {
 
   const send = async (text = input) => {
     if (!text.trim() || loading) return;
+    if (text.length > 1000) return;
+    if (Date.now() - lastSendAt.current < 900) return;
+    lastSendAt.current = Date.now();
     const userMsg: Msg = { role: "user", content: text };
     setMessages((m) => [...m, userMsg]);
     setInput("");
@@ -38,7 +43,12 @@ export default function AiChatWidget() {
       const r = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: [...messages, userMsg].map((m) => ({ role: m.role, content: m.content })), sessionId: sessionId.current }),
+        body: JSON.stringify({
+          messages: [...messages, userMsg].map((m) => ({ role: m.role, content: m.content })),
+          sessionId: sessionId.current,
+          honeypot: (document.getElementById("ai-hp") as HTMLInputElement)?.value || "",
+          ts: openAt.current,
+        }),
       });
       const j = await r.json();
       setMessages((m) => [...m, { role: "assistant", content: j.answer }]);
@@ -60,7 +70,11 @@ export default function AiChatWidget() {
         </div>
       )}
       <button
-        onClick={() => setOpen((o) => !o)}
+        onClick={() => {
+          const n = !open;
+          setOpen(n);
+          if (n) openAt.current = Date.now();
+        }}
         aria-label={open ? "Cerrar chat" : "Abrir chat de Biyum"}
         className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-gold text-on-gold shadow-xl flex items-center justify-center hover:bg-gold-light transition-all hover:scale-105 ring-4 ring-gold/20"
       >
@@ -89,7 +103,8 @@ export default function AiChatWidget() {
             )}
           </div>
           <div className="p-3 border-t border-gold/10 flex gap-2">
-            <input value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && send()} placeholder="Escribe tu pregunta…" className="flex-1 bg-surface border border-gold/15 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-gold/40" />
+            <input id="ai-hp" name="company" tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute -left-[9999px] h-px w-px opacity-0" />
+            <input value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && send()} placeholder="Escribe tu pregunta…" maxLength={1000} className="flex-1 bg-surface border border-gold/15 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-gold/40" />
             <button onClick={() => send()} disabled={loading} className="bg-gold text-on-gold rounded-full px-4 py-2 text-sm disabled:opacity-50">Enviar</button>
           </div>
           <div className="px-3 pb-2 flex gap-2 flex-wrap">
