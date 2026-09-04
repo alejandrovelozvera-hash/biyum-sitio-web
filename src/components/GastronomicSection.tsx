@@ -17,9 +17,15 @@ const photos = [
   "https://wp.biyum.agency/wp-content/uploads/2024/07/DSC02527-scaled.jpg",
 ];
 
-function chunk<T>(arr: T[], n: number): T[][] {
+function pagesFull<T>(arr: T[], n: number): T[][] {
   const r: T[][] = [];
-  for (let i = 0; i < arr.length; i += n) r.push(arr.slice(i, i + n));
+  for (let i = 0; i < arr.length; i += n) {
+    if (i + n > arr.length && arr.length % n !== 0) {
+      r.push(arr.slice(arr.length - n));
+      break;
+    }
+    r.push(arr.slice(i, i + n));
+  }
   return r;
 }
 
@@ -30,8 +36,8 @@ export default function GastronomicSection() {
   const [pageM, setPageM] = React.useState(0);
   const [paused, setPaused] = React.useState(false);
   const [pausedM, setPausedM] = React.useState(false);
-  const pages = React.useMemo(() => chunk(photos, 3), []);
-  const pagesM = React.useMemo(() => chunk(photos, 4), []);
+  const pages = React.useMemo(() => pagesFull(photos, 3), []);
+  const pagesM = React.useMemo(() => pagesFull(photos, 4), []);
   const pageCount = pages.length;
   const pageCountM = pagesM.length;
   const next = () => setPage((p) => (p + 1) % pageCount);
