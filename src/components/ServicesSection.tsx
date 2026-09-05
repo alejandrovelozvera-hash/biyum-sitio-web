@@ -260,28 +260,28 @@ function ServiceCard({ s, i }: { s: (typeof services)[number]; i: number }) {
 
       <div className="relative flex flex-col flex-1">
           <div className="flex items-start gap-3 mb-4">
-            <div className="w-11 h-11 flex items-center justify-center rounded-xl bg-gold/5 ring-1 ring-gold/10 text-gold/70 group-hover:text-gold group-hover:bg-gold/10 transition-colors duration-500 shrink-0 mt-0.5">
+            <div className="w-11 h-11 flex items-center justify-center rounded-xl bg-gold/5 ring-1 ring-gold/10 text-gold group-hover:bg-gold/10 transition-colors duration-500 shrink-0 mt-0.5">
               <ServiceVisual kind={s.kind} size={20} />
             </div>
             <div className="flex-1 min-w-0 bg-white rounded-2xl ring-1 ring-gold/10 px-4 py-3 flex flex-col gap-1">
-              <h3 className="text-[15px] md:text-[16px] font-medium tracking-[-0.01em] text-zinc-900 leading-tight break-words">{s.title}</h3>
-              <span className="text-[10px] tracking-[0.12em] uppercase text-gold font-medium">{s.price}</span>
+              <h3 className="text-[16px] md:text-[17px] font-semibold tracking-[-0.01em] text-[#16161A] leading-tight break-words">{s.title}</h3>
+              <span className="text-[10px] tracking-[0.12em] uppercase text-[#1C1463] font-semibold">{s.price}</span>
             </div>
           </div>
-          <p className="text-zinc-700 text-[13px] leading-relaxed">{s.desc}</p>
+          <p className="text-secondary text-[14px] leading-relaxed font-medium">{s.desc}</p>
 
         <ul className="mt-4 space-y-1.5">
           {s.deliverables.map((d) => (
-            <li key={d} className="flex items-center gap-2 text-[11px] text-zinc-600">
-              <span className="w-1 h-1 rounded-full bg-gold/60 shrink-0" />
+            <li key={d} className="flex items-center gap-2 text-[12px] font-medium text-secondary">
+              <span className="w-1.5 h-1.5 rounded-full bg-gold shrink-0" />
               {d}
             </li>
           ))}
         </ul>
 
-        {(s as any).note && <p className="text-[10px] leading-relaxed text-gold/70 bg-gold/5 ring-1 ring-gold/10 rounded-lg px-3 py-2 mt-3">{(s as any).note}</p>}
+        {(s as any).note && <p className="text-[11px] leading-relaxed font-medium text-[#1C1463] bg-gold/8 ring-1 ring-gold/15 rounded-lg px-3 py-2.5 mt-3">{(s as any).note}</p>}
 
-        <p className="text-[10px] tracking-[0.14em] uppercase text-gold/60 mt-3">Ideal: {s.ideal}</p>
+        <p className="text-[11px] tracking-[0.14em] uppercase font-semibold text-muted mt-3">Ideal: {s.ideal}</p>
 
         <div className="mt-auto pt-5 flex items-center justify-between">
           <span className="text-gold text-[11px] tracking-[0.14em] uppercase inline-flex items-center gap-1.5 opacity-60 group-hover:opacity-100 transition-opacity">
