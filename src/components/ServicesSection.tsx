@@ -263,9 +263,9 @@ function ServiceCard({ s, i }: { s: (typeof services)[number]; i: number }) {
             <div className="w-11 h-11 flex items-center justify-center rounded-xl bg-gold/5 ring-1 ring-gold/10 text-gold group-hover:bg-gold/10 transition-colors duration-500 shrink-0 mt-0.5">
               <ServiceVisual kind={s.kind} size={20} />
             </div>
-            <div className="flex-1 min-w-0 bg-white rounded-2xl ring-1 ring-gold/10 px-4 py-3 flex flex-col gap-1.5">
+            <div className="flex-1 min-w-0 bg-white rounded-2xl ring-1 ring-gold/10 px-4 py-3 flex flex-col gap-2">
               <h3 className="text-[16px] md:text-[17px] font-semibold tracking-[-0.01em] text-[#16161A] leading-tight break-words">{s.title}</h3>
-              <span className="self-start text-[10px] tracking-[0.12em] uppercase bg-gold text-white font-semibold px-3 py-1 rounded-full">{s.price}</span>
+              <span className="self-start text-[12px] tracking-[0.04em] font-bold bg-gold text-white px-3.5 py-1 rounded-full shadow-sm">{s.price}</span>
             </div>
           </div>
           <p className="text-secondary text-[14px] leading-relaxed font-medium">{s.desc}</p>
