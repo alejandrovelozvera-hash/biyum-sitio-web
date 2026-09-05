@@ -24,7 +24,7 @@ const navLinks: Array<{ href: string; label: string; children?: Array<{ href: st
       { href: "/#portafolio", label: "Diseño y Logos" },
       { href: "/#video", label: "Videos" },
       { href: "/#gastronomica", label: "Gastronómica" },
-      { href: "/#servicios", label: "Ver Mas Servicios" },
+      { href: "/#servicios", label: "Ver Más Servicios" },
     ],
   },
   { href: "/#proceso", label: "Proceso" },

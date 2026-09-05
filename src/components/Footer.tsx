@@ -35,7 +35,7 @@ export default function Footer() {
                   { label: "Diseño y Logos", href: "/#portafolio" },
                   { label: "Videos", href: "/#video" },
                   { label: "Gastronómica", href: "/#gastronomica" },
-                  { label: "Ver Mas Servicios", href: "/#servicios" },
+                  { label: "Ver Más Servicios", href: "/#servicios" },
                 ].map((item) => (
                   <a key={item.label} href={item.href} className="text-secondary hover:text-gold text-sm transition-colors">{item.label}</a>
                 ))}
