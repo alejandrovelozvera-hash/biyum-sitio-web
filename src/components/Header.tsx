@@ -16,11 +16,16 @@ const scrollToHash = (href: string) => {
   return true;
 };
 
-const navLinks = [
-  { href: "/#portafolio", label: "Portafolio" },
-  { href: "/#video", label: "Videos" },
-  { href: "/#gastronomica", label: "Gastronómica" },
-  { href: "/#servicios", label: "Servicios" },
+const navLinks: Array<{ href: string; label: string; children?: Array<{ href: string; label: string }> }> = [
+  {
+    href: "/#servicios",
+    label: "Servicios",
+    children: [
+      { href: "/#portafolio", label: "Diseño y Logos" },
+      { href: "/#video", label: "Videos" },
+      { href: "/#gastronomica", label: "Gastronómica" },
+    ],
+  },
   { href: "/#proceso", label: "Proceso" },
   { href: "/#contacto", label: "Contacto" },
   { href: "/chimbuceros", label: "Chimbuceros" },
@@ -61,22 +66,59 @@ export default function Header() {
           <img src="/logo.svg" alt="Biyum" className="logo-theme h-7 md:h-9 w-auto" />
         </Link>
 
-<nav className="hidden md:flex items-center gap-10">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              onClick={(e) => {
-                if (window.location.pathname === "/" && link.href.includes("#")) {
-                  e.preventDefault();
-                  scrollToHash(link.href);
-                }
-              }}
-              className="text-[13px] font-medium tracking-wider uppercase text-gold-dark hover:text-gold transition-colors"
-            >
-              {link.label}
-            </Link>
-          ))}
+ <nav className="hidden md:flex items-center gap-8">
+          {navLinks.map((link) =>
+            link.children ? (
+              <div key={link.href} className="relative group">
+                <Link
+                  href={link.href}
+                  onClick={(e) => {
+                    if (window.location.pathname === "/" && link.href.includes("#")) {
+                      e.preventDefault();
+                      scrollToHash(link.href);
+                    }
+                  }}
+                  className="text-[13px] font-medium tracking-wider uppercase text-gold-dark hover:text-gold transition-colors inline-flex items-center gap-1"
+                >
+                  {link.label}
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="opacity-60 group-hover:opacity-100 transition-opacity"><path d="M6 9l6 6 6-6" /></svg>
+                </Link>
+                <div className="absolute left-1/2 -translate-x-1/2 top-full pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                  <div className="bg-surface rounded-2xl ring-1 ring-gold/10 shadow-xl shadow-black/10 p-2 min-w-[200px]">
+                    {link.children.map((c) => (
+                      <Link
+                        key={c.href}
+                        href={c.href}
+                        onClick={(e) => {
+                          if (window.location.pathname === "/" && c.href.includes("#")) {
+                            e.preventDefault();
+                            scrollToHash(c.href);
+                          }
+                        }}
+                        className="block px-4 py-2.5 text-[13px] font-medium text-gold-dark hover:text-gold hover:bg-gold/5 rounded-xl transition-colors"
+                      >
+                        {c.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={(e) => {
+                  if (window.location.pathname === "/" && link.href.includes("#")) {
+                    e.preventDefault();
+                    scrollToHash(link.href);
+                  }
+                }}
+                className="text-[13px] font-medium tracking-wider uppercase text-gold-dark hover:text-gold transition-colors"
+              >
+                {link.label}
+              </Link>
+            )
+          )}
           <button
             onClick={toggleTheme}
             className="text-gold-dark/60 hover:text-gold transition-colors flex items-center justify-center"
@@ -121,14 +163,9 @@ export default function Header() {
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="md:hidden overflow-hidden glass border-t border-gold/10"
           >
-            <nav className="flex flex-col p-6 gap-3">
+            <nav className="flex flex-col p-6 gap-1">
               {navLinks.map((link, i) => (
-                <motion.div
-                  key={link.href}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05, duration: 0.3 }}
-                >
+                <motion.div key={link.href} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.05, duration: 0.3 }}>
                   <Link
                     href={link.href}
                     onClick={() => {
@@ -137,10 +174,29 @@ export default function Header() {
                         scrollToHash(link.href);
                       }
                     }}
-                    className="text-sm font-medium tracking-wider uppercase text-gold-dark hover:text-gold py-2 block transition-colors"
+                    className="text-sm font-medium tracking-wider uppercase text-gold-dark hover:text-gold py-2.5 block transition-colors"
                   >
                     {link.label}
                   </Link>
+                  {link.children && (
+                    <div className="ml-4 pl-4 border-l border-gold/10 flex flex-col gap-1 mt-1">
+                      {link.children.map((c) => (
+                        <Link
+                          key={c.href}
+                          href={c.href}
+                          onClick={() => {
+                            setOpen(false);
+                            if (window.location.pathname === "/" && c.href.includes("#")) {
+                              scrollToHash(c.href);
+                            }
+                          }}
+                          className="text-[13px] font-medium text-muted hover:text-gold py-1.5 block transition-colors"
+                        >
+                          {c.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
                 </motion.div>
               ))}
               <motion.div
