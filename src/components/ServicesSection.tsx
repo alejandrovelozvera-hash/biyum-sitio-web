@@ -263,9 +263,9 @@ function ServiceCard({ s, i }: { s: (typeof services)[number]; i: number }) {
             <div className="w-11 h-11 flex items-center justify-center rounded-xl bg-gold/5 ring-1 ring-gold/10 text-gold group-hover:bg-gold/10 transition-colors duration-500 shrink-0 mt-0.5">
               <ServiceVisual kind={s.kind} size={20} />
             </div>
-            <div className="flex-1 min-w-0 bg-white rounded-2xl ring-1 ring-gold/10 px-4 py-3 flex flex-col gap-1">
+            <div className="flex-1 min-w-0 bg-white rounded-2xl ring-1 ring-gold/10 px-4 py-3 flex flex-col gap-1.5">
               <h3 className="text-[16px] md:text-[17px] font-semibold tracking-[-0.01em] text-[#16161A] leading-tight break-words">{s.title}</h3>
-              <span className="text-[10px] tracking-[0.12em] uppercase text-[#1C1463] font-semibold">{s.price}</span>
+              <span className="self-start text-[10px] tracking-[0.12em] uppercase bg-gold text-white font-semibold px-3 py-1 rounded-full">{s.price}</span>
             </div>
           </div>
           <p className="text-secondary text-[14px] leading-relaxed font-medium">{s.desc}</p>
@@ -279,7 +279,7 @@ function ServiceCard({ s, i }: { s: (typeof services)[number]; i: number }) {
           ))}
         </ul>
 
-        {(s as any).note && <p className="text-[11px] leading-relaxed font-medium text-[#1C1463] bg-gold/8 ring-1 ring-gold/15 rounded-lg px-3 py-2.5 mt-3">{(s as any).note}</p>}
+        {(s as any).note && <p className="text-[12px] leading-relaxed font-medium text-zinc-700 bg-white ring-1 ring-gold/10 rounded-xl px-3.5 py-2.5 mt-3">{(s as any).note}</p>}
 
         <p className="text-[11px] tracking-[0.14em] uppercase font-semibold text-muted mt-3">Ideal: {s.ideal}</p>
 
