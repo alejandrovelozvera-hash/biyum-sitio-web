@@ -259,13 +259,14 @@ function ServiceCard({ s, i }: { s: (typeof services)[number]; i: number }) {
       </motion.div>
 
       <div className="relative flex flex-col flex-1">
-        <div className="w-11 h-11 flex items-center justify-center rounded-xl bg-gold/5 ring-1 ring-gold/10 text-gold/70 group-hover:text-gold group-hover:bg-gold/10 transition-colors duration-500 mb-4">
-            <ServiceVisual kind={s.kind} size={20} />
-          </div>
-          <h3 className="text-[19px] md:text-[20px] font-bold tracking-[-0.02em] text-gold-dark leading-tight mb-1.5">{s.title}</h3>
-          <div className="flex items-center gap-2 mb-3">
-            <span className="w-6 h-px bg-gold/20" />
-            <span className="shrink-0 text-[10px] tracking-[0.12em] uppercase px-2.5 py-1 rounded-full bg-gold/10 text-gold ring-1 ring-gold/15">{s.price}</span>
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-11 h-11 flex items-center justify-center rounded-xl bg-gold/5 ring-1 ring-gold/10 text-gold/70 group-hover:text-gold group-hover:bg-gold/10 transition-colors duration-500 shrink-0">
+              <ServiceVisual kind={s.kind} size={20} />
+            </div>
+            <div className="flex-1 min-w-0 bg-white rounded-full ring-1 ring-gold/10 px-4 py-2.5 flex items-center justify-between gap-3">
+              <h3 className="text-[15px] md:text-[16px] font-medium tracking-[-0.01em] text-gold-dark leading-tight truncate">{s.title}</h3>
+              <span className="shrink-0 text-[10px] tracking-[0.12em] uppercase text-gold font-medium whitespace-nowrap">{s.price}</span>
+            </div>
           </div>
           <p className="text-secondary text-[13px] leading-relaxed">{s.desc}</p>
 
