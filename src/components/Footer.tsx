@@ -17,16 +17,27 @@ export default function Footer() {
             <div className="md:col-span-2">
               <p className="text-muted text-xs tracking-widest uppercase mb-5">Navegación</p>
               <div className="flex flex-col gap-2.5">
-                {["Inicio", "Servicios", "Portafolio", "Videos", "Contacto"].map((item) => (
-                  <a key={item} href={item === "Inicio" ? "/" : `/#${item.toLowerCase() === "videos" ? "video" : item.toLowerCase()}`} className="text-secondary hover:text-gold text-sm transition-colors">{item}</a>
+                {[
+                  { label: "Inicio", href: "/" },
+                  { label: "Portafolio", href: "/#portafolio" },
+                  { label: "Proceso", href: "/#proceso" },
+                  { label: "Contacto", href: "/#contacto" },
+                  { label: "Chimbuceros", href: "/chimbuceros" },
+                ].map((item) => (
+                  <a key={item.label} href={item.href} className="text-secondary hover:text-gold text-sm transition-colors">{item.label}</a>
                 ))}
               </div>
             </div>
             <div className="md:col-span-2">
               <p className="text-muted text-xs tracking-widest uppercase mb-5">Servicios</p>
               <div className="flex flex-col gap-2.5">
-                {["Fotografía", "Video", "Branding", "Social Media"].map((item) => (
-                  <span key={item} className="text-secondary text-sm">{item}</span>
+                {[
+                  { label: "Diseño y Logos", href: "/#portafolio" },
+                  { label: "Videos", href: "/#video" },
+                  { label: "Gastronómica", href: "/#gastronomica" },
+                  { label: "Ver otros servicios", href: "/#servicios" },
+                ].map((item) => (
+                  <a key={item.label} href={item.href} className="text-secondary hover:text-gold text-sm transition-colors">{item.label}</a>
                 ))}
               </div>
             </div>
