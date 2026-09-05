@@ -18,12 +18,13 @@ const scrollToHash = (href: string) => {
 
 const navLinks: Array<{ href: string; label: string; children?: Array<{ href: string; label: string }> }> = [
   {
-    href: "/#servicios",
-    label: "Servicios",
+    href: "/#portafolio",
+    label: "Portafolio",
     children: [
       { href: "/#portafolio", label: "Diseño y Logos" },
       { href: "/#video", label: "Videos" },
       { href: "/#gastronomica", label: "Gastronómica" },
+      { href: "/#servicios", label: "Ver otros servicios" },
     ],
   },
   { href: "/#proceso", label: "Proceso" },
