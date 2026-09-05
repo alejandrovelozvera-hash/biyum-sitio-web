@@ -259,20 +259,20 @@ function ServiceCard({ s, i }: { s: (typeof services)[number]; i: number }) {
       </motion.div>
 
       <div className="relative flex flex-col flex-1">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-11 h-11 flex items-center justify-center rounded-xl bg-gold/5 ring-1 ring-gold/10 text-gold/70 group-hover:text-gold group-hover:bg-gold/10 transition-colors duration-500 shrink-0">
+          <div className="flex items-start gap-3 mb-4">
+            <div className="w-11 h-11 flex items-center justify-center rounded-xl bg-gold/5 ring-1 ring-gold/10 text-gold/70 group-hover:text-gold group-hover:bg-gold/10 transition-colors duration-500 shrink-0 mt-0.5">
               <ServiceVisual kind={s.kind} size={20} />
             </div>
-            <div className="flex-1 min-w-0 bg-white rounded-full ring-1 ring-gold/10 px-4 py-2.5 flex items-center justify-between gap-3">
-              <h3 className="text-[15px] md:text-[16px] font-medium tracking-[-0.01em] text-gold-dark leading-tight truncate">{s.title}</h3>
-              <span className="shrink-0 text-[10px] tracking-[0.12em] uppercase text-gold font-medium whitespace-nowrap">{s.price}</span>
+            <div className="flex-1 min-w-0 bg-white rounded-2xl ring-1 ring-gold/10 px-4 py-3 flex flex-col gap-1">
+              <h3 className="text-[15px] md:text-[16px] font-medium tracking-[-0.01em] text-zinc-900 leading-tight break-words">{s.title}</h3>
+              <span className="text-[10px] tracking-[0.12em] uppercase text-gold font-medium">{s.price}</span>
             </div>
           </div>
-          <p className="text-secondary text-[13px] leading-relaxed">{s.desc}</p>
+          <p className="text-zinc-700 text-[13px] leading-relaxed">{s.desc}</p>
 
         <ul className="mt-4 space-y-1.5">
           {s.deliverables.map((d) => (
-            <li key={d} className="flex items-center gap-2 text-[11px] text-muted">
+            <li key={d} className="flex items-center gap-2 text-[11px] text-zinc-600">
               <span className="w-1 h-1 rounded-full bg-gold/60 shrink-0" />
               {d}
             </li>
