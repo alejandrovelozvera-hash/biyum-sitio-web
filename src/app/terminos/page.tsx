@@ -25,7 +25,7 @@ export default function TerminosPage() {
           </section>
           <section>
             <h2 className="text-foreground font-semibold text-lg mb-2">3. Plazos</h2>
-            <p>Branding: propuestas en 7 días laborables. Video 7–12 días. Web 10–15 días. Retrasos por falta de material del cliente pausan el plazo.</p>
+            <p>Branding: propuestas en 7 días laborables. Video: plazos dependen de cada proyecto (duración, locaciones y edición). Web 10–15 días. Retrasos por falta de material del cliente pausan el plazo.</p>
           </section>
           <section>
             <h2 className="text-foreground font-semibold text-lg mb-2">4. Revisiones</h2>
