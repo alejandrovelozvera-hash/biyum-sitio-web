@@ -15,9 +15,9 @@ const Food = ({ size = 20, className, ...rest }: any) => (
 const services = [
   {
     kind: "food",
-    title: "Fotograf├¡a Gastron├│mica",
-    desc: "Men├║s que provocan antojo. Estilismo de alimentos, vapor y texturas capturadas para que tu carta venda sola.",
-    deliverables: ["Aprox. 6 fotos por plato", "Distintas perspectivas", "Styling + props"],
+    title: "Fotografía Gastronómica",
+    desc: "Menús que provocan antojo. Estilismo de alimentos, vapor y texturas capturadas para que tu carta venda sola.",
+    deliverables: ["Aprox. 6 fotos por plato", "Distintas perspectivas", "Sesión en tu local"],
     ideal: "Restaurantes, caf├®s, delivery",
     price: "$15 por plato",
     size: "small" as const,
