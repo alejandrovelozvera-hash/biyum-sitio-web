@@ -276,10 +276,10 @@ function ServiceCard({ s, i }: { s: (typeof services)[number]; i: number }) {
             </div>
             <div className="flex-1 min-w-0 glass rounded-2xl px-4 py-3 flex flex-col gap-2">
               <h3 className="text-[16px] md:text-[17px] font-semibold tracking-[-0.01em] text-foreground leading-tight break-words">{s.title}</h3>
-              <span className="self-start inline-flex items-baseline gap-1.5 bg-white ring-1 ring-gold/15 px-3.5 py-1 rounded-full shadow-sm">
+              <span className="self-start inline-flex items-baseline gap-1 bg-white ring-1 ring-gold/15 px-3.5 py-1 rounded-full shadow-sm">
                 {s.price.toLowerCase().startsWith("desde") ? (
                   <>
-                    <span className="text-[10px] tracking-[0.14em] uppercase font-medium text-muted">desde</span>
+                    <span className="text-[11px] tracking-[0.04em] font-semibold text-[#1C1463]">desde</span>
                     <span className="text-[12px] font-bold tracking-[-0.01em] text-[#1C1463]">{s.price.replace(/^Desde\s*/i, "")}</span>
                   </>
                 ) : (
