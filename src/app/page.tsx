@@ -2,7 +2,6 @@ import { getProjects, getHeroSlides } from "@/lib/wp-storage";
 import { demoProjects, demoHeroSlides, demoVideos } from "@/lib/demo-data";
 import Header from "@/components/Header";
 import HeroSlider from "@/components/HeroSlider";
-import BrandingProcess from "@/components/BrandingProcess";
 import PortfolioGrid from "@/components/PortfolioGrid";
 import VideoSection from "@/components/VideoSection";
 import GastronomicSection from "@/components/GastronomicSection";
@@ -49,8 +48,6 @@ export default async function HomePage() {
         <GastronomicSection />
         <Divider alt />
         <ServicesSection />
-        <Divider alt />
-        <BrandingProcess />
         <Divider alt />
         <InfoSection />
         <Footer />
