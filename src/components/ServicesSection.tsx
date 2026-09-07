@@ -230,23 +230,14 @@ function ServiceCard({ s, i }: { s: (typeof services)[number]; i: number }) {
 
   const isBranding = s.kind === "branding";
   const waLink = `https://wa.me/message/N3PW46LKUALOK1?text=${encodeURIComponent(`Hola Biyum, me interesa el servicio de ${s.title}.`)}`;
-  const href = isBranding ? "/#proceso" : waLink;
-  const isExternal = !isBranding;
+  const href = isBranding ? "/proceso" : waLink;
 
   return (
     <motion.a
       ref={ref}
       href={href}
-      target={isExternal ? "_blank" : undefined}
-      rel={isExternal ? "noopener noreferrer" : undefined}
-      onClick={
-        isBranding
-          ? (e) => {
-              e.preventDefault();
-              document.getElementById("proceso")?.scrollIntoView({ behavior: "smooth", block: "start" });
-            }
-          : undefined
-      }
+      target="_blank"
+      rel="noopener noreferrer"
       initial={!reduce ? { opacity: 0, y: 32 } : false}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
