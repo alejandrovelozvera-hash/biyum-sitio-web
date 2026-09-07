@@ -320,7 +320,6 @@ export default function ServicesSection() {
   const reduce = useReducedMotion();
   const anim = !reduce;
   const [procesoOpen, setProcesoOpen] = useState(false);
-  const [copied, setCopied] = useState(false);
   React.useEffect(() => {
     if (!procesoOpen) return;
     const onEsc = (e: KeyboardEvent) => e.key === "Escape" && setProcesoOpen(false);
@@ -399,20 +398,7 @@ export default function ServicesSection() {
               <div className="flex-1 overflow-auto [&>section]:!py-8 [&>section]:!bg-section-alt">
                 <BrandingProcess />
               </div>
-              <div className="sticky bottom-0 bg-section-alt/80 backdrop-blur-xl border-t border-gold/10 px-6 md:px-8 py-4 flex flex-col sm:flex-row gap-3 justify-center sm:justify-between items-center">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => {
-                      navigator.clipboard.writeText(window.location.origin + "/proceso");
-                      setCopied(true);
-                      setTimeout(() => setCopied(false), 2000);
-                    }}
-                    className="text-[11px] tracking-[0.12em] uppercase font-medium text-muted hover:text-foreground border border-gold/15 hover:border-gold/30 rounded-full px-4 py-2 transition-colors"
-                  >
-                    {copied ? "┬íCopiado!" : "Copiar link"}
-                  </button>
-                  <a href="/proceso" target="_blank" rel="noopener noreferrer" className="text-[11px] tracking-[0.12em] uppercase font-medium text-muted hover:text-foreground border border-gold/15 hover:border-gold/30 rounded-full px-4 py-2 transition-colors">Abrir p├ígina</a>
-                </div>
+              <div className="sticky bottom-0 bg-section-alt/80 backdrop-blur-xl border-t border-gold/10 px-6 md:px-8 py-4 flex justify-center">
                 <a href="https://wa.me/message/N3PW46LKUALOK1?text=Hola%20Biyum,%20quiero%20consultar%20todos%20los%20planes%20de%20branding" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-on-gold bg-gold hover:bg-gold-light rounded-full px-7 py-3 font-semibold transition-all hover:scale-[1.02] active:scale-[0.98]">Consulta todos los planes</a>
               </div>
             </motion.div>
