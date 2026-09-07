@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import { useRef, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { Camera, Video, Palette, Megaphone, Code, ChevronRight } from "./Icons";
@@ -319,6 +320,18 @@ export default function ServicesSection() {
   const reduce = useReducedMotion();
   const anim = !reduce;
   const [procesoOpen, setProcesoOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
+  React.useEffect(() => {
+    if (!procesoOpen) return;
+    const onEsc = (e: KeyboardEvent) => e.key === "Escape" && setProcesoOpen(false);
+    document.addEventListener("keydown", onEsc);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onEsc);
+      document.body.style.overflow = prev;
+    };
+  }, [procesoOpen]);
 
   return (
     <section id="servicios" className="py-24 md:py-32 bg-section-alt">
@@ -373,15 +386,34 @@ export default function ServicesSection() {
         {procesoOpen && (
           <motion.div className="fixed inset-0 z-[100] flex items-center justify-center p-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setProcesoOpen(false)}>
             <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
-            <motion.div initial={{ opacity: 0, scale: 0.97, y: 12 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.97, y: 12 }} transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }} className="relative z-10 w-full max-w-5xl max-h-[90vh] overflow-auto bg-section-alt rounded-3xl shadow-2xl ring-1 ring-gold/10" onClick={(e) => e.stopPropagation()}>
-              <button onClick={() => setProcesoOpen(false)} className="sticky top-4 right-4 z-20 ml-auto mr-4 mt-4 flex h-9 w-9 items-center justify-center rounded-full bg-surface-elevated text-muted hover:text-foreground ring-1 ring-gold/10 shadow-sm transition-colors" aria-label="Cerrar">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M18 6L6 18M6 6l12 12" /></svg>
-              </button>
-              <div className="[&>section]:!py-8 [&>section]:!bg-section-alt">
+            <motion.div initial={{ opacity: 0, scale: 0.97, y: 12 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.97, y: 12 }} transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }} className="relative z-10 w-full max-w-5xl max-h-[90vh] overflow-auto bg-section-alt rounded-3xl shadow-2xl ring-1 ring-gold/10 flex flex-col" onClick={(e) => e.stopPropagation()}>
+              <div className="sticky top-0 z-20 bg-section-alt/80 backdrop-blur-xl border-b border-gold/10 px-6 md:px-8 py-4 flex items-center justify-between">
+                <div>
+                  <p className="text-muted text-[10px] tracking-[0.2em] uppercase">Proceso</p>
+                  <h3 className="text-foreground text-lg font-bold tracking-tight">Tu marca, paso a paso</h3>
+                </div>
+                <button onClick={() => setProcesoOpen(false)} className="flex h-9 w-9 items-center justify-center rounded-full bg-surface-elevated text-muted hover:text-foreground ring-1 ring-gold/10 shadow-sm transition-colors shrink-0" aria-label="Cerrar">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M18 6L6 18M6 6l12 12" /></svg>
+                </button>
+              </div>
+              <div className="flex-1 overflow-auto [&>section]:!py-8 [&>section]:!bg-section-alt">
                 <BrandingProcess />
               </div>
-              <div className="px-6 md:px-16 pb-8 flex justify-center">
-                <a href="https://wa.me/message/N3PW46LKUALOK1?text=Hola%20Biyum,%20quiero%20ver%20todos%20los%20planes%20de%20branding" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-base text-on-gold bg-gold hover:bg-gold-light rounded-full px-8 py-4 font-semibold transition-all hover:scale-[1.02] active:scale-[0.98]">Ver todos los planes</a>
+              <div className="sticky bottom-0 bg-section-alt/80 backdrop-blur-xl border-t border-gold/10 px-6 md:px-8 py-4 flex flex-col sm:flex-row gap-3 justify-center sm:justify-between items-center">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText(window.location.origin + "/proceso");
+                      setCopied(true);
+                      setTimeout(() => setCopied(false), 2000);
+                    }}
+                    className="text-[11px] tracking-[0.12em] uppercase font-medium text-muted hover:text-foreground border border-gold/15 hover:border-gold/30 rounded-full px-4 py-2 transition-colors"
+                  >
+                    {copied ? "¡Copiado!" : "Copiar link"}
+                  </button>
+                  <a href="/proceso" target="_blank" rel="noopener noreferrer" className="text-[11px] tracking-[0.12em] uppercase font-medium text-muted hover:text-foreground border border-gold/15 hover:border-gold/30 rounded-full px-4 py-2 transition-colors">Abrir página</a>
+                </div>
+                <a href="https://wa.me/message/N3PW46LKUALOK1?text=Hola%20Biyum,%20quiero%20ver%20todos%20los%20planes%20de%20branding" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-on-gold bg-gold hover:bg-gold-light rounded-full px-7 py-3 font-semibold transition-all hover:scale-[1.02] active:scale-[0.98]">Ver todos los planes</a>
               </div>
             </motion.div>
           </motion.div>
