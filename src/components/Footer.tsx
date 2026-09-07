@@ -20,7 +20,6 @@ export default function Footer() {
                 {[
                   { label: "Inicio", href: "/" },
                   { label: "Portafolio", href: "/#portafolio" },
-                  { label: "Proceso", href: "/#proceso" },
                   { label: "Contacto", href: "/#contacto" },
                   { label: "Chimbuceros", href: "/chimbuceros" },
                 ].map((item) => (
