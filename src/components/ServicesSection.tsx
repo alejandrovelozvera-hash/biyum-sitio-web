@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import { useRef, useState } from "react";
@@ -15,36 +15,36 @@ const Food = ({ size = 20, className, ...rest }: any) => (
 const services = [
   {
     kind: "food",
-    title: "Fotografía Gastronómica",
-    desc: "Menús que provocan antojo. Estilismo de alimentos, vapor y texturas capturadas para que tu carta venda sola.",
+    title: "FotografÃ­a GastronÃ³mica",
+    desc: "MenÃºs que provocan antojo. Estilismo de alimentos, vapor y texturas capturadas para que tu carta venda sola.",
     deliverables: ["Aprox. 6 fotos por plato", "Distintas perspectivas", "Styling + props"],
-    ideal: "Restaurantes, cafés, delivery",
+    ideal: "Restaurantes, cafÃ©s, delivery",
     price: "$15 por plato",
     size: "small" as const,
   },
   {
     kind: "video",
-    title: "Producción de Video",
-    desc: "Spots, reels, documentales y cobertura de eventos. Guion, rodaje y edición listos para publicar.",
-    deliverables: ["Grabación 4K", "Edición + color + audio", "Entrega 7–12 días"],
+    title: "ProducciÃ³n de Video",
+    desc: "Spots, reels, documentales y cobertura de eventos. Guion, rodaje y ediciÃ³n listos para publicar.",
+    deliverables: ["GrabaciÃ³n 4K", "EdiciÃ³n + color + audio", "Entrega 7â€“12 dÃ­as"],
     ideal: "Lanzamientos, redes, ads",
-    price: "Precio según tu idea",
+    price: "Precio segÃºn tu idea",
     size: "small" as const,
   },
   {
     kind: "palette",
     title: "Color Grading",
-    desc: "Etalonaje cinematográfico para unificar tono y emoción. Corrección primaria y secundaria con look a medida.",
-    deliverables: ["Corrección de color", "Look cinematográfico", "Entrega según metraje"],
+    desc: "Etalonaje cinematogrÃ¡fico para unificar tono y emociÃ³n. CorrecciÃ³n primaria y secundaria con look a medida.",
+    deliverables: ["CorrecciÃ³n de color", "Look cinematogrÃ¡fico", "Entrega segÃºn metraje"],
     ideal: "Videoclips, spots, documental",
-    price: "Precio según tu metraje",
+    price: "Precio segÃºn tu metraje",
     size: "small" as const,
   },
   {
     kind: "branding",
     title: "Branding",
-    desc: "De la idea al manual. Logotipo, paleta, tipografía y aplicaciones que hacen tu marca reconocible y coherente.",
-    deliverables: ["3 propuestas", "Manual básico", "Manual completo", "Papelería esencial"],
+    desc: "De la idea al manual. Logotipo, paleta, tipografÃ­a y aplicaciones que hacen tu marca reconocible y coherente.",
+    deliverables: ["3 propuestas", "Manual bÃ¡sico", "Manual completo", "PapelerÃ­a esencial"],
     ideal: "Emprendimientos, rebranding",
     price: "Desde $250",
     size: "large" as const,
@@ -52,18 +52,18 @@ const services = [
   {
     kind: "social",
     title: "Social Media",
-    desc: "Parrilla, copy y diseño para que tu feed no pare. Pauta segmentada para llegar a quien sí compra.",
+    desc: "Parrilla, copy y diseÃ±o para que tu feed no pare. Pauta segmentada para llegar a quien sÃ­ compra.",
     deliverables: ["8 a 12 piezas/mes", "Copy + calendario", "Reporte mensual"],
     ideal: "Negocios locales, marcas",
     price: "Desde $96",
-    note: "Artes individuales $15 — incluye post + historia. Pago a fin de mes según posts realizados.",
+    note: "Artes individuales $15 â€” incluye post + historia. Pago a fin de mes segÃºn posts realizados.",
     size: "small" as const,
   },
   {
     kind: "web",
-    title: "Diseño Web",
-    desc: "Landing pages y webs rápidas que cargan en <2s y convierten visitas en contactos reales.",
-    deliverables: ["Diseño responsive", "SEO básico", "Entrega 10–15 días"],
+    title: "DiseÃ±o Web",
+    desc: "Landing pages y webs rÃ¡pidas que cargan en <2s y convierten visitas en contactos reales.",
+    deliverables: ["DiseÃ±o responsive", "SEO bÃ¡sico", "Entrega 10â€“15 dÃ­as"],
     ideal: "Servicios, reservas, ventas",
     price: "Desde $300",
     size: "small" as const,
@@ -309,7 +309,7 @@ function ServiceCard({ s, i, onBranding }: { s: (typeof services)[number]; i: nu
             {isBranding ? "Ver proceso" : "Cotizar"}
             <ChevronRight size={12} className="group-hover:translate-x-0.5 transition-transform duration-300" />
           </span>
-          <span className="text-muted text-[10px]">{isBranding ? "→ Proceso" : "→ WhatsApp"}</span>
+          <span className="text-muted text-[10px]">{isBranding ? "â†’ Proceso" : "â†’ WhatsApp"}</span>
         </div>
       </div>
     </motion.a>
@@ -346,7 +346,7 @@ export default function ServicesSection() {
           <div>
             <div className="flex items-center gap-4 mb-3">
               <span className="w-8 h-px bg-gradient-to-r from-gold/60 to-transparent" />
-              <p className="text-muted text-[10px] tracking-[0.2em] uppercase">Qué hacemos</p>
+              <p className="text-muted text-[10px] tracking-[0.2em] uppercase">QuÃ© hacemos</p>
             </div>
             <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gold tracking-[-0.04em] leading-[0.92]">
               Servicios
@@ -409,11 +409,11 @@ export default function ServicesSection() {
                     }}
                     className="text-[11px] tracking-[0.12em] uppercase font-medium text-muted hover:text-foreground border border-gold/15 hover:border-gold/30 rounded-full px-4 py-2 transition-colors"
                   >
-                    {copied ? "¡Copiado!" : "Copiar link"}
+                    {copied ? "Â¡Copiado!" : "Copiar link"}
                   </button>
-                  <a href="/proceso" target="_blank" rel="noopener noreferrer" className="text-[11px] tracking-[0.12em] uppercase font-medium text-muted hover:text-foreground border border-gold/15 hover:border-gold/30 rounded-full px-4 py-2 transition-colors">Abrir página</a>
+                  <a href="/proceso" target="_blank" rel="noopener noreferrer" className="text-[11px] tracking-[0.12em] uppercase font-medium text-muted hover:text-foreground border border-gold/15 hover:border-gold/30 rounded-full px-4 py-2 transition-colors">Abrir pÃ¡gina</a>
                 </div>
-                <a href="https://wa.me/message/N3PW46LKUALOK1?text=Hola%20Biyum,%20quiero%20ver%20todos%20los%20planes%20de%20branding" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-on-gold bg-gold hover:bg-gold-light rounded-full px-7 py-3 font-semibold transition-all hover:scale-[1.02] active:scale-[0.98]">Ver todos los planes</a>
+                <a href="https://wa.me/message/N3PW46LKUALOK1?text=Hola%20Biyum,%20quiero%20ver%20todos%20los%20planes%20de%20branding" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-on-gold bg-gold hover:bg-gold-light rounded-full px-7 py-3 font-semibold transition-all hover:scale-[1.02] active:scale-[0.98]">Consulta todos los planes</a>
               </div>
             </motion.div>
           </motion.div>
