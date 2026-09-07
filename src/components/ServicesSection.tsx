@@ -1,8 +1,9 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { useRef, useState } from "react";
+import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { Camera, Video, Palette, Megaphone, Code, ChevronRight } from "./Icons";
+import BrandingProcess from "./BrandingProcess";
 
 const Food = ({ size = 20, className, ...rest }: any) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className} {...rest}>
@@ -221,7 +222,7 @@ function ServiceVisual({ kind, size, className }: { kind: string; size: number; 
   }
 }
 
-function ServiceCard({ s, i }: { s: (typeof services)[number]; i: number }) {
+function ServiceCard({ s, i, onBranding }: { s: (typeof services)[number]; i: number; onBranding?: () => void }) {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLAnchorElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
@@ -230,7 +231,7 @@ function ServiceCard({ s, i }: { s: (typeof services)[number]; i: number }) {
 
   const isBranding = s.kind === "branding";
   const waLink = `https://wa.me/message/N3PW46LKUALOK1?text=${encodeURIComponent(`Hola Biyum, me interesa el servicio de ${s.title}.`)}`;
-  const href = isBranding ? "/proceso" : waLink;
+  const href = waLink;
 
   return (
     <motion.a
@@ -238,6 +239,14 @@ function ServiceCard({ s, i }: { s: (typeof services)[number]; i: number }) {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={
+        isBranding
+          ? (e) => {
+              e.preventDefault();
+              onBranding?.();
+            }
+          : undefined
+      }
       initial={!reduce ? { opacity: 0, y: 32 } : false}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
@@ -309,6 +318,7 @@ function ServiceCard({ s, i }: { s: (typeof services)[number]; i: number }) {
 export default function ServicesSection() {
   const reduce = useReducedMotion();
   const anim = !reduce;
+  const [procesoOpen, setProcesoOpen] = useState(false);
 
   return (
     <section id="servicios" className="py-24 md:py-32 bg-section-alt">
@@ -355,10 +365,26 @@ export default function ServicesSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
           {services.map((s, i) => (
-            <ServiceCard key={s.title} s={s} i={i} />
+            <ServiceCard key={s.title} s={s} i={i} onBranding={() => setProcesoOpen(true)} />
           ))}
         </div>
       </div>
+      <AnimatePresence>
+        {procesoOpen && (
+          <motion.div className="fixed inset-0 z-[100] flex items-center justify-center p-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setProcesoOpen(false)}>
+            <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
+            <motion.div initial={{ opacity: 0, scale: 0.97, y: 12 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.97, y: 12 }} transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }} className="relative z-10 w-full max-w-5xl max-h-[90vh] overflow-auto bg-background rounded-3xl shadow-2xl" onClick={(e) => e.stopPropagation()}>
+              <button onClick={() => setProcesoOpen(false)} className="sticky top-4 right-4 z-20 ml-auto mr-4 mt-4 flex h-9 w-9 items-center justify-center rounded-full bg-surface text-muted hover:text-foreground ring-1 ring-border transition-colors" aria-label="Cerrar">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M18 6L6 18M6 6l12 12" /></svg>
+              </button>
+              <BrandingProcess />
+              <div className="px-6 md:px-16 pb-8 flex justify-center">
+                <a href="https://wa.me/message/N3PW46LKUALOK1?text=Hola%20Biyum,%20quiero%20ver%20todos%20los%20planes%20de%20branding" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-base text-on-gold bg-gold hover:bg-gold-light rounded-full px-8 py-4 font-semibold transition-all hover:scale-[1.02] active:scale-[0.98]">Ver todos los planes</a>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
