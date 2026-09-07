@@ -67,7 +67,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-muted text-xs border-t border-gold/10 pt-8">
-          <span>Biyum &copy; {new Date().getFullYear()} — Hecho con ♥ en Riobamba</span>
+          <span className="flex items-center gap-3">Biyum &copy; {new Date().getFullYear()} — Hecho con ♥ en Riobamba <span className="hidden md:inline text-gold/20">·</span> <a href="/privacidad" className="hover:text-gold transition-colors">Privacidad</a> <a href="/terminos" className="hover:text-gold transition-colors">Términos</a></span>
           <span className="flex items-center gap-2"><span className="w-2 h-2 bg-gold rounded-full animate-pulse" /> Disponible para nuevos proyectos</span>
         </div>
       </div>
