@@ -27,7 +27,7 @@ const navLinks: Array<{ href: string; label: string; children?: Array<{ href: st
       { href: "/#servicios", label: "Ver Más Servicios" },
     ],
   },
-  { href: "/#proceso", label: "Proceso" },
+  { href: "/#servicios", label: "Servicios" },
   { href: "/#contacto", label: "Contacto" },
   { href: "/chimbuceros", label: "Chimbuceros" },
 ];

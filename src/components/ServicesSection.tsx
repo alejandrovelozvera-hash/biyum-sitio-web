@@ -228,14 +228,25 @@ function ServiceCard({ s, i }: { s: (typeof services)[number]; i: number }) {
   const iconY = useTransform(scrollYProgress, [0, 1], [40, -40]);
   const iconRotate = useTransform(scrollYProgress, [0, 1], [0, -8]);
 
+  const isBranding = s.kind === "branding";
   const waLink = `https://wa.me/message/N3PW46LKUALOK1?text=${encodeURIComponent(`Hola Biyum, me interesa el servicio de ${s.title}.`)}`;
+  const href = isBranding ? "/#proceso" : waLink;
+  const isExternal = !isBranding;
 
   return (
     <motion.a
       ref={ref}
-      href={waLink}
-      target="_blank"
-      rel="noopener noreferrer"
+      href={href}
+      target={isExternal ? "_blank" : undefined}
+      rel={isExternal ? "noopener noreferrer" : undefined}
+      onClick={
+        isBranding
+          ? (e) => {
+              e.preventDefault();
+              document.getElementById("proceso")?.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+          : undefined
+      }
       initial={!reduce ? { opacity: 0, y: 32 } : false}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
@@ -293,11 +304,11 @@ function ServiceCard({ s, i }: { s: (typeof services)[number]; i: number }) {
         <p className="text-[11px] tracking-[0.14em] uppercase font-semibold text-muted mt-3">Ideal: {s.ideal}</p>
 
         <div className="mt-auto pt-5 flex items-center justify-between">
-          <span className="text-gold text-[11px] tracking-[0.14em] uppercase inline-flex items-center gap-1.5 opacity-60 group-hover:opacity-100 transition-opacity">
-            Cotizar
+          <span className="text-gold text-[11px] tracking-[0.14em] uppercase inline-flex items-center gap-1.5 opacity-80 group-hover:opacity-100 transition-opacity">
+            {isBranding ? "Ver proceso" : "Cotizar"}
             <ChevronRight size={12} className="group-hover:translate-x-0.5 transition-transform duration-300" />
           </span>
-          <span className="text-muted text-[10px]">→ WhatsApp</span>
+          <span className="text-muted text-[10px]">{isBranding ? "→ Proceso" : "→ WhatsApp"}</span>
         </div>
       </div>
     </motion.a>
