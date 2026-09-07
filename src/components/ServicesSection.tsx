@@ -373,11 +373,13 @@ export default function ServicesSection() {
         {procesoOpen && (
           <motion.div className="fixed inset-0 z-[100] flex items-center justify-center p-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setProcesoOpen(false)}>
             <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
-            <motion.div initial={{ opacity: 0, scale: 0.97, y: 12 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.97, y: 12 }} transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }} className="relative z-10 w-full max-w-5xl max-h-[90vh] overflow-auto bg-background rounded-3xl shadow-2xl" onClick={(e) => e.stopPropagation()}>
-              <button onClick={() => setProcesoOpen(false)} className="sticky top-4 right-4 z-20 ml-auto mr-4 mt-4 flex h-9 w-9 items-center justify-center rounded-full bg-surface text-muted hover:text-foreground ring-1 ring-border transition-colors" aria-label="Cerrar">
+            <motion.div initial={{ opacity: 0, scale: 0.97, y: 12 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.97, y: 12 }} transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }} className="relative z-10 w-full max-w-5xl max-h-[90vh] overflow-auto bg-section-alt rounded-3xl shadow-2xl ring-1 ring-gold/10" onClick={(e) => e.stopPropagation()}>
+              <button onClick={() => setProcesoOpen(false)} className="sticky top-4 right-4 z-20 ml-auto mr-4 mt-4 flex h-9 w-9 items-center justify-center rounded-full bg-surface-elevated text-muted hover:text-foreground ring-1 ring-gold/10 shadow-sm transition-colors" aria-label="Cerrar">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M18 6L6 18M6 6l12 12" /></svg>
               </button>
-              <BrandingProcess />
+              <div className="[&>section]:!py-8 [&>section]:!bg-section-alt">
+                <BrandingProcess />
+              </div>
               <div className="px-6 md:px-16 pb-8 flex justify-center">
                 <a href="https://wa.me/message/N3PW46LKUALOK1?text=Hola%20Biyum,%20quiero%20ver%20todos%20los%20planes%20de%20branding" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-base text-on-gold bg-gold hover:bg-gold-light rounded-full px-8 py-4 font-semibold transition-all hover:scale-[1.02] active:scale-[0.98]">Ver todos los planes</a>
               </div>
