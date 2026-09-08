@@ -8,7 +8,6 @@ const photos = [
   "https://wp.biyum.agency/wp-content/uploads/2024/07/DSC01744-1-scaled.jpg",
   "https://wp.biyum.agency/wp-content/uploads/2024/07/DSC09352-scaled.jpg",
   "https://wp.biyum.agency/wp-content/uploads/2024/07/DSC03925-scaled.jpg",
-  "https://wp.biyum.agency/wp-content/uploads/2024/07/DSC01744-scaled.jpg",
   "https://wp.biyum.agency/wp-content/uploads/2024/07/DSC05606-scaled.jpg",
   "https://wp.biyum.agency/wp-content/uploads/2024/07/DSC03081-1-scaled.jpg",
   "https://wp.biyum.agency/wp-content/uploads/2024/07/DSC06920-scaled.jpg",
@@ -16,21 +15,21 @@ const photos = [
   "https://wp.biyum.agency/wp-content/uploads/2024/07/DSC02412-scaled.jpg",
   "https://wp.biyum.agency/wp-content/uploads/2024/07/DSC02527-scaled.jpg",
 ];
+const perPage = 3;
+const pages = Array.from({ length: Math.ceil(photos.length / perPage) }, (_, i) => photos.slice(i * perPage, (i + 1) * perPage));
 
 export default function GastronomicSection() {
   const reduce = useReducedMotion();
   const anim = !reduce;
   const [current, setCurrent] = React.useState(0);
-  const total = photos.length;
-  const visible = 3;
-  const max = total - visible;
+  const pageCount = pages.length;
   React.useEffect(() => {
     if (reduce) return;
-    const id = setInterval(() => setCurrent((p) => (p >= max ? 0 : p + 1)), 4000);
+    const id = setInterval(() => setCurrent((p) => (p + 1) % pageCount), 4000);
     return () => clearInterval(id);
-  }, [reduce, max]);
-  const next = () => setCurrent((p) => (p >= max ? 0 : p + 1));
-  const prev = () => setCurrent((p) => (p <= 0 ? max : p - 1));
+  }, [reduce, pageCount]);
+  const next = () => setCurrent((p) => (p + 1) % pageCount);
+  const prev = () => setCurrent((p) => (p - 1 + pageCount) % pageCount);
   return (
     <section id="gastronomica" className="py-20 md:py-24 bg-background">
       <div className="max-w-[1400px] mx-auto px-6 md:px-16">
@@ -45,7 +44,7 @@ export default function GastronomicSection() {
           </div>
           <div className="flex items-center gap-3 shrink-0">
             <div className="hidden md:flex gap-1.5 mr-2">
-              {Array.from({ length: max + 1 }).map((_, i) => (
+              {pages.map((_, i) => (
                 <button key={i} onClick={() => setCurrent(i)} aria-label={`Ir ${i + 1}`} className={`h-1 rounded-full transition-all ${i === current ? "w-5 bg-foreground" : "w-1 bg-border hover:bg-muted"}`} />
               ))}
             </div>
@@ -55,27 +54,20 @@ export default function GastronomicSection() {
         </motion.div>
 
         <div className="overflow-hidden rounded-2xl">
-          <motion.div className="flex gap-3 md:gap-4" animate={{ x: `-${current * (100 / visible + 1.2)}%` }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} style={{ width: `${(total * 100) / visible}%` }}>
-            {photos.map((src, i) => {
-              const isLast = i === 2 && total > 3;
-              return (
-                <div key={src + i} className="relative overflow-hidden rounded-2xl bg-surface ring-1 ring-border shadow-sm group shrink-0" style={{ width: `${100 / total}%` }}>
-                  <Image src={src} alt={`Gastronomía ${i + 1}`} width={800} height={800} sizes="(max-width:768px) 50vw, 33vw" className="w-full aspect-[4/3] object-cover block group-hover:scale-[1.03] transition-transform duration-700" unoptimized />
-                  {isLast && (
-                    <div className="absolute inset-0 bg-[#1C1463]/55 backdrop-blur-[1px] flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <span className="text-white text-2xl font-bold tracking-tight">+{total - 3}</span>
-                      <span className="text-white/80 text-[11px] tracking-[0.15em] uppercase">fotos</span>
-                    </div>
-                  )}
-                  {isLast && <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none md:hidden" />}
-                  {isLast && <span className="absolute bottom-3 right-3 md:hidden bg-white/90 text-[#1C1463] text-[11px] font-bold px-3 py-1 rounded-full">+{total - 3} fotos</span>}
-                </div>
-              );
-            })}
+          <motion.div className="flex" animate={{ x: `-${current * 100}%` }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} style={{ width: `${pageCount * 100}%` }}>
+            {pages.map((page, pi) => (
+              <div key={pi} className="grid grid-cols-3 gap-3 md:gap-4 shrink-0 px-0.5" style={{ width: `${100 / pageCount}%` }}>
+                {page.map((src, i) => (
+                  <div key={src + i} className="relative overflow-hidden rounded-2xl bg-surface ring-1 ring-border shadow-sm group">
+                    <Image src={src} alt={`Gastronomía ${pi * perPage + i + 1}`} width={800} height={800} sizes="33vw" className="w-full aspect-[4/3] object-cover block group-hover:scale-[1.03] transition-transform duration-700" unoptimized />
+                  </div>
+                ))}
+              </div>
+            ))}
           </motion.div>
         </div>
         <div className="md:hidden flex gap-1.5 justify-center mt-4">
-          {Array.from({ length: max + 1 }).map((_, i) => (
+          {pages.map((_, i) => (
             <button key={i} onClick={() => setCurrent(i)} className={`h-1 rounded-full transition-all ${i === current ? "w-5 bg-foreground" : "w-1 bg-border"}`} />
           ))}
         </div>
