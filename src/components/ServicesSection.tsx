@@ -180,25 +180,16 @@ function ServiceCard({ s, i, onBranding }: { s: (typeof services)[number]; i: nu
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const iconY = useTransform(scrollYProgress, [0, 1], [40, -40]);
   const iconRotate = useTransform(scrollYProgress, [0, 1], [0, -8]);
-
   const isBranding = s.kind === "branding";
   const waLink = `https://wa.me/message/N3PW46LKUALOK1?text=${encodeURIComponent(`Hola Biyum, me interesa el servicio de ${s.title}.`)}`;
   const href = waLink;
-
   return (
     <motion.a
       ref={ref}
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      onClick={
-        isBranding
-          ? (e) => {
-              e.preventDefault();
-              onBranding?.();
-            }
-          : undefined
-      }
+      onClick={isBranding ? (e) => { e.preventDefault(); onBranding?.(); } : undefined}
       initial={!reduce ? { opacity: 0, y: 32 } : false}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
@@ -292,78 +283,76 @@ export default function ServicesSection() {
         {procesoOpen && (
           <motion.div className="fixed inset-0 z-[100] flex items-center justify-center p-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setProcesoOpen(false)}>
             <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
-            <motion.div initial={{ opacity: 0, scale: 0.97, y: 12 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.97, y: 12 }} transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }} className="relative z-10 w-full max-w-5xl max-h-[90vh] overflow-auto bg-section-alt rounded-3xl shadow-2xl ring-1 ring-gold/10 flex flex-col" onClick={(e) => e.stopPropagation()}>
-              <div className="sticky top-0 z-20 bg-section-alt/80 backdrop-blur-xl border-b border-gold/10 px-6 md:px-8 py-4 flex items-center justify-between">
+            <motion.div initial={{ opacity: 0, scale: 0.97, y: 12 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.97, y: 12 }} transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }} className="relative z-10 w-full max-w-5xl max-h-[90vh] overflow-auto bg-white rounded-3xl shadow-2xl ring-1 ring-gold/10 flex flex-col" onClick={(e) => e.stopPropagation()}>
+              <div className="sticky top-0 z-20 bg-white/90 backdrop-blur-xl border-b border-gold/10 px-6 md:px-8 py-4 flex items-center justify-between">
                 <div>
                   <p className="text-muted text-[10px] tracking-[0.2em] uppercase">Proceso</p>
                   <h3 className="text-foreground text-lg font-bold tracking-tight">Tu marca, paso a paso</h3>
                 </div>
-                <button onClick={() => setProcesoOpen(false)} className="flex h-9 w-9 items-center justify-center rounded-full bg-surface-elevated text-muted hover:text-foreground ring-1 ring-gold/10 shadow-sm transition-colors shrink-0" aria-label="Cerrar">
+                <button onClick={() => setProcesoOpen(false)} className="flex h-9 w-9 items-center justify-center rounded-full bg-surface text-muted hover:text-foreground ring-1 ring-gold/10 shadow-sm transition-colors shrink-0" aria-label="Cerrar">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M18 6L6 18M6 6l12 12" /></svg>
                 </button>
               </div>
-              <div className="flex-1 overflow-auto [&>section]:!py-8 [&>section]:!bg-section-alt">
+              <div className="flex-1 overflow-auto bg-surface px-6 md:px-8 py-6 space-y-6">
+                <div className="bg-surface-elevated rounded-2xl ring-1 ring-gold/10 p-6">
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="w-8 h-px bg-gold/30" />
+                    <h4 className="text-foreground font-semibold text-[13px] tracking-[0.1em] uppercase">Antes de diseñar — Briefing obligatorio</h4>
+                  </div>
+                  <p className="text-foreground text-[14px] leading-relaxed font-semibold">Es un documento con preguntas que debes responder con tus propias palabras, sin IA.</p>
+                  <p className="text-secondary text-[13px] leading-relaxed mt-2">Nos da el concepto, tono y referencias exactas para que tu logo nazca con dirección correcta. <span className="text-foreground font-semibold">Una respuesta mal contestada desvía todo el rumbo de tu marca.</span></p>
+                </div>
                 <BrandingProcess />
-                <div className="px-6 md:px-8 pb-6 space-y-6">
-                  <div className="glass rounded-2xl p-5 md:p-6">
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className="w-8 h-px bg-gold" />
-                      <h4 className="text-gold font-bold text-[12px] tracking-[0.16em] uppercase">Antes de diseñar — Briefing obligatorio</h4>
-                    </div>
-                    <p className="text-foreground text-[14px] leading-relaxed font-semibold">Es un documento con preguntas que debes responder con tus propias palabras, sin IA.</p>
-                    <p className="text-secondary text-[13px] leading-relaxed mt-2">Nos da el concepto, tono y referencias exactas para que tu logo nazca con dirección correcta. <span className="text-foreground font-medium">Una respuesta mal contestada desvía todo el rumbo de tu marca.</span></p>
+                <div className="grid md:grid-cols-3 gap-4">
+                  <div className="bg-surface-elevated rounded-2xl ring-1 ring-gold/10 p-6 flex flex-col">
+                    <p className="text-gold text-[11px] tracking-[0.14em] uppercase font-bold mb-1">Emprendedor</p>
+                    <p className="text-foreground font-bold text-[22px] tracking-tight leading-none">$150</p>
+                    <p className="text-muted text-[11px] mt-1 mb-3">Briefing previo incluido</p>
+                    <ul className="space-y-2 text-[13px] leading-relaxed text-secondary font-medium">
+                      <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Diseño de Logo</li>
+                      <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Manual básico</li>
+                      <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Concepto, Color, Tipografía</li>
+                      <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Logo color, blanco y negro</li>
+                    </ul>
+                    <a href="https://wa.me/message/N3PW46LKUALOK1?text=Hola%20Biyum,%20quiero%20contratar%20el%20Paquete%20Emprendedor%20%24150" target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center justify-center gap-2 text-[13px] font-bold text-on-gold bg-gold hover:bg-gold-light rounded-full px-6 py-3 transition-all">Contratar plan</a>
                   </div>
-                  <div className="grid md:grid-cols-3 gap-4">
-                    <div className="glass rounded-2xl p-6 flex flex-col ring-1 ring-gold/10">
-                      <p className="text-muted text-[11px] tracking-[0.16em] uppercase font-semibold mb-1">Emprendedor</p>
-                      <p className="text-foreground font-extrabold text-2xl tracking-tight">$150</p>
-                      <p className="text-muted text-[11px] mb-3">Briefing previo incluido</p>
-                      <ul className="space-y-2 text-[13px] leading-relaxed text-secondary font-medium">
-                        <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Diseño de Logo</li>
-                        <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Manual básico</li>
-                        <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Concepto, Color, Tipografía</li>
-                        <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Logo color, blanco y negro</li>
-                      </ul>
-                      <a href="https://wa.me/message/N3PW46LKUALOK1?text=Hola%20Biyum,%20quiero%20contratar%20el%20Paquete%20Emprendedor%20%24150" target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex items-center justify-center gap-2 text-sm font-bold text-on-gold bg-gold hover:bg-gold-light rounded-full px-6 py-3 transition-all shadow-sm">Contratar plan</a>
+                  <div className="bg-surface-elevated rounded-2xl ring-2 ring-gold p-6 flex flex-col shadow-[0_10px_40px_-16px_rgba(28,20,99,0.2)]">
+                    <div className="flex items-center justify-between mb-1">
+                      <p className="text-gold text-[11px] tracking-[0.14em] uppercase font-bold">Emprendedor Plus</p>
+                      <span className="text-[10px] font-bold tracking-[0.1em] uppercase bg-gold text-on-gold px-2.5 py-1 rounded-full">Recomendado</span>
                     </div>
-                    <div className="glass rounded-2xl p-6 flex flex-col ring-1 ring-gold/20 shadow-md">
-                      <div className="flex items-center justify-between mb-1">
-                        <p className="text-gold text-[11px] tracking-[0.16em] uppercase font-bold">Emprendedor Plus</p>
-                        <span className="text-[10px] font-bold tracking-[0.1em] uppercase bg-gold text-on-gold px-2.5 py-1 rounded-full">Recomendado</span>
-                      </div>
-                      <p className="text-foreground font-extrabold text-2xl tracking-tight">$250</p>
-                      <p className="text-muted text-[11px] mb-3">Briefing previo incluido</p>
-                      <ul className="space-y-2 text-[13px] leading-relaxed text-secondary font-medium">
-                        <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Diseño de Logo</li>
-                        <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Manual básico</li>
-                        <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Concepto, Color, Tipografía</li>
-                        <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Logo color, blanco y negro</li>
-                        <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Tarjeta + Hoja tipo</li>
-                      </ul>
-                      <a href="https://wa.me/message/N3PW46LKUALOK1?text=Hola%20Biyum,%20quiero%20contratar%20el%20Paquete%20Emprendedor%20Plus%20%24250" target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex items-center justify-center gap-2 text-sm font-bold text-on-gold bg-gold hover:bg-gold-light rounded-full px-6 py-3 transition-all shadow-md">Contratar plan</a>
-                    </div>
-                    <div className="glass rounded-2xl p-6 flex flex-col ring-1 ring-gold/10">
-                      <div className="flex items-center justify-between mb-1">
-                        <p className="text-gold text-[11px] tracking-[0.16em] uppercase font-bold">Profesional</p>
-                        <span className="text-[10px] tracking-[0.12em] uppercase bg-foreground text-background font-bold px-2.5 py-1 rounded-full">Más completo</span>
-                      </div>
-                      <p className="text-foreground font-extrabold text-2xl tracking-tight">$400</p>
-                      <p className="text-muted text-[11px] mb-3">Briefing previo incluido</p>
-                      <ul className="space-y-2 text-[13px] leading-relaxed text-secondary font-medium">
-                        <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Diseño de Logo</li>
-                        <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Manual de Identidad completo</li>
-                        <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Concepto, Construcción, Color, Tipografía, Ubicación Relativa</li>
-                        <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Logo color, blanco y negro</li>
-                        <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Papelería: hoja, tarjetas, carta</li>
-                        <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Línea gráfica redes</li>
-                        <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Animación claqueta intro</li>
-                      </ul>
-                      <a href="https://wa.me/message/N3PW46LKUALOK1?text=Hola%20Biyum,%20quiero%20contratar%20el%20Paquete%20Profesional%20de%20Branding%20%24400" target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex items-center justify-center gap-2 text-sm font-bold text-on-gold bg-gold hover:bg-gold-light rounded-full px-6 py-3 transition-all">Contratar plan</a>
-                    </div>
+                    <p className="text-foreground font-bold text-[22px] tracking-tight leading-none">$250</p>
+                    <p className="text-muted text-[11px] mt-1 mb-3">Briefing previo incluido</p>
+                    <ul className="space-y-2 text-[13px] leading-relaxed text-secondary font-medium">
+                      <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Diseño de Logo</li>
+                      <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Manual básico</li>
+                      <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Concepto, Color, Tipografía</li>
+                      <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Logo color, blanco y negro</li>
+                      <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Tarjeta + Hoja tipo</li>
+                    </ul>
+                    <a href="https://wa.me/message/N3PW46LKUALOK1?text=Hola%20Biyum,%20quiero%20contratar%20el%20Paquete%20Emprendedor%20Plus%20%24250" target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center justify-center gap-2 text-[13px] font-bold text-on-gold bg-gold hover:bg-gold-light rounded-full px-6 py-3 transition-all shadow-md">Contratar plan</a>
                   </div>
-                  <div className="flex justify-center pt-2">
-                    <a href="https://wa.me/message/N3PW46LKUALOK1?text=Hola%20Biyum,%20quiero%20mas%20informacion%20sobre%20branding" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-medium text-gold hover:text-gold-light border border-gold/20 hover:border-gold/40 rounded-full px-7 py-3 transition-all">Pide más información</a>
+                  <div className="bg-surface-elevated rounded-2xl ring-1 ring-gold/10 p-6 flex flex-col">
+                    <div className="flex items-center justify-between mb-1">
+                      <p className="text-gold text-[11px] tracking-[0.14em] uppercase font-bold">Profesional</p>
+                      <span className="text-[10px] tracking-[0.12em] uppercase bg-foreground text-background font-bold px-2.5 py-1 rounded-full">Más completo</span>
+                    </div>
+                    <p className="text-foreground font-bold text-[22px] tracking-tight leading-none">$400</p>
+                    <p className="text-muted text-[11px] mt-1 mb-3">Briefing previo incluido</p>
+                    <ul className="space-y-2 text-[13px] leading-relaxed text-secondary font-medium">
+                      <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Diseño de Logo</li>
+                      <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Manual de Identidad completo</li>
+                      <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Concepto, Construcción, Color, Tipografía, Ubicación Relativa</li>
+                      <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Logo color, blanco y negro</li>
+                      <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Papelería: hoja, tarjetas, carta</li>
+                      <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Línea gráfica redes</li>
+                      <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Animación claqueta intro</li>
+                    </ul>
+                    <a href="https://wa.me/message/N3PW46LKUALOK1?text=Hola%20Biyum,%20quiero%20contratar%20el%20Paquete%20Profesional%20de%20Branding%20%24400" target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center justify-center gap-2 text-[13px] font-bold text-on-gold bg-gold hover:bg-gold-light rounded-full px-6 py-3 transition-all">Contratar plan</a>
                   </div>
+                </div>
+                <div className="flex justify-center pt-2">
+                  <a href="https://wa.me/message/N3PW46LKUALOK1?text=Hola%20Biyum,%20quiero%20mas%20informacion%20sobre%20branding" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-medium text-gold hover:text-gold-light border border-gold/20 hover:border-gold/40 rounded-full px-7 py-3 transition-all">Pide más información</a>
                 </div>
               </div>
             </motion.div>
