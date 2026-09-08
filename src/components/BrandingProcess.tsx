@@ -676,28 +676,11 @@ export default function BrandingProcess() {
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 bg-surface-elevated rounded-2xl border border-gold/10 p-6 md:p-8">
-              <div>
-                <p className="text-muted text-[10px] tracking-[0.2em] uppercase mb-2">Paquetes a medida</p>
-                <h3 className="text-gold-dark text-xl md:text-2xl font-bold tracking-tight">
-                  Consulta nuestros planes de branding
-                </h3>
-                <p className="text-secondary text-sm mt-2">
-                  Desde un logotipo hasta la identidad completa. Precios claros, sin sorpresas.
-                </p>
-                <p className="text-gold text-[11px] tracking-[0.14em] uppercase mt-3">
-                  1 llamada · 1 encuesta · 1 propuesta en 7 días
-                </p>
-              </div>
-              <a
-                href={`https://wa.me/message/N3PW46LKUALOK1?text=${encodeURIComponent("Hola Biyum, quiero conocer sus planes de branding")}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm text-on-gold bg-gold hover:bg-gold-light rounded-full px-6 py-3 font-medium transition-all hover:scale-[1.02] active:scale-[0.98] shrink-0"
-              >
-                Ver planes
-                <ChevronRight size={14} />
-              </a>
+            <div className="bg-surface-elevated rounded-2xl border border-gold/10 p-6 md:p-8">
+              <p className="text-muted text-[10px] tracking-[0.2em] uppercase mb-2">Paquetes a medida</p>
+              <h3 className="text-gold-dark text-xl md:text-2xl font-bold tracking-tight">Consulta nuestros planes de branding</h3>
+              <p className="text-secondary text-sm mt-2">Desde un logotipo hasta la identidad completa. Precios claros, sin sorpresas.</p>
+              <p className="text-gold text-[11px] tracking-[0.14em] uppercase mt-3">1 llamada · 1 encuesta · 1 propuesta en 7 días</p>
             </div>
           </motion.div>
         </div>
