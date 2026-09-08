@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
-import { Mail, MapPin } from "./Icons";
+import { Mail, MapPin, Whatsapp } from "./Icons";
 
 export default function Footer() {
   const reduce = useReducedMotion();
@@ -81,7 +81,7 @@ export default function Footer() {
                 <div className="flex gap-3">
                   <a href="https://www.facebook.com/profile.php?id=61590844183641" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-surface border border-border text-muted hover:text-foreground hover:border-foreground/20 flex items-center justify-center transition-all hover:scale-105"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg></a>
                   <a href="https://www.instagram.com/alejandro_veloz_vera/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-surface border border-border text-muted hover:text-foreground hover:border-foreground/20 flex items-center justify-center transition-all hover:scale-105"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" /></svg></a>
-                  <a href="https://wa.me/message/N3PW46LKUALOK1" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="w-10 h-10 rounded-full bg-gold text-on-gold flex items-center justify-center shadow-sm hover:scale-105 transition-all"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.6 4.3A10 10 0 0 0 12 2C6.48 2 2 6.21 2 11.4c0 1.66.43 3.28 1.25 4.71L2 22l6.02-1.58A9.9 9.9 0 0 0 12 20.8c5.52 0 10-4.21 10-9.4 0-2.51-1.04-4.87-2.4-7.1Zm-7.6 14a8.2 8.2 0 0 1-4.18-1.13l-.3-.18-3.58.94.95-3.48-.2-.36A8.17 8.17 0 0 1 12 4.1a8.18 8.18 0 0 1 8.18 8.3 8.2 8.2 0 0 1-8.18 6Zm6.2-6.1c-.34-.17-2-.99-2.31-1.1-.31-.11-.54-.17-.77.17s-.88 1.1-1.08 1.33c-.2.22-.39.25-.73.08-.34-.17-1.43-.53-2.73-1.69-1.01-.9-1.69-2-1.89-2.34-.2-.34-.02-.52.15-.69.15-.15.34-.39.51-.58.17-.2.22-.34.34-.56.11-.22.06-.42-.03-.58-.08-.17-.77-1.86-1.06-2.55-.28-.67-.56-.58-.77-.59h-.66c-.22 0-.58.08-.89.42-.3.34-1.16 1.13-1.16 2.76s1.19 3.2 1.35 3.42c.17.22 2.34 3.58 5.67 5.02.79.34 1.41.55 1.89.7.8.25 1.52.22 2.09.13.64-.1 2-.82 2.28-1.61.28-.79.28-1.47.2-1.61-.08-.14-.31-.22-.65-.39Z"/></svg></a>
+                  <a href="https://wa.me/message/N3PW46LKUALOK1" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="w-10 h-10 rounded-full bg-gold text-on-gold flex items-center justify-center shadow-sm hover:scale-105 transition-all"><Whatsapp size={16} /></a>
                 </div>
                 <div className="mt-6 rounded-2xl bg-gold text-on-gold p-5">
                   <p className="text-sm font-semibold">¿Listo para tu proyecto?</p>
