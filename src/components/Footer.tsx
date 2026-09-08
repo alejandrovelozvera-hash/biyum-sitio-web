@@ -53,7 +53,7 @@ export default function Footer() {
                 </form>
                 <div className="mt-6 rounded-2xl bg-surface ring-1 ring-border p-4">
                   <div className="flex items-center gap-2 text-gold text-xs font-medium"><span className="w-2 h-2 bg-gold rounded-full animate-pulse" /> Respuesta en menos de 2 horas</div>
-                  <p className="text-muted text-xs mt-2 leading-relaxed">Atención directa, sin compromiso. <a href="https://wa.me/message/N3PW46LKUALOK1" target="_blank" rel="noopener noreferrer" className="text-gold underline underline-offset-4">Escríbenos →</a></p>
+                  <p className="text-muted text-xs mt-2 leading-relaxed">Atención directa del equipo, sin compromiso.</p>
                 </div>
               </div>
               <div className="lg:col-span-2">
