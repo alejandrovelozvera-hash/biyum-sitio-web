@@ -8,9 +8,13 @@ const photos = [
   "https://wp.biyum.agency/wp-content/uploads/2024/07/DSC01744-1-scaled.jpg",
   "https://wp.biyum.agency/wp-content/uploads/2024/07/DSC09352-scaled.jpg",
   "https://wp.biyum.agency/wp-content/uploads/2024/07/DSC03925-scaled.jpg",
+  "https://wp.biyum.agency/wp-content/uploads/2024/07/DSC01744-scaled.jpg",
   "https://wp.biyum.agency/wp-content/uploads/2024/07/DSC05606-scaled.jpg",
   "https://wp.biyum.agency/wp-content/uploads/2024/07/DSC03081-1-scaled.jpg",
   "https://wp.biyum.agency/wp-content/uploads/2024/07/DSC06920-scaled.jpg",
+  "https://wp.biyum.agency/wp-content/uploads/2024/07/DSC04074-scaled.jpg",
+  "https://wp.biyum.agency/wp-content/uploads/2024/07/DSC02412-scaled.jpg",
+  "https://wp.biyum.agency/wp-content/uploads/2024/07/DSC02527-scaled.jpg",
 ];
 
 export default function GastronomicSection() {
