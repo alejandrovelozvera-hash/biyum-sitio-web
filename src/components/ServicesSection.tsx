@@ -305,12 +305,6 @@ export default function ServicesSection() {
                 <div className="scale-[0.85] origin-top -mb-10">
                   <BrandingProcess />
                 </div>
-                  <div className="grid grid-cols-4 gap-2 text-[11px] font-medium p-3 bg-surface-elevated rounded-xl ring-1 ring-gold/10">
-                    <span className="text-muted">Incluye</span><span className="text-center font-bold text-foreground">Emprendedor</span><span className="text-center font-bold text-foreground">Plus</span><span className="text-center font-bold text-gold">Profesional</span>
-                    <span className="text-secondary">Manual completo</span><span className="text-center text-muted">—</span><span className="text-center text-muted">—</span><span className="text-center text-emerald-600">✓</span>
-                    <span className="text-secondary">Papelería</span><span className="text-center text-muted">—</span><span className="text-center text-muted">—</span><span className="text-center text-emerald-600">✓</span>
-                    <span className="text-secondary">Animación</span><span className="text-center text-muted">—</span><span className="text-center text-muted">—</span><span className="text-center text-emerald-600">✓</span>
-                  </div>
                   <div className="grid md:grid-cols-3 gap-4">
                   <div className="bg-surface-elevated rounded-2xl ring-1 ring-gold/10 p-6 flex flex-col group relative overflow-hidden hover:ring-gold/20 transition-all">
                     <span className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-gold/0 via-gold to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity" />
