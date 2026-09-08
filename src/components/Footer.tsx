@@ -21,16 +21,16 @@ export default function Footer() {
     setTimeout(() => setSent(false), 3000);
   };
   return (
-    <footer id="contacto" className="bg-section-alt py-20">
-      <div className="max-w-[1400px] mx-auto px-6 md:px-16">
+    <footer id="contacto" className="bg-surface-elevated border-t border-border">
+      <div className="w-full">
         <motion.div
           initial={anim ? { opacity: 0, y: 24 } : false}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.15 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="bg-surface-elevated rounded-2xl ring-1 ring-border shadow-sm overflow-hidden"
+          className="w-full overflow-hidden"
         >
-          <div className="p-8 md:p-10">
+          <div className="w-full px-6 md:px-16 py-16 md:py-20">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8">
               <div className="lg:col-span-5">
                 <div className="flex items-center gap-2 mb-3">
@@ -92,7 +92,7 @@ export default function Footer() {
               </div>
             </div>
           </div>
-          <div className="px-8 md:px-10 py-6 flex flex-col md:flex-row justify-between items-center gap-3 text-muted text-xs border-t border-border">
+          <div className="w-full px-6 md:px-16 py-6 flex flex-col md:flex-row justify-between items-center gap-3 text-muted text-xs border-t border-border">
             <span className="flex flex-wrap items-center gap-2">Biyum © {new Date().getFullYear()} — Hecho con ♥ en Riobamba <span className="hidden md:inline opacity-30">·</span> <a href="/privacidad" className="hover:text-foreground underline underline-offset-4">Privacidad</a> <a href="/terminos" className="hover:text-foreground underline underline-offset-4">Términos</a></span>
             <span className="flex items-center gap-2"><span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" /> Disponible para nuevos proyectos</span>
           </div>
