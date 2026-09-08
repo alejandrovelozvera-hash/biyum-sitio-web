@@ -46,7 +46,7 @@ const services = [
     desc: "De la idea al manual. Logotipo, paleta, tipografía y aplicaciones que hacen tu marca reconocible y coherente.",
     deliverables: ["3 propuestas", "Manual básico", "Manual completo", "Papelería esencial"],
     ideal: "Emprendimientos, rebranding",
-    price: "Desde $250",
+    price: "Desde $150",
     size: "large" as const,
   },
   {
