@@ -24,8 +24,8 @@ async function getHeroData() {
 
 function Divider({ alt = false }: { alt?: boolean }) {
   return (
-    <div className={`flex justify-center py-6 md:py-8 ${alt ? "bg-section-alt" : "bg-background"}`}>
-      <div className="w-1.5 h-1.5 rounded-full bg-gold/50" />
+    <div className={`${alt ? "bg-section-alt" : "bg-background"} px-6 md:px-16`}>
+      <div className="max-w-[1400px] mx-auto h-px bg-border/40" />
     </div>
   );
 }

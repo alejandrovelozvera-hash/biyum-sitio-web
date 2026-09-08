@@ -57,7 +57,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es" className={GeistSans.className} suppressHydrationWarning>
+    <html lang="es" className={GeistSans.variable} suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{

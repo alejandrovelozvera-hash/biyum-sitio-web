@@ -58,14 +58,14 @@
   --color-secondary: var(--secondary);
   --color-muted: var(--muted);
   --color-placeholder: var(--placeholder);
-  --font-sans: 'Geist', system-ui, sans-serif;
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
 }
 
 @layer base {
   * { @apply antialiased; }
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-sans);
+    font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
     transition: background-color 0.4s ease, color 0.4s ease;
   }
   ::selection {

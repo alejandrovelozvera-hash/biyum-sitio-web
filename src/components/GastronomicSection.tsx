@@ -52,14 +52,14 @@ export default function GastronomicSection() {
     return () => clearInterval(id);
   }, [reduce, pausedM]);
   return (
-    <section id="gastronomica" className="py-24 md:py-32 bg-background">
+    <section id="gastronomica" className="py-20 md:py-24 bg-background">
       <div className="max-w-[1400px] mx-auto px-6 md:px-16">
         <motion.div initial={anim ? { clipPath: "inset(0 100% 0 0)" } : false} whileInView={{ clipPath: "inset(0 0% 0 0)" }} viewport={{ once: true }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }} className="mb-10 md:mb-14">
           <div className="flex items-center gap-4 mb-3">
-            <span className="w-8 h-px bg-gradient-to-r from-gold/60 to-transparent" />
+            <span className="w-8 h-px bg-gradient-to-r from-border to-transparent" />
             <p className="text-muted text-[10px] tracking-[0.2em] uppercase">Fotografía Gastronómica</p>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-gold tracking-[-0.04em] leading-[0.92]">Sabores que se ven</h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground tracking-[-0.04em] leading-[0.92]">Sabores que se ven</h2>
           <p className="text-secondary text-sm md:text-base leading-relaxed mt-5 max-w-xl">Cada plato cuenta una historia. Capturamos texturas, vapor y color para que tu carta provoque antojo antes del primer bocado. $15 por plato · 6 fotos desde distintas perspectivas.</p>
         </motion.div>
 
@@ -69,7 +69,7 @@ export default function GastronomicSection() {
               {pagesM.map((pg, pi) => (
                 <div key={pi} className="grid grid-cols-2 gap-3 shrink-0 p-0.5" style={{ width: `${100 / pageCountM}%` }}>
                   {pg.map((src, i) => (
-                    <div key={`${src}-${i}`} className="relative overflow-hidden rounded-2xl bg-surface ring-1 ring-gold/5">
+                    <div key={`${src}-${i}`} className="relative overflow-hidden rounded-2xl bg-surface ring-1 ring-border shadow-sm">
                       <Image src={src} alt={`Gastronomica ${pi * 4 + i + 1}`} width={600} height={600} sizes="50vw" className="w-full h-auto block" unoptimized />
                     </div>
                   ))}
@@ -80,12 +80,12 @@ export default function GastronomicSection() {
           <div className="flex items-center justify-between mt-4">
             <div className="flex gap-1.5">
               {Array.from({ length: pageCountM }).map((_, i) => (
-                <button key={i} onClick={() => setPageM(i)} aria-label={`Ir ${i + 1}`} className={`h-1.5 rounded-full transition-all ${i === pageM ? "w-6 bg-gold" : "w-1.5 bg-gold/20"}`} />
+                <button key={i} onClick={() => setPageM(i)} aria-label={`Ir ${i + 1}`} className={`h-1.5 rounded-full transition-all ${i === pageM ? "w-6 bg-gold" : "w-1.5 bg-border"}`} />
               ))}
             </div>
             <div className="flex gap-2">
-              <button onClick={prevM} aria-label="Anterior" className="w-8 h-8 rounded-full bg-surface border border-gold/10 flex items-center justify-center text-gold"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M15 18l-6-6 6-6" /></svg></button>
-              <button onClick={nextM} aria-label="Siguiente" className="w-8 h-8 rounded-full bg-surface border border-gold/10 flex items-center justify-center text-gold"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M9 18l6-6-6-6" /></svg></button>
+              <button onClick={prevM} aria-label="Anterior" className="w-8 h-8 rounded-full bg-surface border border-border flex items-center justify-center text-muted hover:text-foreground"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M15 18l-6-6 6-6" /></svg></button>
+              <button onClick={nextM} aria-label="Siguiente" className="w-8 h-8 rounded-full bg-surface border border-border flex items-center justify-center text-muted hover:text-foreground"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M9 18l6-6-6-6" /></svg></button>
             </div>
           </div>
         </div>
@@ -96,7 +96,7 @@ export default function GastronomicSection() {
               {pages.map((pg, pi) => (
                 <div key={pi} className="grid grid-cols-3 gap-4 shrink-0" style={{ width: `${100 / pageCount}%` }}>
                   {pg.map((src, i) => (
-                    <div key={`${src}-${i}`} className="relative overflow-hidden rounded-2xl bg-surface ring-1 ring-gold/5">
+                    <div key={`${src}-${i}`} className="relative overflow-hidden rounded-2xl bg-surface ring-1 ring-border shadow-sm">
                       <Image src={src} alt={`Gastronomica ${pi * 3 + i + 1}`} width={800} height={800} sizes="33vw" className="w-full h-auto block" unoptimized />
                     </div>
                   ))}
@@ -107,12 +107,12 @@ export default function GastronomicSection() {
           <div className="flex items-center justify-between mt-4">
             <div className="flex gap-1.5">
               {Array.from({ length: pageCount }).map((_, i) => (
-                <button key={i} onClick={() => setCurrent(i)} aria-label={`Ir ${i + 1}`} className={`h-1.5 rounded-full transition-all ${current === i ? "w-6 bg-gold" : "w-1.5 bg-gold/20"}`} />
+                <button key={i} onClick={() => setCurrent(i)} aria-label={`Ir ${i + 1}`} className={`h-1.5 rounded-full transition-all ${current === i ? "w-6 bg-gold" : "w-1.5 bg-border"}`} />
               ))}
             </div>
             <div className="flex gap-2">
-              <button onClick={prev} aria-label="Anterior" className="w-8 h-8 rounded-full bg-surface border border-gold/10 flex items-center justify-center text-gold"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M15 18l-6-6 6-6" /></svg></button>
-              <button onClick={next} aria-label="Siguiente" className="w-8 h-8 rounded-full bg-surface border border-gold/10 flex items-center justify-center text-gold"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M9 18l6-6-6-6" /></svg></button>
+              <button onClick={prev} aria-label="Anterior" className="w-8 h-8 rounded-full bg-surface border border-border flex items-center justify-center text-muted hover:text-foreground"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M15 18l-6-6-6-6" /></svg></button>
+              <button onClick={next} aria-label="Siguiente" className="w-8 h-8 rounded-full bg-surface border border-border flex items-center justify-center text-muted hover:text-foreground"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M9 18l6-6-6-6" /></svg></button>
             </div>
           </div>
         </div>

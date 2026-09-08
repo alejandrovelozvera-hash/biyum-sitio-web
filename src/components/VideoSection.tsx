@@ -102,7 +102,7 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
   const current = filtered[active];
 
   return (
-    <section id="video" className="py-24 md:py-32 bg-background">
+    <section id="video" className="py-16 md:py-20 bg-background">
       <div className="max-w-[1400px] mx-auto px-6 md:px-16 mb-10 md:mb-14">
         <motion.div
           initial={anim ? { clipPath: "inset(0 100% 0 0)" } : false}
@@ -111,10 +111,12 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
           <div className="flex items-center gap-4 mb-3">
-            <span className="w-8 h-px bg-gradient-to-r from-gold/60 to-transparent" />
+            <span className="w-8 h-px bg-gradient-to-r from-border to-transparent" />
             <p className="text-muted text-[10px] tracking-[0.2em] uppercase">Audiovisual</p>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-gold tracking-[-0.04em] leading-[0.92]">Videos</h2>
+          <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground tracking-[-0.04em] leading-[0.92]">
+            Videos
+          </h2>
         </motion.div>
       </div>
 
@@ -128,7 +130,7 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
             className={`text-[10px] md:text-xs tracking-[0.15em] uppercase rounded-full px-4 md:px-5 py-2 border transition-all hover:scale-[1.02] active:scale-[0.98] ${
               category === c
                 ? "bg-gold text-on-gold border-gold"
-                : "bg-surface text-muted border-gold/15 hover:text-gold hover:border-gold/30"
+                : "bg-surface text-muted border-border hover:text-foreground hover:border-foreground/20"
             }`}
           >
             {c}
@@ -144,7 +146,7 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
             initial={anim ? { opacity: 0 } : false}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.4 }}
-            className="relative overflow-hidden rounded-2xl md:rounded-3xl bg-surface cursor-pointer group ring-1 ring-gold/15 hover:ring-gold/30 transition-all duration-500"
+            className="relative overflow-hidden rounded-2xl bg-surface cursor-pointer group ring-1 ring-border shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300"
             onClick={() => openVideo(active)}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
@@ -188,14 +190,14 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
                   <button
                     onClick={() => document.getElementById("video-scroller")?.scrollBy({ left: -360, behavior: "smooth" })}
                     aria-label="Anterior"
-                    className="w-8 h-8 rounded-full bg-surface border border-gold/10 flex items-center justify-center text-gold hover:bg-gold hover:text-on-gold transition-colors"
+                    className="w-8 h-8 rounded-full bg-surface border border-border flex items-center justify-center text-muted hover:text-foreground transition-colors"
                   >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M15 18l-6-6 6-6" /></svg>
                   </button>
                   <button
                     onClick={() => document.getElementById("video-scroller")?.scrollBy({ left: 360, behavior: "smooth" })}
                     aria-label="Siguiente"
-                    className="w-8 h-8 rounded-full bg-surface border border-gold/10 flex items-center justify-center text-gold hover:bg-gold hover:text-on-gold transition-colors"
+                    className="w-8 h-8 rounded-full bg-surface border border-border flex items-center justify-center text-muted hover:text-foreground transition-colors"
                   >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M9 18l6-6-6-6" /></svg>
                   </button>
@@ -218,7 +220,7 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
                     onClick={() => openVideo(i)}
                     className="group text-left cursor-pointer focus:outline-none shrink-0 snap-start w-[78%] sm:w-[44%] md:w-[32%] lg:w-[24%] xl:w-[22%]"
                   >
-                    <div className="relative overflow-hidden rounded-xl md:rounded-2xl bg-surface flex flex-col ring-1 ring-gold/5 group-hover:ring-gold/15 transition-all duration-300">
+                    <div className="relative overflow-hidden rounded-2xl bg-surface flex flex-col ring-1 ring-border shadow-sm group-hover:shadow-md group-hover:-translate-y-1 transition-all duration-300">
                       <div className="w-full aspect-video relative overflow-hidden">
                         <YtThumb id={video.youtubeId} alt={video.title} className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105" />
                         <div className="absolute inset-0 flex items-center justify-center">
@@ -230,7 +232,7 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
                       </div>
                       <div className="p-3 md:p-4 flex flex-col justify-center">
                         <p className="text-muted text-[9px] tracking-[0.15em] uppercase mb-0.5">{video.category || "Audiovisual"}</p>
-                        <h4 className="text-gold-dark text-xs md:text-sm font-semibold tracking-tight line-clamp-2 leading-snug">{video.title}</h4>
+                        <h4 className="text-foreground text-xs md:text-sm font-semibold tracking-tight line-clamp-2 leading-snug">{video.title}</h4>
                         <p className="text-secondary text-[10px] mt-1 leading-relaxed line-clamp-1 hidden md:block">{video.description}</p>
                       </div>
                     </div>

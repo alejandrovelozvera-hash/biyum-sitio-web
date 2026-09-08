@@ -27,7 +27,7 @@ function TiltCard({ project, index, reduce, onSelect }: {
     >
       <div
         onClick={() => onSelect(project)}
-        className="group block relative overflow-hidden bg-surface cursor-pointer rounded-2xl ring-1 ring-gold/5 hover:ring-gold/20 transition-all duration-500"
+        className="group block relative overflow-hidden bg-surface cursor-pointer rounded-2xl ring-1 ring-border shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300"
       >
         <div className="aspect-[4/3] relative overflow-hidden">
           {project.cover_image_url && (
@@ -86,7 +86,7 @@ export default function PortfolioGrid({ projects }: { projects: Project[] }) {
   if (projects.length === 0) return null;
 
   return (
-    <section id="portafolio" className="bg-background pt-20 md:pt-28">
+    <section id="portafolio" className="bg-background py-20 md:py-24">
       <div className="px-6 md:px-16 max-w-[1400px] mx-auto mb-12 md:mb-16">
         <motion.div
           initial={reduce ? false : { clipPath: "inset(0 100% 0 0)" }}
@@ -95,10 +95,12 @@ export default function PortfolioGrid({ projects }: { projects: Project[] }) {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
           <div className="flex items-center gap-4 mb-3">
-            <span className="w-8 h-px bg-gradient-to-r from-gold/60 to-transparent" />
+            <span className="w-8 h-px bg-gradient-to-r from-border to-transparent" />
             <p className="text-muted text-[10px] tracking-[0.2em] uppercase">Diseño y Logos</p>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-gold tracking-[-0.04em] leading-[0.92]">Proyectos</h2>
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-[-0.04em] leading-[0.92] pb-[0.18em] mb-[-0.18em]">
+            Proyectos
+          </h2>
         </motion.div>
 
         <div className="flex flex-wrap gap-2 md:gap-3 mt-8" role="group" aria-label="Filtrar por categoría">
@@ -108,7 +110,7 @@ export default function PortfolioGrid({ projects }: { projects: Project[] }) {
             className={`text-[11px] tracking-wider uppercase rounded-full px-4 py-2 border transition-all hover:scale-[1.02] active:scale-[0.98] ${
               filter === null
                 ? "text-on-gold bg-gold border-gold"
-                : "text-muted bg-surface border-gold/15 hover:text-gold hover:border-gold/30"
+                : "text-muted bg-surface border-border hover:text-foreground hover:border-foreground/20"
             }`}
           >
             Todos <span className="opacity-60 tabular-nums">({projects.length})</span>
@@ -123,7 +125,7 @@ export default function PortfolioGrid({ projects }: { projects: Project[] }) {
                 className={`text-[11px] tracking-wider uppercase rounded-full px-4 py-2 border transition-all hover:scale-[1.02] active:scale-[0.98] ${
                   filter === cat
                     ? "text-on-gold bg-gold border-gold"
-                    : "text-muted bg-surface border-gold/15 hover:text-gold hover:border-gold/30"
+                    : "text-muted bg-surface border-border hover:text-foreground hover:border-foreground/20"
                 }`}
               >
                 {categoryLabels[cat] || cat} <span className="opacity-60 tabular-nums">({count})</span>

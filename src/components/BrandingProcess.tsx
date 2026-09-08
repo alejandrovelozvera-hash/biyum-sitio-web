@@ -533,10 +533,12 @@ export default function BrandingProcess() {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className="flex items-center gap-4 mb-3">
-              <span className="w-8 h-px bg-gradient-to-r from-gold/60 to-transparent" />
+              <span className="w-8 h-px bg-gradient-to-r from-border to-transparent" />
               <p className="text-muted text-[10px] tracking-[0.2em] uppercase">¿Cómo trabajamos?</p>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-gold tracking-[-0.04em] leading-[0.92]">Tu marca, paso a paso</h2>
+            <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground tracking-[-0.04em] leading-[0.92] pb-[0.18em] mb-[-0.18em]">
+              Tu marca, paso a paso
+            </h2>
           </motion.div>
         </div>
 
@@ -548,7 +550,7 @@ export default function BrandingProcess() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="relative bg-surface-elevated rounded-2xl md:rounded-3xl ring-1 ring-gold/10 hover:ring-gold/30 transition-shadow duration-500 overflow-hidden p-2 md:p-3"
+            className="relative bg-surface-elevated rounded-2xl ring-1 ring-border shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden p-2 md:p-3"
           >
             <div className="relative aspect-[400/280]">
               <LogoDemo phase={display} anim={anim} />
@@ -599,11 +601,11 @@ export default function BrandingProcess() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.4 }}
-                  className="text-gold tabular-nums"
+                  className="text-foreground tabular-nums"
                 >
                   Paso {current.step}
                 </motion.span>
-                <span className="w-6 h-px bg-gold/20" />
+                <span className="w-6 h-px bg-border" />
                 <span>{display + 1} de 3</span>
               </div>
 
@@ -615,7 +617,7 @@ export default function BrandingProcess() {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -16 }}
                     transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                    className="w-12 h-12 flex items-center justify-center rounded-xl bg-gold/10 text-gold ring-1 ring-gold/15"
+                    className="w-12 h-12 flex items-center justify-center rounded-xl bg-surface ring-1 ring-border text-muted"
                   >
                     <current.icon size={22} />
                   </motion.div>
@@ -627,7 +629,7 @@ export default function BrandingProcess() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                    className="text-gold-dark text-2xl md:text-3xl font-bold tracking-tight"
+                    className="text-foreground text-2xl md:text-3xl font-bold tracking-tight"
                   >
                     {current.title}
                   </motion.h3>
@@ -674,7 +676,7 @@ export default function BrandingProcess() {
               </div>
             </div>
 
-            <div className="bg-surface-elevated rounded-2xl border border-gold/10 p-6 md:p-8">
+            <div className="bg-surface-elevated rounded-2xl border border-border shadow-sm p-6 md:p-8">
               <p className="text-muted text-[10px] tracking-[0.2em] uppercase mb-2">Paquetes a medida</p>
               <h3 className="text-gold-dark text-xl md:text-2xl font-bold tracking-tight">Consulta nuestros planes de branding</h3>
               <p className="text-secondary text-sm mt-2">Desde un logotipo hasta la identidad completa. Precios claros, sin sorpresas.</p>

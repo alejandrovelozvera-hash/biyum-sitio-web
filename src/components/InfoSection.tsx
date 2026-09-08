@@ -24,7 +24,7 @@ export default function InfoSection() {
   };
 
   return (
-    <section id="info" className="py-24 md:py-32 bg-section-alt">
+    <section id="info" className="py-20 md:py-20 bg-section-alt">
       <div className="max-w-[1400px] mx-auto px-6 md:px-16">
         {/* Contacto - fusionado con CTA */}
         <motion.div
@@ -33,28 +33,28 @@ export default function InfoSection() {
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           id="contacto"
-          className="bg-surface-elevated rounded-2xl md:rounded-3xl p-8 md:p-10 grid md:grid-cols-2 gap-10 items-start relative overflow-hidden ring-1 ring-gold/10 hover:ring-gold/30 shadow-[0_10px_40px_-20px_rgba(28,20,99,0.18)] transition-shadow duration-500 group"
+          className="bg-surface-elevated rounded-2xl p-8 md:p-10 grid md:grid-cols-2 gap-10 items-start relative overflow-hidden ring-1 ring-border shadow-sm hover:shadow-md transition-all duration-300 group"
         >
-          <span className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-gold/0 via-gold to-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <span className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-border to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
           <div
-            className="absolute -left-16 top-1/3 w-64 h-64 rounded-full bg-gold/[0.05] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+            className="absolute -left-16 top-1/3 w-64 h-64 rounded-full bg-foreground/[0.03] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
             aria-hidden
           />
 
           <div className="relative">
             <div className="flex items-center gap-2 mb-3">
-              <span className="w-8 h-px bg-gold/25" />
-              <span className="text-gold text-[10px] tracking-[0.2em] uppercase">Contacto</span>
+              <span className="w-8 h-px bg-border" />
+              <span className="text-muted text-[10px] tracking-[0.2em] uppercase">Contacto</span>
             </div>
-            <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gold tracking-[-0.04em] leading-[0.95] mb-2">
+            <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground tracking-[-0.04em] leading-[0.95] mb-2">
               ¿Tienes un proyecto en mente?
             </h3>
             <p className="text-secondary text-sm leading-relaxed mb-6">Hablemos y creemos algo increíble juntos.</p>
-            <a href="mailto:biyumdis@gmail.com" className="flex items-center gap-2 text-gold-dark/70 hover:text-gold text-sm transition-colors">
+            <a href="mailto:biyumdis@gmail.com" className="flex items-center gap-2 text-muted hover:text-foreground text-sm transition-colors">
               <Mail size={14} /> biyumdis@gmail.com
             </a>
-            <div className="flex items-start gap-2 text-gold-dark/70 text-sm mt-2">
+            <div className="flex items-start gap-2 text-muted text-sm mt-2">
               <MapPin size={14} className="mt-0.5 shrink-0" />
               <span>Riobamba, Ecuador</span>
             </div>
@@ -69,7 +69,7 @@ export default function InfoSection() {
                   placeholder="Tu nombre"
                   autoComplete="name"
                   aria-label="Tu nombre"
-                  className="w-full bg-surface/70 border border-gold/15 rounded-xl px-4 py-3 text-sm text-gold-dark placeholder:text-placeholder focus:outline-none focus:border-gold/50 transition-colors"
+                  className="w-full bg-surface/70 border border-border rounded-xl px-4 py-3 text-sm text-foreground placeholder:text-placeholder focus:outline-none focus:border-foreground/20 transition-colors"
                 />
               </div>
               <input
@@ -89,7 +89,7 @@ export default function InfoSection() {
                   rows={4}
                   placeholder="Cuéntanos tu idea..."
                   aria-label="Cuéntanos tu idea"
-                  className="w-full bg-surface/70 border border-gold/15 rounded-xl px-4 py-3 text-sm text-gold-dark placeholder:text-placeholder focus:outline-none focus:border-gold/50 transition-colors resize-none"
+                  className="w-full bg-surface/70 border border-border rounded-xl px-4 py-3 text-sm text-foreground placeholder:text-placeholder focus:outline-none focus:border-foreground/20 transition-colors resize-none"
                 />
               </div>
               <button
@@ -109,16 +109,16 @@ export default function InfoSection() {
           <div className="relative flex flex-col gap-8">
             <div>
               <div className="flex items-center gap-2 mb-3">
-                <span className="w-8 h-px bg-gold/25" />
-                <span className="text-gold text-[10px] tracking-[0.2em] uppercase">Síguenos</span>
+                <span className="w-8 h-px bg-border" />
+                <span className="text-muted text-[10px] tracking-[0.2em] uppercase">Síguenos</span>
               </div>
               <div className="flex flex-wrap gap-3">
-                <a href="https://www.facebook.com/biyumec" target="_blank" rel="noopener noreferrer" className="rounded-full px-5 py-2.5 text-xs ring-1 ring-gold/15 text-gold-dark/70 hover:text-gold hover:ring-gold/40 transition-all hover:scale-[1.02] active:scale-[0.98]">Facebook</a>
-                <a href="https://www.instagram.com/biyumecu/" target="_blank" rel="noopener noreferrer" className="rounded-full px-5 py-2.5 text-xs ring-1 ring-gold/15 text-gold-dark/70 hover:text-gold hover:ring-gold/40 transition-all hover:scale-[1.02] active:scale-[0.98]">Instagram</a>
-                <a href="https://wa.me/message/N3PW46LKUALOK1" target="_blank" rel="noopener noreferrer" className="rounded-full px-5 py-2.5 text-xs ring-1 ring-gold/15 text-gold hover:text-gold-light hover:ring-gold/40 transition-all hover:scale-[1.02] active:scale-[0.98]">WhatsApp</a>
+                <a href="https://www.facebook.com/biyumec" target="_blank" rel="noopener noreferrer" className="rounded-full px-5 py-2.5 text-xs ring-1 ring-border text-muted hover:text-foreground hover:ring-foreground/20 transition-all hover:scale-[1.02] active:scale-[0.98]">Facebook</a>
+                <a href="https://www.instagram.com/biyumecu/" target="_blank" rel="noopener noreferrer" className="rounded-full px-5 py-2.5 text-xs ring-1 ring-border text-muted hover:text-foreground hover:ring-foreground/20 transition-all hover:scale-[1.02] active:scale-[0.98]">Instagram</a>
+                <a href="https://wa.me/message/N3PW46LKUALOK1" target="_blank" rel="noopener noreferrer" className="rounded-full px-5 py-2.5 text-xs ring-1 ring-border text-foreground hover:ring-gold/30 transition-all hover:scale-[1.02] active:scale-[0.98]">WhatsApp</a>
               </div>
             </div>
-            <div className="rounded-2xl bg-gold/5 ring-1 ring-gold/10 p-5">
+            <div className="rounded-2xl bg-surface ring-1 ring-border p-5">
               <div className="flex items-center gap-2 text-gold text-xs font-medium">
                 <span className="w-2 h-2 bg-gold rounded-full animate-pulse" />
                 Respuesta en menos de 2 horas
@@ -133,7 +133,7 @@ export default function InfoSection() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-10 pt-8 border-t border-gold/10 text-placeholder text-[10px] tracking-wider text-center"
+          className="mt-10 pt-8 border-t border-border text-placeholder text-[10px] tracking-wider text-center"
         >
           &copy; {new Date().getFullYear()} Biyum &mdash; Diseño Integral / Producción Audiovisual / Desarrollo Web
         </motion.div>
