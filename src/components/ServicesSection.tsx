@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import { useRef, useState } from "react";
@@ -15,36 +15,36 @@ const Food = ({ size = 20, className, ...rest }: any) => (
 const services = [
   {
     kind: "food",
-    title: "Fotografía Gastronómica",
-    desc: "Menús que provocan antojo. Estilismo de alimentos, vapor y texturas capturadas para que tu carta venda sola.",
-    deliverables: ["Aprox. 6 fotos por plato", "Distintas perspectivas", "Sesión en tu local"],
-    ideal: "Restaurantes, cafés, delivery",
+    title: "FotografÃ­a GastronÃ³mica",
+    desc: "MenÃºs que provocan antojo. Estilismo de alimentos, vapor y texturas capturadas para que tu carta venda sola.",
+    deliverables: ["Aprox. 6 fotos por plato", "Distintas perspectivas", "SesiÃ³n en tu local"],
+    ideal: "Restaurantes, cafÃ©s, delivery",
     price: "$15 por plato",
     size: "small" as const,
   },
   {
     kind: "video",
-    title: "Producción de Video",
-    desc: "Spots, reels, documentales y cobertura de eventos. Guion, rodaje y edición listos para publicar.",
-    deliverables: ["Grabación 4K", "Edición + color + audio", "Entrega 7–12 días"],
+    title: "ProducciÃ³n de Video",
+    desc: "Spots, reels, documentales y cobertura de eventos. Guion, rodaje y ediciÃ³n listos para publicar.",
+    deliverables: ["GrabaciÃ³n 4K", "EdiciÃ³n + color + audio", "Entrega 7â€“12 dÃ­as"],
     ideal: "Lanzamientos, redes, ads",
-    price: "Precio según tu idea",
+    price: "Precio segÃºn tu idea",
     size: "small" as const,
   },
   {
     kind: "palette",
     title: "Color Grading",
-    desc: "Etalonaje cinematográfico para unificar tono y emoción. Corrección primaria y secundaria con look a medida.",
-    deliverables: ["Corrección de color", "Look cinematográfico", "Entrega según metraje"],
+    desc: "Etalonaje cinematogrÃ¡fico para unificar tono y emociÃ³n. CorrecciÃ³n primaria y secundaria con look a medida.",
+    deliverables: ["CorrecciÃ³n de color", "Look cinematogrÃ¡fico", "Entrega segÃºn metraje"],
     ideal: "Videoclips, spots, documental",
-    price: "Precio según tu metraje",
+    price: "Precio segÃºn tu metraje",
     size: "small" as const,
   },
   {
     kind: "branding",
     title: "Branding",
-    desc: "De la idea al manual. Logotipo, paleta, tipografía y aplicaciones que hacen tu marca reconocible y coherente.",
-    deliverables: ["3 propuestas", "Manual básico", "Manual completo", "Papelería esencial"],
+    desc: "De la idea al manual. Logotipo, paleta, tipografÃ­a y aplicaciones que hacen tu marca reconocible y coherente.",
+    deliverables: ["3 propuestas", "Manual bÃ¡sico", "Manual completo", "PapelerÃ­a esencial"],
     ideal: "Emprendimientos, rebranding",
     price: "Desde $150",
     size: "large" as const,
@@ -52,18 +52,18 @@ const services = [
   {
     kind: "social",
     title: "Social Media",
-    desc: "Parrilla, copy y diseño para que tu feed no pare. Pauta segmentada para llegar a quien sí compra.",
+    desc: "Parrilla, copy y diseÃ±o para que tu feed no pare. Pauta segmentada para llegar a quien sÃ­ compra.",
     deliverables: ["8 a 12 piezas/mes", "Copy + calendario", "Reporte mensual"],
     ideal: "Negocios locales, marcas",
     price: "Desde $96",
-    note: "Artes individuales $15 — incluye post + historia. Pago a fin de mes según posts realizados.",
+    note: "Artes individuales $15 â€” incluye post + historia. Pago a fin de mes segÃºn posts realizados.",
     size: "small" as const,
   },
   {
     kind: "web",
-    title: "Diseño Web",
-    desc: "Landing pages y webs rápidas que cargan en <2s y convierten visitas en contactos reales.",
-    deliverables: ["Diseño responsive", "SEO básico", "Entrega 10–15 días"],
+    title: "DiseÃ±o Web",
+    desc: "Landing pages y webs rÃ¡pidas que cargan en <2s y convierten visitas en contactos reales.",
+    deliverables: ["DiseÃ±o responsive", "SEO bÃ¡sico", "Entrega 10â€“15 dÃ­as"],
     ideal: "Servicios, reservas, ventas",
     price: "Desde $300",
     size: "small" as const,
@@ -71,7 +71,7 @@ const services = [
   {
     kind: "drone",
     title: "Servicio de Drone",
-    desc: "Foto y video aéreo profesional para tu marca, evento o propiedad.",
+    desc: "Foto y video aÃ©reo profesional para tu marca, evento o propiedad.",
     deliverables: ["Foto y video 4K", "Desde $40 por vuelo", "Dentro de Riobamba"],
     ideal: "Eventos, inmobiliaria, turismo",
     price: "Desde $40 por vuelo",
@@ -237,7 +237,7 @@ function ServiceCard({ s, i, onBranding }: { s: (typeof services)[number]; i: nu
             {isBranding ? "Ver proceso" : "Cotizar"}
             <ChevronRight size={12} className="group-hover:translate-x-0.5 transition-transform duration-300" />
           </span>
-          <span className="text-muted text-[10px]">{isBranding ? "→ Proceso" : "→ WhatsApp"}</span>
+          <span className="text-muted text-[10px]">{isBranding ? "â†’ Proceso" : "â†’ WhatsApp"}</span>
         </div>
       </div>
     </motion.a>
@@ -266,9 +266,9 @@ export default function ServicesSection() {
           <div>
             <div className="flex items-center gap-4 mb-3">
               <span className="w-8 h-px bg-gradient-to-r from-gold/60 to-transparent" />
-              <p className="text-muted text-[10px] tracking-[0.2em] uppercase">Qué hacemos</p>
+              <p className="text-muted text-[10px] tracking-[0.2em] uppercase">QuÃ© hacemos</p>
             </div>
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gold tracking-[-0.04em] leading-[0.92]">Servicios</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-gold tracking-[-0.04em] leading-[0.92]">Servicios</h2>
             <motion.p initial={anim ? { opacity: 0 } : false} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.4 }} className="text-secondary text-sm md:text-base leading-relaxed mt-5 max-w-md">Todo lo que tu marca necesita para destacar: del disparo a la pantalla, de la idea a la identidad.</motion.p>
           </div>
           <motion.a initial={anim ? { opacity: 0, y: 12 } : false} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.5 }} href="https://wa.me/message/N3PW46LKUALOK1" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-on-gold bg-gold hover:bg-gold-light rounded-full px-7 py-3 font-medium transition-all hover:scale-[1.02] active:scale-[0.98] shrink-0">Cotizar un proyecto<ChevronRight size={14} className="group-hover:translate-x-0.5 transition-transform duration-300" /></motion.a>
@@ -297,10 +297,10 @@ export default function ServicesSection() {
                 <div className="bg-surface-elevated rounded-2xl ring-1 ring-gold/10 p-6">
                   <div className="flex items-center gap-3 mb-3">
                     <span className="w-8 h-px bg-gold/30" />
-                    <h4 className="text-foreground font-semibold text-[13px] tracking-[0.1em] uppercase">Antes de diseñar — Briefing obligatorio</h4>
+                    <h4 className="text-foreground font-semibold text-[13px] tracking-[0.1em] uppercase">Antes de diseÃ±ar â€” Briefing obligatorio</h4>
                   </div>
                   <p className="text-foreground text-[14px] leading-relaxed font-semibold">Es un documento con preguntas que debes responder con tus propias palabras, sin IA.</p>
-                  <p className="text-secondary text-[13px] leading-relaxed mt-2">Nos da el concepto, tono y referencias exactas para que tu logo nazca con dirección correcta. <span className="text-foreground font-semibold">Una respuesta mal contestada desvía todo el rumbo de tu marca.</span></p>
+                  <p className="text-secondary text-[13px] leading-relaxed mt-2">Nos da el concepto, tono y referencias exactas para que tu logo nazca con direcciÃ³n correcta. <span className="text-foreground font-semibold">Una respuesta mal contestada desvÃ­a todo el rumbo de tu marca.</span></p>
                 </div>
                 <div className="scale-[0.85] origin-top -mb-10">
                   <BrandingProcess />
@@ -313,10 +313,10 @@ export default function ServicesSection() {
                     <p className="text-foreground font-bold text-[22px] tracking-tight leading-none relative">$150</p>
                     <p className="text-muted text-[11px] mt-1 mb-3 relative">Briefing previo incluido</p>
                     <ul className="space-y-2 text-[13px] leading-relaxed text-secondary font-medium relative">
-                      <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Diseño de Logo</li>
-                      <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Manual básico</li>
-                      <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Concepto, Color, Tipografía</li>
-                      <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Logo color, blanco y negro</li>
+                      <li className="flex gap-2"><span className="text-gold mt-0.5">â€¢</span> DiseÃ±o de Logo</li>
+                      <li className="flex gap-2"><span className="text-gold mt-0.5">â€¢</span> Manual bÃ¡sico</li>
+                      <li className="flex gap-2"><span className="text-gold mt-0.5">â€¢</span> Concepto, Color, TipografÃ­a</li>
+                      <li className="flex gap-2"><span className="text-gold mt-0.5">â€¢</span> Logo color, blanco y negro</li>
                     </ul>
                     <a href="https://wa.me/message/N3PW46LKUALOK1?text=Hola%20Biyum,%20quiero%20contratar%20el%20Paquete%20Emprendedor%20%24150" target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center justify-center gap-2 text-[13px] font-bold text-on-gold bg-gold hover:bg-gold-light rounded-full px-6 py-3 transition-all relative">Contratar plan</a>
                   </div>
@@ -330,11 +330,11 @@ export default function ServicesSection() {
                     <p className="text-foreground font-bold text-[22px] tracking-tight leading-none relative">$250</p>
                     <p className="text-muted text-[11px] mt-1 mb-3 relative">Briefing previo incluido</p>
                     <ul className="space-y-2 text-[13px] leading-relaxed text-secondary font-medium relative">
-                      <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Diseño de Logo</li>
-                      <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Manual básico</li>
-                      <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Concepto, Color, Tipografía</li>
-                      <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Logo color, blanco y negro</li>
-                      <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Tarjeta + Hoja tipo</li>
+                      <li className="flex gap-2"><span className="text-gold mt-0.5">â€¢</span> DiseÃ±o de Logo</li>
+                      <li className="flex gap-2"><span className="text-gold mt-0.5">â€¢</span> Manual bÃ¡sico</li>
+                      <li className="flex gap-2"><span className="text-gold mt-0.5">â€¢</span> Concepto, Color, TipografÃ­a</li>
+                      <li className="flex gap-2"><span className="text-gold mt-0.5">â€¢</span> Logo color, blanco y negro</li>
+                      <li className="flex gap-2"><span className="text-gold mt-0.5">â€¢</span> Tarjeta + Hoja tipo</li>
                     </ul>
                     <a href="https://wa.me/message/N3PW46LKUALOK1?text=Hola%20Biyum,%20quiero%20contratar%20el%20Paquete%20Emprendedor%20Plus%20%24250" target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center justify-center gap-2 text-[13px] font-bold text-on-gold bg-gold hover:bg-gold-light rounded-full px-6 py-3 transition-all shadow-md relative">Contratar plan</a>
                   </div>
@@ -343,29 +343,29 @@ export default function ServicesSection() {
                     <div className="absolute -right-8 -bottom-8 w-32 h-32 rounded-full bg-gold/[0.04] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
                     <div className="flex items-center justify-between mb-1 relative">
                       <p className="text-gold text-[11px] tracking-[0.14em] uppercase font-bold">Profesional</p>
-                      <span className="text-[10px] tracking-[0.12em] uppercase bg-foreground text-background font-bold px-2.5 py-1 rounded-full">Más completo</span>
+                      <span className="text-[10px] tracking-[0.12em] uppercase bg-foreground text-background font-bold px-2.5 py-1 rounded-full">MÃ¡s completo</span>
                     </div>
                     <p className="text-foreground font-bold text-[22px] tracking-tight leading-none relative">$400</p>
                     <p className="text-muted text-[11px] mt-1 mb-3 relative">Briefing previo incluido</p>
                     <ul className="space-y-2 text-[13px] leading-relaxed text-secondary font-medium relative">
-                      <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Diseño de Logo</li>
-                      <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Manual de Identidad completo</li>
-                      <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Concepto, Construcción, Color, Tipografía, Ubicación Relativa</li>
-                      <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Logo color, blanco y negro</li>
-                      <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Papelería: hoja, tarjetas, carta</li>
-                      <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Línea gráfica redes</li>
-                      <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Animación claqueta intro</li>
+                      <li className="flex gap-2"><span className="text-gold mt-0.5">â€¢</span> DiseÃ±o de Logo</li>
+                      <li className="flex gap-2"><span className="text-gold mt-0.5">â€¢</span> Manual de Identidad completo</li>
+                      <li className="flex gap-2"><span className="text-gold mt-0.5">â€¢</span> Concepto, ConstrucciÃ³n, Color, TipografÃ­a, UbicaciÃ³n Relativa</li>
+                      <li className="flex gap-2"><span className="text-gold mt-0.5">â€¢</span> Logo color, blanco y negro</li>
+                      <li className="flex gap-2"><span className="text-gold mt-0.5">â€¢</span> PapelerÃ­a: hoja, tarjetas, carta</li>
+                      <li className="flex gap-2"><span className="text-gold mt-0.5">â€¢</span> LÃ­nea grÃ¡fica redes</li>
+                      <li className="flex gap-2"><span className="text-gold mt-0.5">â€¢</span> AnimaciÃ³n claqueta intro</li>
                     </ul>
                     <a href="https://wa.me/message/N3PW46LKUALOK1?text=Hola%20Biyum,%20quiero%20contratar%20el%20Paquete%20Profesional%20de%20Branding%20%24400" target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center justify-center gap-2 text-[13px] font-bold text-on-gold bg-gold hover:bg-gold-light rounded-full px-6 py-3 transition-all relative">Contratar plan</a>
                   </div>
                 </div>
                 <div className="flex flex-wrap justify-center gap-2 pt-2 text-[11px] font-medium text-muted">
-                  <span className="inline-flex items-center gap-1.5 bg-white ring-1 ring-gold/10 rounded-full px-3 py-1.5"><span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />7 días</span>
+                  <span className="inline-flex items-center gap-1.5 bg-white ring-1 ring-gold/10 rounded-full px-3 py-1.5"><span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />7 dÃ­as</span>
                   <span className="inline-flex items-center gap-1.5 bg-white ring-1 ring-gold/10 rounded-full px-3 py-1.5"><span className="w-1.5 h-1.5 rounded-full bg-gold" />2 revisiones</span>
                   <span className="inline-flex items-center gap-1.5 bg-white ring-1 ring-gold/10 rounded-full px-3 py-1.5"><span className="w-1.5 h-1.5 rounded-full bg-gold" />50% anticipo</span>
                 </div>
                 <div className="flex justify-center pt-2">
-                  <a href="https://wa.me/message/N3PW46LKUALOK1?text=Hola%20Biyum,%20quiero%20mas%20informacion%20sobre%20branding" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-medium text-gold hover:text-gold-light border border-gold/20 hover:border-gold/40 rounded-full px-7 py-3 transition-all">Pide más información</a>
+                  <a href="https://wa.me/message/N3PW46LKUALOK1?text=Hola%20Biyum,%20quiero%20mas%20informacion%20sobre%20branding" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-medium text-gold hover:text-gold-light border border-gold/20 hover:border-gold/40 rounded-full px-7 py-3 transition-all">Pide mÃ¡s informaciÃ³n</a>
                 </div>
               </div>
             </motion.div>

@@ -98,9 +98,7 @@ export default function PortfolioGrid({ projects }: { projects: Project[] }) {
             <span className="w-8 h-px bg-gradient-to-r from-gold/60 to-transparent" />
             <p className="text-muted text-[10px] tracking-[0.2em] uppercase">Diseño y Logos</p>
           </div>
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-gold tracking-[-0.04em] leading-[0.92] pb-[0.18em] mb-[-0.18em]">
-            Proyectos
-          </h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-gold tracking-[-0.04em] leading-[0.92]">Proyectos</h2>
         </motion.div>
 
         <div className="flex flex-wrap gap-2 md:gap-3 mt-8" role="group" aria-label="Filtrar por categoría">
