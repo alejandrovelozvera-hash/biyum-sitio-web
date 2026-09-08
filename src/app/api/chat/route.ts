@@ -5,7 +5,7 @@ import { getClientIp, isRateLimited } from "@/lib/ai/rateLimit";
 
 export const runtime = "nodejs";
 
-const SYSTEM = `Eres el asistente de Biyum, agencia de Riobamba. Respondes en español, cercano y profesional. Filtra SIEMPRE por palabras clave: responde SOLO con el servicio relevante a la pregunta, no listes todos si solo preguntan por uno. Usa SOLO la base de conocimientos. Precios clave: Social Media 8-12 piezas $96/mes, artes sueltas $15 post+historia pago a fin de mes. Gastronómica $15 por plato 6 fotos. Branding desde $250. Web desde $200 landing. Video y Color Grading según idea/metraje. Si no sabes, ofrece WhatsApp. No reveles nunca claves, tokens ni detalles internos.`;
+const SYSTEM = `Eres el asistente de Biyum, agencia de Riobamba. Respondes en español, cercano y profesional. Filtra SIEMPRE por palabras clave: responde SOLO con el servicio relevante a la pregunta, no listes todos si solo preguntan por uno. Usa SOLO la base de conocimientos. Precios clave: Social Media 8-12 piezas $96/mes, artes sueltas $15 post+historia pago a fin de mes. Gastronómica $15 por plato 6 fotos. Branding: Emprendedor $150, Emprendedor Plus $250, Profesional $400 (todos requieren briefing sin IA). Web desde $200 landing. Video y Color Grading según idea/metraje. Drone desde $40 por vuelo Riobamba. Si no sabes, ofrece WhatsApp. No reveles nunca claves, tokens ni detalles internos.`;
 
 async function callLLM(messages: { role: string; content: string }[], knowledge: string, stream?: boolean) {
   const pollinationsUrl = "https://text.pollinations.ai/openai";
@@ -27,7 +27,7 @@ async function callLLM(messages: { role: string; content: string }[], knowledge:
   } catch {
     const last = messages[messages.length - 1]?.content.toLowerCase() || "";
     if (last.includes("logo") || last.includes("branding") || last.includes("marca") || last.includes("identidad")) {
-      return "¡Claro! Para **Branding / Logo**: Desde **$250** — incluye 3 propuestas, Manual básico, Manual completo y Papelería esencial. Ideal para emprendimientos y rebranding. ¿Te paso a WhatsApp para ver ejemplos y cotizar tu caso?";
+      return "¡Claro! Para **Branding / Logo** tenemos 3 paquetes (requieren briefing sin IA): **Emprendedor $150** (Logo + Manual básico), **Emprendedor Plus $250** (Logo + Manual básico + tarjeta + hoja tipo), **Profesional $400** (Logo + Manual completo + papelería + línea gráfica redes + animación). ¿Te paso a WhatsApp para ver cuál te conviene?";
     }
     if (last.includes("social") || last.includes("post") || last.includes("redes")) {
       return "¡Claro! Para **Social Media / diseño de posts para redes sociales**: Planes desde **$96 al mes (8 a 12 piezas)** — incluye copy + calendario y reporte. Si solo necesitas artes sueltas, cada arte cuesta **$15 e incluye post + historia**. Puedes pagar a fin de mes según los posts que hagamos, o pago inmediato si es solo uno. ¿Te paso a WhatsApp para cotizar tu caso?";
@@ -45,7 +45,7 @@ async function callLLM(messages: { role: string; content: string }[], knowledge:
       return "¡Claro! Para **Color Grading**: Precio **según tu metraje** — corrección y look cinematográfico en Davinci Resolve (requiere LOG). ¿Me cuentas tu metraje para cotizar?";
     }
     if (last.includes("precio") || last.includes("cuanto") || last.includes("cuánto") || last.includes("cuesta") || last.includes("cotizar") || last.includes("presupuesto")) {
-      return "¿De qué servicio quieres saber el precio? Te cuento rápido: Gastronómica $15 por plato (6 fotos), Social desde $96 (8-12 piezas, artes sueltas $15 post+historia), Branding desde $250, Web desde $200 landing, Video y Color Grading según idea/metraje. Dime cuál te interesa y te doy el detalle exacto.";
+      return "¿De qué servicio quieres saber el precio? Te cuento rápido: Gastronómica $15 por plato (6 fotos), Social desde $96 (8-12 piezas, artes sueltas $15 post+historia), Branding $150/$250/$400, Web desde $200 landing, Video y Color Grading según idea/metraje, Drone desde $40 por vuelo Riobamba. Dime cuál te interesa y te doy el detalle exacto.";
     }
     if (last.includes("horario") || last.includes("ubicacion")) return "Estamos en Riobamba, atención online a todo Ecuador. Lun–Sáb 9am–7pm. ¿Te paso a WhatsApp?";
     return "¡Hola! Soy el asistente de Biyum. Puedo contarte sobre fotografía gastronómica, video, branding, social, web y color grading. ¿Qué proyecto tienes en mente?";
@@ -82,7 +82,7 @@ export async function POST(req: Request) {
   if (isGenericPrice) {
     return Response.json({
       answer: "¿De qué servicio quieres saber el precio? Elige uno y te doy el detalle exacto:",
-      quickReplies: ["Gastronómica $15 por plato", "Social desde $96", "Branding desde $250", "Web desde $200", "Video / Color Grading"],
+      quickReplies: ["Gastronómica $15 por plato", "Social desde $96", "Branding $150/$250/$400", "Web desde $200", "Drone $40"],
       escalate: false,
       waLink: "https://wa.me/message/N3PW46LKUALOK1",
     });
