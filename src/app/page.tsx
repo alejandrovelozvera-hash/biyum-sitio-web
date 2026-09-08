@@ -6,7 +6,6 @@ import PortfolioGrid from "@/components/PortfolioGrid";
 import VideoSection from "@/components/VideoSection";
 import GastronomicSection from "@/components/GastronomicSection";
 import ServicesSection from "@/components/ServicesSection";
-import InfoSection from "@/components/InfoSection";
 import Footer from "@/components/Footer";
 import Cursor from "@/components/Cursor";
 import AmbientGlow from "@/components/AmbientGlow";
@@ -48,8 +47,6 @@ export default async function HomePage() {
         <GastronomicSection />
         <Divider alt />
         <ServicesSection />
-        <Divider alt />
-        <InfoSection />
         <Footer />
       </div>
       <BackToTop />
