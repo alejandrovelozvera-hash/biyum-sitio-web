@@ -23,7 +23,7 @@ const navLinks: Array<{ href: string; label: string; children?: Array<{ href: st
     children: [
       { href: "/#portafolio", label: "Diseño y Logos" },
       { href: "/#video", label: "Videos" },
-      { href: "/#gastronomica", label: "Gastronómica" },
+      { href: "/#gastronomica", label: "Foto Gastronómica" },
       { href: "/#servicios", label: "Ver Más Servicios" },
     ],
   },
