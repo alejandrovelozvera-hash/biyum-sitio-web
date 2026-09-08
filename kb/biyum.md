@@ -16,8 +16,12 @@ Edita este archivo para entrenar a la IA. Cada servicio, precio o FAQ que añada
 - Ideal: Lanzamientos, redes, ads
 - Nota: El precio depende del proyecto/idea.
 
-### Branding — Desde $250
-- 3 propuestas de logo, Manual básico, Manual completo, Papelería esencial
+### Branding — Paquetes desde $150
+- Previo al diseño se realiza un briefing de trabajo.
+- **Detalles del Briefing:** Es un documento que se envía al cliente con una serie de preguntas que debe contestar con la mayor seriedad posible, sin uso de IA, sino con sus palabras. Este documento proporcionará la información adecuada para que su marca lleve el rumbo correcto. Una pregunta mal contestada podría llevar a que tu logo no tenga el rumbo correcto.
+- **Paquete Profesional — $400:** Diseño de Logo + Manual de Identidad (Concepto/Construcción, Color, Tipografía, Ubicación Relativa, Logo en versiones color/blanco y negro, Papelería: hoja tipo, tarjetas, carta, Línea gráfica redes: portada, posts, historias) + Animación básica del logo (claqueta intro para videos).
+- **Paquete Emprendedor Plus — $250:** Diseño de Logo + Manual básico (Concepto/Construcción, Color, Tipografía, Logo versiones color/blanco y negro, Tarjeta de presentación, Hoja tipo) en digital.
+- **Paquete Emprendedor — $150:** Diseño de Logo + Manual básico (Concepto/Construcción, Color, Tipografía, Logo versiones color/blanco y negro) en digital.
 - Ideal: Emprendimientos, rebranding
 
 ### Social Media o diseño de posts para redes sociales — Planes desde $96 (8 a 12 piezas/mes)
@@ -28,6 +32,9 @@ Edita este archivo para entrenar a la IA. Cada servicio, precio o FAQ que añada
 ### Diseño Web — Desde $200 si es una landing page. El precio incrementa si requieres varias pestañas, enlaces, reservas, compras.
 - Diseño responsive, SEO básico, Entre 10–15 días
 - Ideal: Servicios, reservas.
+
+### Servicio de Drone — Desde $40 por vuelo (dentro de Riobamba)
+- Foto y video aéreo 4K con drone. Ideal para eventos, inmobiliaria y turismo. Precio por vuelo dentro de la ciudad de Riobamba. Fuera de la ciudad se cotiza aparte.
 
 ### Color Grading — Precio según tu metraje
 - Corrección de color, Look cinematográfico, Entrega según metraje

@@ -68,6 +68,15 @@ const services = [
     price: "Desde $300",
     size: "small" as const,
   },
+  {
+    kind: "drone",
+    title: "Servicio de Drone",
+    desc: "Foto y video aéreo profesional para tu marca, evento o propiedad.",
+    deliverables: ["Foto y video 4K", "Desde $40 por vuelo", "Dentro de Riobamba"],
+    ideal: "Eventos, inmobiliaria, turismo",
+    price: "Desde $40 por vuelo",
+    size: "small" as const,
+  },
 ];
 
 function CameraVisual({ size, className }: any) {
@@ -137,6 +146,20 @@ function WebVisual({ size, className }: any) {
   );
 }
 
+function DroneVisual({ size, className }: any) {
+  const reduce = useReducedMotion();
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <circle cx="12" cy="8" r="3" />
+      <path d="M6 12l-2 2M18 12l2 2M8 14l-2 3M16 14l2 3M9 8l-3-2M15 8l3-2" />
+      <motion.circle cx="5" cy="10" r="1" fill="currentColor" animate={reduce ? undefined : { scale: [1, 1.4, 1] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0 }} />
+      <motion.circle cx="19" cy="10" r="1" fill="currentColor" animate={reduce ? undefined : { scale: [1, 1.4, 1] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0.15 }} />
+      <motion.circle cx="7" cy="16" r="1" fill="currentColor" animate={reduce ? undefined : { scale: [1, 1.4, 1] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0.3 }} />
+      <motion.circle cx="17" cy="16" r="1" fill="currentColor" animate={reduce ? undefined : { scale: [1, 1.4, 1] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0.45 }} />
+    </svg>
+  );
+}
+
 function ServiceVisual({ kind, size, className }: { kind: string; size: number; className?: string }) {
   switch (kind) {
     case "camera": return <CameraVisual size={size} className={className} />;
@@ -146,6 +169,7 @@ function ServiceVisual({ kind, size, className }: { kind: string; size: number; 
     case "branding": return <BrandingVisual size={size} className={className} />;
     case "social": return <SocialVisual size={size} className={className} />;
     case "web": return <WebVisual size={size} className={className} />;
+    case "drone": return <DroneVisual size={size} className={className} />;
     default: return <Camera size={size} className={className} />;
   }
 }
@@ -280,6 +304,49 @@ export default function ServicesSection() {
               </div>
               <div className="flex-1 overflow-auto [&>section]:!py-8 [&>section]:!bg-section-alt">
                 <BrandingProcess />
+                <div className="px-6 md:px-8 pb-6 space-y-6">
+                  <div className="glass rounded-2xl p-5 md:p-6">
+                    <h4 className="text-foreground font-semibold mb-2">Detalles del Briefing</h4>
+                    <p className="text-secondary text-[13px] leading-relaxed">Es un documento que se envía al cliente con una serie de preguntas que debe contestar con la mayor seriedad posible, sin uso de IA, sino con sus palabras. Este documento proporcionará la información adecuada para que su marca lleve el rumbo correcto. Una pregunta mal contestada podría llevar a que tu logo no tenga el rumbo correcto.</p>
+                  </div>
+                  <div className="grid md:grid-cols-3 gap-4">
+                    <div className="bg-white rounded-2xl ring-1 ring-gold/10 p-5">
+                      <p className="text-gold text-[11px] tracking-[0.14em] uppercase font-semibold mb-1">Profesional</p>
+                      <p className="text-[#1C1463] font-bold text-lg">$400</p>
+                      <ul className="mt-3 space-y-1.5 text-[12px] text-secondary">
+                        <li>• Diseño de Logo</li>
+                        <li>• Manual de Identidad</li>
+                        <li>• Concepto / Construcción, Color, Tipografía, Ubicación Relativa</li>
+                        <li>• Logo color, blanco y negro</li>
+                        <li>• Papelería: hoja tipo, tarjetas, carta</li>
+                        <li>• Línea gráfica redes: portada, posts, historias</li>
+                        <li>• Animación básica (claqueta intro)</li>
+                      </ul>
+                    </div>
+                    <div className="bg-white rounded-2xl ring-1 ring-gold/10 p-5">
+                      <p className="text-gold text-[11px] tracking-[0.14em] uppercase font-semibold mb-1">Emprendedor Plus</p>
+                      <p className="text-[#1C1463] font-bold text-lg">$250</p>
+                      <ul className="mt-3 space-y-1.5 text-[12px] text-secondary">
+                        <li>• Diseño de Logo</li>
+                        <li>• Manual básico</li>
+                        <li>• Concepto / Construcción, Color, Tipografía</li>
+                        <li>• Logo color, blanco y negro</li>
+                        <li>• Tarjeta de presentación + Hoja tipo</li>
+                      </ul>
+                    </div>
+                    <div className="bg-white rounded-2xl ring-1 ring-gold/10 p-5">
+                      <p className="text-gold text-[11px] tracking-[0.14em] uppercase font-semibold mb-1">Emprendedor</p>
+                      <p className="text-[#1C1463] font-bold text-lg">$150</p>
+                      <ul className="mt-3 space-y-1.5 text-[12px] text-secondary">
+                        <li>• Diseño de Logo</li>
+                        <li>• Manual básico</li>
+                        <li>• Concepto / Construcción, Color, Tipografía</li>
+                        <li>• Logo color, blanco y negro</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <p className="text-muted text-[11px]">Previo a cualquier paquete se debe completar el briefing de trabajo.</p>
+                </div>
               </div>
               <div className="sticky bottom-0 bg-section-alt/80 backdrop-blur-xl border-t border-gold/10 px-6 md:px-8 py-4 flex justify-center">
                 <a href="https://wa.me/message/N3PW46LKUALOK1?text=Hola%20Biyum,%20quiero%20consultar%20todos%20los%20planes%20de%20branding" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-on-gold bg-gold hover:bg-gold-light rounded-full px-7 py-3 font-semibold transition-all hover:scale-[1.02] active:scale-[0.98]">Consulta todos los planes</a>
