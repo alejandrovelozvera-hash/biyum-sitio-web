@@ -114,7 +114,7 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
             <span className="w-8 h-px bg-gradient-to-r from-border to-transparent" />
             <p className="text-muted text-[10px] tracking-[0.2em] uppercase">Audiovisual</p>
           </div>
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground tracking-[-0.04em] leading-[0.92]">
+          <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gold tracking-[-0.04em] leading-[0.92]">
             Videos
           </h2>
         </motion.div>

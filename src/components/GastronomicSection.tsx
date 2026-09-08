@@ -59,7 +59,7 @@ export default function GastronomicSection() {
             <span className="w-8 h-px bg-gradient-to-r from-border to-transparent" />
             <p className="text-muted text-[10px] tracking-[0.2em] uppercase">Fotografía Gastronómica</p>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground tracking-[-0.04em] leading-[0.92]">Sabores que se ven</h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-gold tracking-[-0.04em] leading-[0.92]">Sabores que se ven</h2>
           <p className="text-secondary text-sm md:text-base leading-relaxed mt-5 max-w-xl">Cada plato cuenta una historia. Capturamos texturas, vapor y color para que tu carta provoque antojo antes del primer bocado. $15 por plato · 6 fotos desde distintas perspectivas.</p>
         </motion.div>
 

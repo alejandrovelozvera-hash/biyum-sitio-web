@@ -267,7 +267,7 @@ export default function ServicesSection() {
               <span className="w-8 h-px bg-gradient-to-r from-border to-transparent" />
               <p className="text-muted text-[10px] tracking-[0.2em] uppercase">Qué hacemos</p>
             </div>
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground tracking-[-0.04em] leading-[0.92]">Servicios</h2>
+            <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gold tracking-[-0.04em] leading-[0.92]">Servicios</h2>
             <motion.p initial={anim ? { opacity: 0 } : false} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.4 }} className="text-secondary text-sm md:text-base leading-relaxed mt-5 max-w-md">Todo lo que tu marca necesita para destacar: del disparo a la pantalla, de la idea a la identidad.</motion.p>
           </div>
           <motion.a initial={anim ? { opacity: 0, y: 12 } : false} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.5 }} href="https://wa.me/message/N3PW46LKUALOK1" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-on-gold bg-gold hover:bg-gold-light rounded-full px-7 py-3 font-medium transition-all hover:scale-[1.02] active:scale-[0.98] shrink-0">Cotizar un proyecto<ChevronRight size={14} className="group-hover:translate-x-0.5 transition-transform duration-300" /></motion.a>

@@ -98,7 +98,7 @@ export default function PortfolioGrid({ projects }: { projects: Project[] }) {
             <span className="w-8 h-px bg-gradient-to-r from-border to-transparent" />
             <p className="text-muted text-[10px] tracking-[0.2em] uppercase">Diseño y Logos</p>
           </div>
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-[-0.04em] leading-[0.92] pb-[0.18em] mb-[-0.18em]">
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-gold tracking-[-0.04em] leading-[0.92] pb-[0.18em] mb-[-0.18em]">
             Proyectos
           </h2>
         </motion.div>

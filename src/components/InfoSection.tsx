@@ -47,7 +47,7 @@ export default function InfoSection() {
               <span className="w-8 h-px bg-border" />
               <span className="text-muted text-[10px] tracking-[0.2em] uppercase">Contacto</span>
             </div>
-            <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground tracking-[-0.04em] leading-[0.95] mb-2">
+            <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gold tracking-[-0.04em] leading-[0.95] mb-2">
               ¿Tienes un proyecto en mente?
             </h3>
             <p className="text-secondary text-sm leading-relaxed mb-6">Hablemos y creemos algo increíble juntos.</p>
