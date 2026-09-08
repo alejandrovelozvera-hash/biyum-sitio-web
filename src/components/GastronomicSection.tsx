@@ -77,7 +77,7 @@ export default function GastronomicSection() {
         </div>
 
         <div className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-          <a href="https://wa.me/message/N3PW46LKUALOK1?text=Hola%20Biyum,%20me%20interesa%20fotografia%20gastronomica%20$15%20por%20plato" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-on-gold bg-gold hover:bg-gold-light rounded-full px-7 py-3 font-medium transition-colors">Cotizar gastronomía — $15/plato</a>
+          <a href="https://wa.me/message/N3PW46LKUALOK1?text=Hola%20Biyum,%20me%20interesa%20fotografia%20gastronomica%20$15%20por%20plato" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-on-gold bg-gold hover:bg-gold-light rounded-full px-7 py-3 font-medium transition-colors">Cotizar foto gastronómica</a>
           <span className="text-muted text-xs">Entrega 5–7 días · Sesión en tu local · Props incluidos</span>
         </div>
       </div>
