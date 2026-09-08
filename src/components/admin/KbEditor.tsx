@@ -9,16 +9,31 @@ export default function KbEditor() {
   const [testQ, setTestQ] = useState("¿Cuánto cuesta un diseño para post de redes sociales?");
   const [testA, setTestA] = useState("");
 
+  const [loadErr, setLoadErr] = useState("");
   useEffect(() => {
-    fetch("/api/admin/kb").then((r) => r.json()).then((j) => { setContent(j.content || ""); setLoading(false); });
+    fetch("/api/admin/kb")
+      .then(async (r) => {
+        const j = await r.json();
+        if (!r.ok) throw new Error(j.error || "No autorizado");
+        setContent(j.content || "");
+      })
+      .catch((e) => setLoadErr(e.message))
+      .finally(() => setLoading(false));
   }, []);
 
   const save = async () => {
     setSaving(true);
-    const r = await fetch("/api/admin/kb", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ content }) });
-    setMsg(r.ok ? "Guardado ✓ — la IA ya usa lo nuevo" : "Error al guardar");
+    setMsg("");
+    try {
+      const r = await fetch("/api/admin/kb", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ content }) });
+      const j = await r.json();
+      if (!r.ok) throw new Error(j.error || "Error");
+      setMsg(j.warning ? `Guardado ✓ — ${j.warning}` : "Guardado ✓ — la IA ya usa lo nuevo");
+    } catch (e: any) {
+      setMsg(`Error: ${e.message}`);
+    }
     setSaving(false);
-    setTimeout(() => setMsg(""), 3000);
+    setTimeout(() => setMsg(""), 4000);
   };
 
   const test = async () => {
@@ -31,11 +46,17 @@ export default function KbEditor() {
   if (loading) return <p className="text-[#525252] text-sm">Cargando base…</p>;
   return (
     <div className="space-y-6">
+      {loadErr && <p className="text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-2">Error al cargar: {loadErr} — Re-inicia sesión en /admin/login</p>}
+      <div className="bg-[#0a0a0a] border border-[#222] rounded-xl p-4">
+        <p className="text-[11px] tracking-[0.14em] uppercase text-white/40 mb-2">Contenido actual de kb/biyum.md — {content.length} caracteres</p>
+        <pre className="text-xs text-white/80 whitespace-pre-wrap max-h-[160px] overflow-auto font-mono">{content.slice(0, 1200)}{content.length > 1200 ? "\n… (ver abajo para editar completo)" : ""}</pre>
+      </div>
       <div>
-        <textarea value={content} onChange={(e) => setContent(e.target.value)} rows={20} className="w-full bg-[#111] border border-[#222] rounded-xl p-4 text-sm text-white font-mono focus:outline-none focus:border-white/20" placeholder="Escribe aquí servicios, precios, FAQs..." />
+        <label className="text-white text-sm font-medium">Editar base completa</label>
+        <textarea value={content} onChange={(e) => setContent(e.target.value)} rows={20} className="w-full bg-[#111] border border-[#222] rounded-xl p-4 text-sm text-white font-mono focus:outline-none focus:border-white/20 mt-2" placeholder="Escribe aquí servicios, precios, FAQs..." />
         <div className="flex items-center gap-3 mt-3">
           <button onClick={save} disabled={saving} className="bg-white text-black rounded-full px-6 py-2 text-sm font-medium disabled:opacity-50">{saving ? "Guardando…" : "Guardar"}</button>
-          {msg && <span className="text-sm text-green-400">{msg}</span>}
+          {msg && <span className={`text-sm ${msg.startsWith("Error") ? "text-red-400" : "text-green-400"}`}>{msg}</span>}
         </div>
       </div>
       <div className="border-t border-[#222] pt-6">

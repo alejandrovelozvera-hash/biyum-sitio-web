@@ -15,10 +15,14 @@ export function getKnowledge(): string {
   try {
     const p = path.join(process.cwd(), "kb", "biyum.md");
     const c = fs.readFileSync(p, "utf-8");
-    return c.length > 100 ? c : FALLBACK_KB;
-  } catch {
-    return FALLBACK_KB;
-  }
+    if (c.length > 100) return c;
+  } catch {}
+  try {
+    const tmp = path.join("/tmp", "kb", "biyum.md");
+    const c2 = fs.readFileSync(tmp, "utf-8");
+    if (c2.length > 100) return c2;
+  } catch {}
+  return FALLBACK_KB;
 }
 
 export function shouldEscalate(text: string): boolean {
