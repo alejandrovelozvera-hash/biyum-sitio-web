@@ -84,7 +84,7 @@ export default function RootLayout({
               address: { "@type": "PostalAddress", addressLocality: "Riobamba", addressRegion: "Chimborazo", addressCountry: "EC" },
               areaServed: "EC",
               email: "biyumdis@gmail.com",
-              sameAs: ["https://www.facebook.com/biyumec", "https://www.instagram.com/biyumecu/"],
+              sameAs: ["https://www.facebook.com/profile.php?id=61590844183641", "https://www.instagram.com/alejandro_veloz_vera/"],
             }),
           }}
         />

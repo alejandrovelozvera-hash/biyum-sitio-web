@@ -37,8 +37,8 @@ export default function ExhibitionColophon() {
             <div>
               <p className="text-[#525252] text-[10px] tracking-[0.15em] uppercase mb-4">Redes</p>
               <div className="flex flex-col gap-2 text-sm">
-                <a href="https://www.facebook.com/biyumec" target="_blank" rel="noopener noreferrer" className="text-[#737373] hover:text-white transition-colors">Facebook</a>
-                <a href="https://www.instagram.com/biyumecu/" target="_blank" rel="noopener noreferrer" className="text-[#737373] hover:text-white transition-colors">Instagram</a>
+                <a href="https://www.facebook.com/profile.php?id=61590844183641" target="_blank" rel="noopener noreferrer" className="text-[#737373] hover:text-white transition-colors">Facebook</a>
+                <a href="https://www.instagram.com/alejandro_veloz_vera/" target="_blank" rel="noopener noreferrer" className="text-[#737373] hover:text-white transition-colors">Instagram</a>
                 <a href="https://wa.me/message/N3PW46LKUALOK1" target="_blank" rel="noopener noreferrer" className="text-[#737373] hover:text-white transition-colors">WhatsApp</a>
               </div>
             </div>

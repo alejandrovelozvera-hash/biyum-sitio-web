@@ -113,8 +113,8 @@ export default function InfoSection() {
                 <span className="text-muted text-[10px] tracking-[0.2em] uppercase">Síguenos</span>
               </div>
               <div className="flex flex-wrap gap-3">
-                <a href="https://www.facebook.com/biyumec" target="_blank" rel="noopener noreferrer" className="rounded-full px-5 py-2.5 text-xs ring-1 ring-border text-muted hover:text-foreground hover:ring-foreground/20 transition-all hover:scale-[1.02] active:scale-[0.98]">Facebook</a>
-                <a href="https://www.instagram.com/biyumecu/" target="_blank" rel="noopener noreferrer" className="rounded-full px-5 py-2.5 text-xs ring-1 ring-border text-muted hover:text-foreground hover:ring-foreground/20 transition-all hover:scale-[1.02] active:scale-[0.98]">Instagram</a>
+                <a href="https://www.facebook.com/profile.php?id=61590844183641" target="_blank" rel="noopener noreferrer" className="rounded-full px-5 py-2.5 text-xs ring-1 ring-border text-muted hover:text-foreground hover:ring-foreground/20 transition-all hover:scale-[1.02] active:scale-[0.98]">Facebook</a>
+                <a href="https://www.instagram.com/alejandro_veloz_vera/" target="_blank" rel="noopener noreferrer" className="rounded-full px-5 py-2.5 text-xs ring-1 ring-border text-muted hover:text-foreground hover:ring-foreground/20 transition-all hover:scale-[1.02] active:scale-[0.98]">Instagram</a>
                 <a href="https://wa.me/message/N3PW46LKUALOK1" target="_blank" rel="noopener noreferrer" className="rounded-full px-5 py-2.5 text-xs ring-1 ring-border text-foreground hover:ring-gold/30 transition-all hover:scale-[1.02] active:scale-[0.98]">WhatsApp</a>
               </div>
             </div>
