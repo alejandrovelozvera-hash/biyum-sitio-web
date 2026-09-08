@@ -286,8 +286,8 @@ export default function ServicesSection() {
             <motion.div initial={{ opacity: 0, scale: 0.97, y: 12 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.97, y: 12 }} transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }} className="relative z-10 w-full max-w-5xl max-h-[90vh] overflow-auto bg-white rounded-3xl shadow-2xl ring-1 ring-gold/10 flex flex-col" onClick={(e) => e.stopPropagation()}>
               <div className="sticky top-0 z-20 bg-white/90 backdrop-blur-xl border-b border-gold/10 px-6 md:px-8 py-4 flex items-center justify-between">
                 <div>
-                  <p className="text-muted text-[10px] tracking-[0.2em] uppercase">Proceso</p>
-                  <h3 className="text-foreground text-lg font-bold tracking-tight">Tu marca, paso a paso</h3>
+                  <p className="text-gold text-[10px] tracking-[0.2em] uppercase font-semibold">Proceso</p>
+                  <h3 className="text-gold text-lg font-bold tracking-tight">Tu marca, paso a paso</h3>
                 </div>
                 <button onClick={() => setProcesoOpen(false)} className="flex h-9 w-9 items-center justify-center rounded-full bg-surface text-muted hover:text-foreground ring-1 ring-gold/10 shadow-sm transition-colors shrink-0" aria-label="Cerrar">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M18 6L6 18M6 6l12 12" /></svg>
