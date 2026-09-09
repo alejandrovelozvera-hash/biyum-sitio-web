@@ -159,11 +159,11 @@ cover_image_url: coverImage?.url || otherImages[0]?.url || "",
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="text-[#525252] text-xs block mb-2">Título *</label>
-          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} className="w-full bg-[#141414] border border-[#1F1F1F] px-4 py-3 text-white text-sm focus:outline-none focus:border-white/20" placeholder="Nombre del proyecto" />
+          <label className="text-muted text-xs block mb-2">Título *</label>
+          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} className="w-full bg-[#141414] ring-1 ring-white/5 rounded-2xl px-4 py-3 text-white text-sm focus:outline-none focus:border-white/20" placeholder="Nombre del proyecto" />
         </div>
         <div>
-          <label className="text-[#525252] text-xs block mb-2">Categoría</label>
+          <label className="text-muted text-xs block mb-2">Categoría</label>
           {showNewCategory ? (
             <div className="flex items-center gap-2">
               <input
@@ -173,38 +173,38 @@ cover_image_url: coverImage?.url || otherImages[0]?.url || "",
                 onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); createCategory(); } }}
                 placeholder="Nueva categoría"
                 autoFocus
-                className="flex-1 bg-[#141414] border border-[#1F1F1F] px-4 py-3 text-white text-sm focus:outline-none focus:border-white/20"
+                className="flex-1 bg-[#141414] ring-1 ring-white/5 rounded-2xl px-4 py-3 text-white text-sm focus:outline-none focus:border-white/20"
               />
               <button type="button" onClick={createCategory} disabled={categoryBusy} className="bg-gold text-[#0A0A0A] px-3 py-3 text-sm font-medium hover:bg-gold-light disabled:opacity-50">
                 {categoryBusy ? "…" : "Crear"}
               </button>
-              <button type="button" onClick={() => setShowNewCategory(false)} className="p-3 text-[#525252] hover:text-white"><X size={15} /></button>
+              <button type="button" onClick={() => setShowNewCategory(false)} className="p-3 text-muted hover:text-white"><X size={15} /></button>
             </div>
           ) : (
             <div className="flex items-center gap-2">
-              <select value={category} onChange={(e) => setCategory(e.target.value)} className="flex-1 bg-[#141414] border border-[#1F1F1F] px-4 py-3 text-white text-sm focus:outline-none focus:border-white/20">
+              <select value={category} onChange={(e) => setCategory(e.target.value)} className="flex-1 bg-[#141414] ring-1 ring-white/5 rounded-2xl px-4 py-3 text-white text-sm focus:outline-none focus:border-white/20">
                 <option value="">Sin categoría</option>
                 {localCategories.map((cat) => (<option key={cat.slug} value={cat.slug}>{cat.name}</option>))}
               </select>
-              <button type="button" onClick={() => setShowNewCategory(true)} title="Nueva categoría" className="p-3 text-[#525252] hover:text-white"><Plus size={16} /></button>
+              <button type="button" onClick={() => setShowNewCategory(true)} title="Nueva categoría" className="p-3 text-muted hover:text-white"><Plus size={16} /></button>
             </div>
           )}
         </div>
         <div className="md:col-span-2">
-          <label className="text-[#525252] text-xs block mb-2">Descripción</label>
-          <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows={4} className="w-full bg-[#141414] border border-[#1F1F1F] px-4 py-3 text-white text-sm focus:outline-none focus:border-white/20 resize-none" placeholder="Describe el proyecto..." />
+          <label className="text-muted text-xs block mb-2">Descripción</label>
+          <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows={4} className="w-full bg-[#141414] ring-1 ring-white/5 rounded-2xl px-4 py-3 text-white text-sm focus:outline-none focus:border-white/20 resize-none" placeholder="Describe el proyecto..." />
         </div>
         <div>
-          <label className="text-[#525252] text-xs block mb-2">Cliente</label>
-          <input type="text" value={client} onChange={(e) => setClient(e.target.value)} className="w-full bg-[#141414] border border-[#1F1F1F] px-4 py-3 text-white text-sm focus:outline-none focus:border-white/20" placeholder="Nombre del cliente" />
+          <label className="text-muted text-xs block mb-2">Cliente</label>
+          <input type="text" value={client} onChange={(e) => setClient(e.target.value)} className="w-full bg-[#141414] ring-1 ring-white/5 rounded-2xl px-4 py-3 text-white text-sm focus:outline-none focus:border-white/20" placeholder="Nombre del cliente" />
         </div>
         <div>
-          <label className="text-[#525252] text-xs block mb-2">Año</label>
-          <input type="text" value={year} onChange={(e) => setYear(e.target.value)} className="w-full bg-[#141414] border border-[#1F1F1F] px-4 py-3 text-white text-sm focus:outline-none focus:border-white/20" placeholder="2024" />
+          <label className="text-muted text-xs block mb-2">Año</label>
+          <input type="text" value={year} onChange={(e) => setYear(e.target.value)} className="w-full bg-[#141414] ring-1 ring-white/5 rounded-2xl px-4 py-3 text-white text-sm focus:outline-none focus:border-white/20" placeholder="2024" />
         </div>
         <div className="md:col-span-2">
-          <label className="text-[#525252] text-xs block mb-2">Servicios (separados por coma)</label>
-          <input type="text" value={servicesStr} onChange={(e) => setServicesStr(e.target.value)} className="w-full bg-[#141414] border border-[#1F1F1F] px-4 py-3 text-white text-sm focus:outline-none focus:border-white/20" placeholder="Fotografía, Branding, Video" />
+          <label className="text-muted text-xs block mb-2">Servicios (separados por coma)</label>
+          <input type="text" value={servicesStr} onChange={(e) => setServicesStr(e.target.value)} className="w-full bg-[#141414] ring-1 ring-white/5 rounded-2xl px-4 py-3 text-white text-sm focus:outline-none focus:border-white/20" placeholder="Fotografía, Branding, Video" />
         </div>
         <div className="md:col-span-2">
           <label className="flex items-center gap-3 cursor-pointer">
@@ -215,13 +215,13 @@ cover_image_url: coverImage?.url || otherImages[0]?.url || "",
         </div>
 
         <div className="lg:col-span-1">
-          <p className="text-[#525252] text-xs mb-3">Vista previa</p>
+          <p className="text-muted text-xs mb-3">Vista previa</p>
           <div className="bg-[#1A1A1A] border border-[#1F1F1F] overflow-hidden">
             <div className="aspect-[4/3] relative">
               {previewCover ? (
                 <img src={previewCover} alt={title || "preview"} className="w-full h-full object-cover" />
               ) : (
-                <div className="w-full h-full flex items-center justify-center text-[#525252] text-xs">Sin imagen</div>
+                <div className="w-full h-full flex items-center justify-center text-muted text-xs">Sin imagen</div>
               )}
               <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-[#1A1A1A]/50 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-4">
@@ -230,7 +230,7 @@ cover_image_url: coverImage?.url || otherImages[0]?.url || "",
               </div>
             </div>
           </div>
-          <button type="button" onClick={showWarnings} className="mt-4 w-full text-xs text-[#525252] hover:text-white border border-[#1F1F1F] px-4 py-2.5 transition-colors">
+          <button type="button" onClick={showWarnings} className="mt-4 w-full text-xs text-muted hover:text-white border border-[#1F1F1F] px-4 py-2.5 transition-colors">
             Verificar antes de publicar
           </button>
         </div>
@@ -243,7 +243,7 @@ cover_image_url: coverImage?.url || otherImages[0]?.url || "",
       {error && <p className="text-red-400 text-sm">{error}</p>}
 
       <div className="flex items-center gap-4 pt-4 border-t border-[#1F1F1F]">
-        <Link href="/admin/proyectos" className="flex items-center gap-2 text-[#525252] hover:text-white text-sm transition-colors">
+        <Link href="/admin/proyectos" className="flex items-center gap-2 text-muted hover:text-white text-sm transition-colors">
           <ArrowLeft size={14} /> Cancelar
         </Link>
         <button type="submit" disabled={saving || !title.trim()} className="flex items-center gap-2 bg-gold text-[#0A0A0A] px-6 py-3 text-sm font-medium hover:bg-gold-light transition-colors disabled:opacity-50 ml-auto">

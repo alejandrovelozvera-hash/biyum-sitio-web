@@ -98,12 +98,12 @@ export default function AdminMediaPage() {
       <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-white tracking-tight">WordPress Media</h1>
-          <p className="text-[#525252] text-sm mt-1">Gestiona y elimina fotos de la biblioteca. {total} imágenes en total.</p>
+          <p className="text-muted text-sm mt-1">Gestiona y elimina fotos de la biblioteca. {total} imágenes en total.</p>
         </div>
         {selected.size > 0 && (
           <div className="flex items-center gap-2">
             <span className="text-white text-sm">{selected.size} seleccionadas</span>
-            <button onClick={() => setSelected(new Set())} className="text-xs text-[#9CA3AF] hover:text-white px-3 py-1">Limpiar</button>
+            <button onClick={() => setSelected(new Set())} className="text-xs text-muted hover:text-white px-3 py-1">Limpiar</button>
             <button onClick={handleBulkDelete} className="flex items-center gap-1.5 bg-red-500 hover:bg-red-600 text-white px-4 py-2 text-sm">
               <Trash2 size={14} /> Eliminar seleccionadas
             </button>
@@ -113,8 +113,8 @@ export default function AdminMediaPage() {
 
       <div className="flex flex-col sm:flex-row gap-3 mb-6">
         <div className="relative flex-1 max-w-md">
-          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#9CA3AF]" />
-          <input value={search} onChange={(e) => { setSearch(e.target.value); setPage(1); }} placeholder="Buscar por nombre..." className="w-full bg-white/[0.03] border border-white/10 pl-10 pr-4 py-2.5 text-white text-sm placeholder:text-[#6B7280] focus:outline-none focus:border-gold/50" />
+          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
+          <input value={search} onChange={(e) => { setSearch(e.target.value); setPage(1); }} placeholder="Buscar por nombre..." className="w-full bg-[#141414] ring-1 ring-white/5 rounded-2xl pl-10 pr-4 py-2.5 text-white text-sm placeholder:text-[#6B7280] focus:outline-none focus:border-gold/50" />
         </div>
         <label className="flex items-center gap-2 text-sm text-white cursor-pointer select-none">
           <input type="checkbox" checked={allSelected} onChange={(e) => {
@@ -125,12 +125,12 @@ export default function AdminMediaPage() {
         </label>
       </div>
 
-      {msg && <p className="text-sm text-[#9CA3AF] mb-4">{msg}</p>}
+      {msg && <p className="text-sm text-muted mb-4">{msg}</p>}
 
       {loading ? (
-        <div className="flex items-center justify-center py-16 text-[#9CA3AF]"><Spinner size={20} className="mr-2" /> Cargando...</div>
+        <div className="flex items-center justify-center py-16 text-muted"><Spinner size={20} className="mr-2" /> Cargando...</div>
       ) : images.length === 0 ? (
-        <p className="text-[#9CA3AF] text-sm py-16 text-center">{search ? "Sin resultados" : "No hay imágenes."}</p>
+        <p className="text-muted text-sm py-16 text-center">{search ? "Sin resultados" : "No hay imágenes."}</p>
       ) : (
         <>
           <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-3">
@@ -165,9 +165,9 @@ export default function AdminMediaPage() {
             })}
           </div>
           <div className="flex justify-center items-center gap-2 mt-8">
-            <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1} className="text-xs text-[#9CA3AF] hover:text-white disabled:opacity-30 px-4 py-2 bg-white/[0.03] border border-white/10">Anterior</button>
-            <span className="text-xs text-[#9CA3AF] px-4 py-2">Página {page} de {Math.ceil(total / 100)} · {total} imágenes{selected.size > 0 ? ` · ${selected.size} seleccionadas` : ""}</span>
-            <button onClick={() => setPage((p) => p + 1)} disabled={page >= Math.ceil(total / 100)} className="text-xs text-[#9CA3AF] hover:text-white disabled:opacity-30 px-4 py-2 bg-white/[0.03] border border-white/10">Siguiente</button>
+            <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1} className="text-xs text-muted hover:text-white disabled:opacity-30 px-4 py-2 bg-[#141414] ring-1 ring-white/5 rounded-2xl">Anterior</button>
+            <span className="text-xs text-muted px-4 py-2">Página {page} de {Math.ceil(total / 100)} · {total} imágenes{selected.size > 0 ? ` · ${selected.size} seleccionadas` : ""}</span>
+            <button onClick={() => setPage((p) => p + 1)} disabled={page >= Math.ceil(total / 100)} className="text-xs text-muted hover:text-white disabled:opacity-30 px-4 py-2 bg-[#141414] ring-1 ring-white/5 rounded-2xl">Siguiente</button>
           </div>
         </>
       )}

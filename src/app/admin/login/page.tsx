@@ -41,16 +41,16 @@ function LoginForm() {
           </div>
           <p className="text-[#525252] text-sm mt-2">Panel de Administración</p>
         </div>
-        <form onSubmit={handleSubmit} className="bg-[#141414] border border-[#1F1F1F] rounded-2xl p-8 space-y-5 shadow-2xl">
+        <form onSubmit={handleSubmit} className="bg-[#141414] ring-1 ring-white/5 rounded-2xl p-8 space-y-5 shadow-2xl">
           <div>
-            <label className="text-[#9CA3AF] text-xs block mb-2 tracking-wide">Contraseña</label>
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full bg-[#0A0A0A] border border-[#1F1F1F] rounded-xl px-4 py-3 text-white text-sm placeholder:text-[#525252] focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/20 transition-all" placeholder="Ingresa la contraseña" autoFocus />
+            <label className="text-muted text-xs block mb-2 tracking-wide">Contraseña</label>
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full bg-[#0A0A0A] ring-1 ring-white/5 rounded-2xl px-4 py-3 text-white text-sm placeholder:text-muted focus:outline-none focus:ring-white/20" placeholder="Ingresa la contraseña" autoFocus />
           </div>
-          {error && <p className="text-red-400 text-xs bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-2">{error}</p>}
-          <button type="submit" disabled={loading || !password} className="w-full flex items-center justify-center gap-2 bg-gold text-[#0A0A0A] px-6 py-3.5 rounded-xl text-sm font-medium hover:bg-gold-light transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 shadow-lg">
+          {error && <p className="text-red-400 text-xs bg-red-500/10 ring-1 ring-red-500/20 rounded-xl px-3 py-2">{error}</p>}
+          <button type="submit" disabled={loading || !password} className="w-full flex items-center justify-center gap-2 bg-gold text-on-gold px-6 py-3.5 rounded-2xl text-sm font-medium hover:bg-gold-light transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 shadow-lg">
             <LogIn size={16} /> {loading ? "Ingresando..." : "Ingresar"}
           </button>
-          <p className="text-center text-[#525252] text-[11px]">Acceso restringido · Biyum Studio</p>
+          <p className="text-center text-muted text-[11px]">Acceso restringido · Biyum Studio</p>
         </form>
       </div>
     </div>

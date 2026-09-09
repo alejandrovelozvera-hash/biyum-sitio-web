@@ -41,34 +41,34 @@ export default async function AdminDashboard() {
           { icon: Video, label: "Hero", value: heroCount, sub: "Slides" },
           { icon: Settings, label: "Categorías", value: catCount, sub: "Activas" },
         ].map((stat) => (
-          <div key={stat.label} className="group bg-gradient-to-br from-[#141414] to-[#0F0F0F] border border-[#1F1F1F] p-6 rounded-2xl hover:border-white/10 transition-all hover:translate-y-[-2px] hover:shadow-lg">
-            <stat.icon size={18} className="text-gold/60 group-hover:text-gold mb-4 transition-colors" />
-            <p className="text-[28px] font-bold tracking-[-0.02em] text-white leading-none">{stat.value}</p>
-            <p className="text-[#9CA3AF] text-xs mt-1.5 tracking-wide">{stat.label}</p>
+          <div key={stat.label} className="group bg-[#141414] ring-1 ring-white/5 p-6 rounded-2xl hover:ring-white/10 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all">
+            <stat.icon size={18} className="text-muted group-hover:text-gold mb-3 transition-colors" />
+            <p className="text-[22px] font-bold tracking-[-0.02em] text-white leading-none">{stat.value}</p>
+            <p className="text-muted text-xs mt-1.5 tracking-wide">{stat.label}</p>
             <p className="text-[#525252] text-[11px] mt-1">{stat.sub}</p>
           </div>
         ))}
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-8">
-        <div className="bg-[#141414] border border-[#1F1F1F] p-6">
-          <h2 className="text-white font-medium mb-4">Acciones rápidas</h2>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-6">
+        <div className="bg-[#141414] ring-1 ring-white/5 p-6 rounded-2xl">
+          <h2 className="text-white font-medium mb-4 text-sm tracking-wide">Acciones rápidas</h2>
           <div className="flex flex-wrap gap-2">
-            <Link href="/admin/proyectos/nuevo" className="bg-gold text-[#0A0A0A] px-4 py-2 text-sm font-medium">Nuevo proyecto</Link>
-            <Link href="/admin/media" className="border border-white/10 text-white px-4 py-2 text-sm hover:bg-white/5">Gestionar Media</Link>
-            <Link href="/admin/chat" className="border border-white/10 text-white px-4 py-2 text-sm hover:bg-white/5">Entrenar Chat IA</Link>
-            <Link href="/admin/config" className="border border-white/10 text-white px-4 py-2 text-sm hover:bg-white/5">Editar Hero</Link>
+            <Link href="/admin/proyectos/nuevo" className="bg-gold text-on-gold px-4 py-2 rounded-full text-sm font-medium hover:bg-gold-light transition-colors">Nuevo proyecto</Link>
+            <Link href="/admin/media" className="ring-1 ring-white/10 text-white px-4 py-2 rounded-full text-sm hover:bg-white/5 transition-colors">Gestionar Media</Link>
+            <Link href="/admin/chat" className="ring-1 ring-white/10 text-white px-4 py-2 rounded-full text-sm hover:bg-white/5 transition-colors">Entrenar Chat IA</Link>
+            <Link href="/admin/config" className="ring-1 ring-white/10 text-white px-4 py-2 rounded-full text-sm hover:bg-white/5 transition-colors">Editar Hero</Link>
           </div>
         </div>
-        <div className="bg-[#141414] border border-[#1F1F1F] p-6">
-          <h2 className="text-white font-medium mb-3">Proyectos recientes</h2>
+        <div className="bg-[#141414] ring-1 ring-white/5 p-6 rounded-2xl">
+          <h2 className="text-white font-medium mb-3 text-sm">Proyectos recientes</h2>
           {recent.length === 0 ? (
-            <p className="text-[#525252] text-sm">Aún no hay proyectos.</p>
+            <p className="text-muted text-sm">Aún no hay proyectos.</p>
           ) : (
             <ul className="space-y-2">
               {recent.map((p) => (
                 <li key={p.id} className="flex items-center justify-between text-sm">
                   <span className="text-white truncate pr-4">{p.title}</span>
-                  <span className="text-[#525252] text-xs shrink-0">{p.category}</span>
+                  <span className="bg-white/5 ring-1 ring-white/10 text-muted text-[11px] px-2 py-0.5 rounded-full shrink-0">{p.category}</span>
                 </li>
               ))}
             </ul>
@@ -76,9 +76,9 @@ export default async function AdminDashboard() {
         </div>
       </div>
 
-      <div className="mt-4 bg-[#141414] border border-[#1F1F1F] p-6">
-        <h2 className="text-white font-medium mb-2">Cómo funciona</h2>
-        <p className="text-[#525252] text-xs">Backend: <a href={process.env.NEXT_PUBLIC_WORDPRESS_URL || "#"} target="_blank" rel="noopener noreferrer" className="text-gold hover:underline">{wpHost}</a> · REST /wp-json/biyum/v1</p>
+      <div className="mt-4 bg-[#141414] ring-1 ring-white/5 p-6 rounded-2xl">
+        <h2 className="text-white font-medium mb-2 text-sm">Cómo funciona</h2>
+        <p className="text-muted text-xs">Backend: <a href={process.env.NEXT_PUBLIC_WORDPRESS_URL || "#"} target="_blank" rel="noopener noreferrer" className="text-gold hover:underline">{wpHost}</a> · REST /wp-json/biyum/v1</p>
       </div>
     </div>
   );
