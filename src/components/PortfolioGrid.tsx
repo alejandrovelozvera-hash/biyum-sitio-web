@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { motion, useReducedMotion, AnimatePresence } from "motion/react";
 import { Project } from "@/types";
 import ExhibitionDetail from "./Exhibition/ExhibitionDetail";
@@ -26,6 +26,29 @@ function TiltCard({ project, index, reduce, onSelect }: {
 }) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    const img = imgRef.current;
+    if (!img) return;
+    
+    // Si la imagen ya está cargada (cache), marcarla como loaded
+    if (img.complete && img.naturalWidth !== 0) {
+      setImageLoaded(true);
+      return;
+    }
+    
+    const handleLoad = () => setImageLoaded(true);
+    const handleError = () => setImageError(true);
+    
+    img.addEventListener('load', handleLoad);
+    img.addEventListener('error', handleError);
+    
+    return () => {
+      img.removeEventListener('load', handleLoad);
+      img.removeEventListener('error', handleError);
+    };
+  }, []);
 
   return (
     <motion.div
@@ -46,11 +69,10 @@ function TiltCard({ project, index, reduce, onSelect }: {
           {!imageLoaded && !imageError && <SkeletonLoader />}
           {project.cover_image_url && (
             <img
+              ref={imgRef}
               src={project.cover_image_url}
               alt={project.title}
               loading="lazy"
-              onLoad={() => setImageLoaded(true)}
-              onError={() => setImageError(true)}
               className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04] ${!imageLoaded && !imageError ? "opacity-0" : "opacity-100"} transition-opacity duration-300`}
             />
           )}
