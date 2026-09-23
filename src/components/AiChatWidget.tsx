@@ -13,6 +13,7 @@ export default function AiChatWidget() {
   const [loading, setLoading] = useState(false);
   const [showWa, setShowWa] = useState(false);
   const [showHint, setShowHint] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
   const [quickReplies, setQuickReplies] = useState<string[]>([]);
   const listRef = useRef<HTMLDivElement>(null);
   const sessionId = useRef(Math.random().toString(36).slice(2, 8));
@@ -104,8 +105,8 @@ export default function AiChatWidget() {
 
   return (
     <>
-      {!open && showHint && (
-        <div className="fixed bottom-20 right-20 z-50 max-w-[220px] bg-surface-elevated border border-gold/15 rounded-2xl rounded-br-sm shadow-xl p-3 pr-8 animate-[fadeIn_0.4s_ease]">
+      {!open && (showHint || isHovering) && (
+        <div className="fixed bottom-36 right-6 z-50 max-w-[220px] bg-surface-elevated border border-gold/15 rounded-2xl rounded-br-sm shadow-xl p-3 pr-8 animate-[fadeIn_0.4s_ease]">
           <button onClick={() => setShowHint(false)} aria-label="Cerrar aviso" className="absolute top-2 right-2 text-muted hover:text-gold text-xs">×</button>
           <p className="text-gold-dark text-sm font-medium leading-tight">¿Quieres algún servicio?</p>
           <p className="text-muted text-xs mt-1">Pregunta por tu servicio aquí →</p>
@@ -117,6 +118,8 @@ export default function AiChatWidget() {
           setOpen(n);
           if (n) openAt.current = Date.now();
         }}
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
         aria-label={open ? "Cerrar chat" : "Abrir chat de Biyum"}
         className="fixed bottom-20 right-6 z-50 w-14 h-14 rounded-full bg-gold text-on-gold shadow-xl flex items-center justify-center hover:bg-gold-light transition-all hover:scale-105 ring-4 ring-gold/20"
       >
