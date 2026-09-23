@@ -51,8 +51,13 @@ function TiltCard({ project, index, reduce, onSelect }: {
               loading="lazy"
               onLoad={() => setImageLoaded(true)}
               onError={() => setImageError(true)}
-              className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04] ${imageLoaded ? "opacity-100" : "opacity-0"} transition-opacity duration-300`}
+              className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04] ${!imageLoaded && !imageError ? "opacity-0" : "opacity-100"} transition-opacity duration-300`}
             />
+          )}
+          {imageError && project.cover_image_url && (
+            <div className="w-full h-full flex items-center justify-center bg-surface text-muted text-xs">
+              No disponible
+            </div>
           )}
           {project.featured && (
             <span className="absolute top-4 left-4 z-20 bg-gold text-on-gold text-[9px] tracking-[0.14em] uppercase font-medium px-3 py-1.5 rounded-full shadow-sm">
