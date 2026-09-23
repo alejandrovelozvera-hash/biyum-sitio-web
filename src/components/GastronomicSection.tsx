@@ -56,10 +56,10 @@ export default function GastronomicSection() {
         <div className="overflow-hidden rounded-2xl">
           <motion.div className="flex" animate={{ x: `-${(current * 100) / pageCount}%` }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} style={{ width: `${pageCount * 100}%` }}>
             {pages.map((page, pi) => (
-              <div key={pi} className="grid grid-cols-3 gap-3 md:gap-4 shrink-0" style={{ width: `${100 / pageCount}%` }}>
+              <div key={pi} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 shrink-0" style={{ width: `${100 / pageCount}%` }}>
                 {page.map((src, i) => (
                   <div key={src + i} className="relative overflow-hidden rounded-2xl bg-surface ring-1 ring-border shadow-sm group">
-                    <Image src={src} alt={`Gastronomía ${pi * perPage + i + 1}`} width={800} height={800} sizes="33vw" className="w-full aspect-[4/3] object-cover block group-hover:scale-[1.03] transition-transform duration-700" unoptimized />
+                    <Image src={src} alt={`Gastronomía ${pi * perPage + i + 1}`} width={800} height={800} sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw" className="w-full aspect-[4/3] object-cover block group-hover:scale-[1.03] transition-transform duration-700" unoptimized />
                   </div>
                 ))}
               </div>
