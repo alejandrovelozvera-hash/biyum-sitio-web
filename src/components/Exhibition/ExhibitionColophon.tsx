@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 import { Mail, MapPin } from "../Icons";
+import { getWhatsAppUrl } from "@/lib/whatsapp";
 
 export default function ExhibitionColophon() {
   return (
@@ -39,7 +40,7 @@ export default function ExhibitionColophon() {
               <div className="flex flex-col gap-2 text-sm">
                 <a href="https://www.facebook.com/profile.php?id=61590844183641" target="_blank" rel="noopener noreferrer" className="text-[#737373] hover:text-white transition-colors">Facebook</a>
                 <a href="https://www.instagram.com/alejandro_veloz_vera/" target="_blank" rel="noopener noreferrer" className="text-[#737373] hover:text-white transition-colors">Instagram</a>
-                <a href="https://wa.me/message/N3PW46LKUALOK1" target="_blank" rel="noopener noreferrer" className="text-[#737373] hover:text-white transition-colors">WhatsApp</a>
+                <a href={getWhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="text-[#737373] hover:text-white transition-colors">WhatsApp</a>
               </div>
             </div>
 

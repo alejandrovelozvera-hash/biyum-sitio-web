@@ -2,9 +2,10 @@
 
 import { Fragment, useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence, useScroll, useTransform } from "motion/react";
+import { motion, AnimatePresence, useScroll, useTransform, useReducedMotion } from "motion/react";
 import { ChevronLeft, ChevronRight, Play } from "./Icons";
 import Link from "next/link";
+import { getWhatsAppUrl, HEADER_OFFSET } from "@/lib/whatsapp";
 
 interface Slide {
   image_url: string;
@@ -48,26 +49,37 @@ const services = [
 
 const TITLE_DURATION = 10;
 
-function KineticTitle({ text }: { text: string }) {
+function KineticTitle({ text, reduce = false }: { text: string; reduce?: boolean }) {
+  if (reduce) {
+    return <span className="inline-block">{text}</span>;
+  }
+  
+  const words = text.split(" ");
   return (
     <span className="inline-block" aria-label={text}>
-      {text.split(" ").map((word, wi) => (
+      {words.map((word, wi) => (
         <span key={wi} className="inline-block whitespace-nowrap">
           {word.split("").map((char, ci) => (
-            <span key={ci} className="inline-block overflow-hidden align-bottom pb-[0.5em] mb-[-0.5em]">
-              <motion.span
-                className="inline-block"
-                initial={{ y: "110%" }}
-                animate={{ y: 0 }}
-                transition={{ duration: 0.8, delay: 0.15 + (wi * 4 + ci) * 0.035, ease: [0.16, 1, 0.3, 1] }}
-              >
-                {char}
-              </motion.span>
+            <span
+              key={ci}
+              className="inline-block overflow-hidden align-bottom pb-[0.5em] mb-[-0.5em]"
+              style={{
+                animation: "kinetic-char 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+                animationDelay: `${0.15 + (wi * 4 + ci) * 0.035}s`,
+              } as React.CSSProperties}
+            >
+              {char}
             </span>
           ))}
-          {wi < text.split(" ").length - 1 && <span className="inline-block">&nbsp;</span>}
+          {wi < words.length - 1 && <span className="inline-block">&nbsp;</span>}
         </span>
       ))}
+      <style jsx>{`
+        @keyframes kinetic-char {
+          from { transform: translateY(110%); }
+          to { transform: translateY(0); }
+        }
+      `}</style>
     </span>
   );
 }
@@ -75,6 +87,7 @@ function KineticTitle({ text }: { text: string }) {
 export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) {
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
+  const reduce = !!useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
   const parallaxY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
@@ -203,7 +216,7 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
                   <span>Galería de Diseño</span>
                 </p>
                 <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold text-gold tracking-[-0.04em] leading-[1] pb-[0.12em] mb-[-0.12em]">
-                  <KineticTitle text={s?.title || ""} />
+                  <KineticTitle text={s?.title || ""} reduce={reduce} />
                 </h1>
                 <motion.span
                   initial={{ scaleX: 0 }}
@@ -247,7 +260,7 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
                           e.preventDefault();
                           const el = document.getElementById("video");
                           if (el) {
-                            const y = el.getBoundingClientRect().top + window.scrollY - 80;
+                            const y = el.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET;
                             window.scrollTo({ top: y, behavior: "smooth" });
                           }
                         }
@@ -264,7 +277,7 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
                           e.preventDefault();
                           const el = document.getElementById("portafolio");
                           if (el) {
-                            const y = el.getBoundingClientRect().top + window.scrollY - 80;
+                            const y = el.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET;
                             window.scrollTo({ top: y, behavior: "smooth" });
                           }
                         }
@@ -283,7 +296,7 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
                           e.preventDefault();
                           const el = document.getElementById("portafolio");
                           if (el) {
-                            const y = el.getBoundingClientRect().top + window.scrollY - 80;
+                            const y = el.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET;
                             window.scrollTo({ top: y, behavior: "smooth" });
                           }
                         }
@@ -293,7 +306,7 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
                       Ver Portafolio
                     </Link>
                     <a
-                      href="https://wa.me/message/N3PW46LKUALOK1"
+                      href={getWhatsAppUrl()}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 text-xs sm:text-sm text-gold-dark hover:text-gold border border-gold/25 hover:border-gold/50 rounded-full px-5 sm:px-6 py-2.5 sm:py-3 transition-all hover:scale-[1.02] active:scale-[0.98]"

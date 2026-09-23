@@ -1,3 +1,7 @@
+"use client";
+
+import { getWhatsAppUrl } from "@/lib/whatsapp";
+
 export default function CtaBanner() {
   return (
     <section className="py-32 md:py-40 bg-[#0A0A0A]">
@@ -8,13 +12,13 @@ export default function CtaBanner() {
             ¿Listo para llevar tu marca al siguiente nivel?
           </h2>
           <a
-            href="https://wa.me/message/N3PW46LKUALOK1"
+            href={getWhatsAppUrl()}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 mt-12 text-sm text-[#737373] hover:text-white transition-colors group"
+            className="inline-flex items-center gap-2 mt-12 text-sm text-[#737373] hover:text-white transition-colors group min-h-[44px] flex items-center justify-center"
           >
             <span className="w-12 h-px bg-white/20 group-hover:bg-white transition-colors" />
-            Hablemos
+            Escríbenos
           </a>
         </div>
       </div>

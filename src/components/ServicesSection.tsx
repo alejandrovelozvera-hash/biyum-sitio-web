@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { Camera, Video, Palette, Megaphone, Code, ChevronRight } from "./Icons";
 import BrandingProcess from "./BrandingProcess";
+import { getWhatsAppUrl } from "@/lib/whatsapp";
 
 const Food = ({ size = 20, className, ...rest }: any) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className} {...rest}>
@@ -181,7 +182,16 @@ function ServiceCard({ s, i, onBranding }: { s: (typeof services)[number]; i: nu
   const iconY = useTransform(scrollYProgress, [0, 1], [40, -40]);
   const iconRotate = useTransform(scrollYProgress, [0, 1], [0, -8]);
   const isBranding = s.kind === "branding";
-  const waLink = `https://wa.me/message/N3PW46LKUALOK1?text=${encodeURIComponent(`Hola Biyum, me interesa el servicio de ${s.title}.`)}`;
+  const serviceKeyMap: Record<string, import("@/lib/whatsapp").ServiceKey> = {
+    food: "gastronomica",
+    video: "video",
+    palette: "color-grading",
+    branding: "branding",
+    social: "social",
+    web: "web",
+    drone: "drone",
+  };
+  const waLink = getWhatsAppUrl(serviceKeyMap[s.kind] || "general");
   return (
     <motion.a
       ref={ref}
@@ -270,7 +280,7 @@ export default function ServicesSection() {
             <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gold tracking-[-0.04em] leading-[0.92]">Servicios</h2>
             <motion.p initial={anim ? { opacity: 0 } : false} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.4 }} className="text-secondary text-sm md:text-base leading-relaxed mt-5 max-w-md">Todo lo que tu marca necesita para destacar: del disparo a la pantalla, de la idea a la identidad.</motion.p>
           </div>
-          <motion.a initial={anim ? { opacity: 0, y: 12 } : false} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.5 }} href="https://wa.me/message/N3PW46LKUALOK1" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-on-gold bg-gold hover:bg-gold-light rounded-full px-7 py-3 font-medium transition-all hover:scale-[1.02] active:scale-[0.98] shrink-0">Cotizar un proyecto<ChevronRight size={14} className="group-hover:translate-x-0.5 transition-transform duration-300" /></motion.a>
+          <motion.a initial={anim ? { opacity: 0, y: 12 } : false} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.5 }} href={getWhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-on-gold bg-gold hover:bg-gold-light rounded-full px-7 py-3 font-medium transition-all hover:scale-[1.02] active:scale-[0.98] shrink-0">Cotizar proyecto<ChevronRight size={14} className="group-hover:translate-x-0.5 transition-transform duration-300" /></motion.a>
         </motion.div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
           {services.map((s, i) => (
@@ -316,7 +326,7 @@ export default function ServicesSection() {
                       <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Concepto, Color, Tipografía</li>
                       <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Logo color, blanco y negro</li>
                     </ul>
-                    <a href="https://wa.me/message/N3PW46LKUALOK1?text=Hola%20Biyum,%20quiero%20contratar%20el%20Paquete%20Emprendedor%20%24150" target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center justify-center gap-2 text-[13px] font-bold text-on-gold bg-gold hover:bg-gold-light rounded-full px-6 py-3 transition-all relative">Contratar plan</a>
+                    <a href={getWhatsAppUrl("branding")} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center justify-center gap-2 text-[13px] font-bold text-on-gold bg-gold hover:bg-gold-light rounded-full px-6 py-3 transition-all relative">Contratar plan</a>
                   </div>
                   <div className="bg-surface-elevated rounded-2xl ring-2 ring-gold p-6 flex flex-col shadow-md group relative overflow-hidden">
                     <span className="absolute inset-x-0 top-0 h-[2px] bg-gold/40" />
@@ -333,7 +343,7 @@ export default function ServicesSection() {
                       <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Logo color, blanco y negro</li>
                       <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Tarjeta + Hoja tipo</li>
                     </ul>
-                    <a href="https://wa.me/message/N3PW46LKUALOK1?text=Hola%20Biyum,%20quiero%20contratar%20el%20Paquete%20Emprendedor%20Plus%20%24250" target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center justify-center gap-2 text-[13px] font-bold text-on-gold bg-gold hover:bg-gold-light rounded-full px-6 py-3 transition-all shadow-md relative">Contratar plan</a>
+                    <a href={getWhatsAppUrl("branding")} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center justify-center gap-2 text-[13px] font-bold text-on-gold bg-gold hover:bg-gold-light rounded-full px-6 py-3 transition-all shadow-md relative">Contratar plan</a>
                   </div>
                   <div className="bg-surface-elevated rounded-2xl ring-1 ring-border p-6 flex flex-col group relative overflow-hidden hover:ring-border transition-all">
                     <div className="flex items-center justify-between mb-1 relative">
@@ -351,7 +361,7 @@ export default function ServicesSection() {
                       <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Línea gráfica redes</li>
                       <li className="flex gap-2"><span className="text-gold mt-0.5">•</span> Animación claqueta intro</li>
                     </ul>
-                    <a href="https://wa.me/message/N3PW46LKUALOK1?text=Hola%20Biyum,%20quiero%20contratar%20el%20Paquete%20Profesional%20de%20Branding%20%24400" target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center justify-center gap-2 text-[13px] font-bold text-on-gold bg-gold hover:bg-gold-light rounded-full px-6 py-3 transition-all relative">Contratar plan</a>
+                    <a href={getWhatsAppUrl("branding")} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center justify-center gap-2 text-[13px] font-bold text-on-gold bg-gold hover:bg-gold-light rounded-full px-6 py-3 transition-all relative">Contratar plan</a>
                   </div>
                 </div>
                 <div className="flex flex-wrap justify-center gap-2 pt-2 text-[11px] font-medium text-muted">
@@ -360,7 +370,7 @@ export default function ServicesSection() {
                   <span className="inline-flex items-center gap-1.5 bg-white ring-1 ring-border rounded-full px-3 py-1.5"><span className="w-1.5 h-1.5 rounded-full bg-gold" />50% anticipo</span>
                 </div>
                 <div className="flex justify-center pt-2">
-                  <a href="https://wa.me/message/N3PW46LKUALOK1?text=Hola%20Biyum,%20quiero%20mas%20informacion%20sobre%20branding" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-medium text-gold hover:text-gold-light border border-gold/20 hover:border-gold/40 rounded-full px-7 py-3 transition-all">Pide más información</a>
+                  <a href={getWhatsAppUrl("branding")} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-medium text-gold hover:text-gold-light border border-gold/20 hover:border-gold/40 rounded-full px-7 py-3 transition-all">Pide más información</a>
                 </div>
               </div>
             </motion.div>

@@ -3,6 +3,7 @@
 import * as React from "react";
 import { motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
+import { getWhatsAppUrl } from "@/lib/whatsapp";
 
 const photos = [
   "https://wp.biyum.agency/wp-content/uploads/2024/07/DSC01744-1-scaled.jpg",
@@ -17,6 +18,33 @@ const photos = [
 ];
 const perPage = 3;
 const pages = Array.from({ length: Math.ceil(photos.length / perPage) }, (_, i) => photos.slice(i * perPage, (i + 1) * perPage));
+
+function SkeletonLoader() {
+  return (
+    <div className="w-full h-full bg-gradient-to-r from-surface via-muted to-surface animate-pulse" />
+  );
+}
+
+function PhotoItem({ src, alt, index }: { src: string; alt: string; index: number }) {
+  const [loaded, setLoaded] = React.useState(false);
+  const [error, setError] = React.useState(false);
+
+  return (
+    <div className="relative overflow-hidden rounded-2xl bg-surface ring-1 ring-border shadow-sm group">
+      {!loaded && !error && <SkeletonLoader />}
+      <Image
+        src={src}
+        alt={alt}
+        width={800}
+        height={800}
+        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+        className={`w-full aspect-[4/3] object-cover block group-hover:scale-[1.03] transition-transform duration-700 ${loaded ? "opacity-100" : "opacity-0"} transition-opacity duration-300`}
+        onLoad={() => setLoaded(true)}
+        onError={() => setError(true)}
+      />
+    </div>
+  );
+}
 
 export default function GastronomicSection() {
   const reduce = useReducedMotion();
@@ -58,9 +86,7 @@ export default function GastronomicSection() {
             {pages.map((page, pi) => (
               <div key={pi} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 shrink-0" style={{ width: `${100 / pageCount}%` }}>
                 {page.map((src, i) => (
-                  <div key={src + i} className="relative overflow-hidden rounded-2xl bg-surface ring-1 ring-border shadow-sm group">
-                    <Image src={src} alt={`Gastronomía ${pi * perPage + i + 1}`} width={800} height={800} sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw" className="w-full aspect-[4/3] object-cover block group-hover:scale-[1.03] transition-transform duration-700" unoptimized />
-                  </div>
+                  <PhotoItem key={src + i} src={src} alt={`Gastronomía ${pi * perPage + i + 1}`} index={pi * perPage + i} />
                 ))}
               </div>
             ))}
@@ -73,7 +99,7 @@ export default function GastronomicSection() {
         </div>
 
         <div className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-          <a href="https://wa.me/message/N3PW46LKUALOK1?text=Hola%20Biyum,%20me%20interesa%20fotografia%20gastronomica%20$15%20por%20plato" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-on-gold bg-gold hover:bg-gold-light rounded-full px-7 py-3 font-medium transition-colors">Cotizar foto gastronómica</a>
+          <a href={getWhatsAppUrl("gastronomica")} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-on-gold bg-gold hover:bg-gold-light rounded-full px-7 py-3 font-medium transition-colors">Cotizar foto gastronómica</a>
           <span className="text-muted text-xs">Entrega 5–7 días · Sesión en tu local · Props incluidos</span>
         </div>
       </div>

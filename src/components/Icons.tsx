@@ -14,6 +14,7 @@ export const X = s("M18 6L6 18M6 6l12 12");
 export const ChevronLeft = s("M15 18l-6-6 6-6");
 export const ChevronRight = s("M9 18l6-6-6-6");
 export const ChevronUp = s("M18 15l-6-6-6 6");
+export const ChevronDown = s("M6 9l6 6 6-6");
 export const ArrowLeft = s("M19 12H5m7-7l-7 7 7 7");
 export const Plus = s("M12 5v14m-7-7h14");
 export const Upload = s("M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4m5-6l5-5 5 5m-5-5v12");

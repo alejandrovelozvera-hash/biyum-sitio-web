@@ -96,7 +96,7 @@ export default function AiChatWidget() {
         if (j.quickReplies?.length) setQuickReplies(j.quickReplies);
       }
     } catch {
-      setMessages((m) => { const c = [...m]; c[c.length - 1] = { role: "assistant", content: "Hubo un error. Escríbenos directo por WhatsApp y te ayudamos." }; return c; });
+      setMessages((m) => { const c = [...m]; c[c.length - 1] = { role: "assistant", content: "Hubo un error. Escríbenos por WhatsApp y te ayudamos." }; return c; });
       setShowWa(true);
     }
     setLoading(false);
@@ -140,7 +140,7 @@ export default function AiChatWidget() {
             {loading && messages[messages.length - 1]?.content === "" && <div className="flex items-center gap-1 text-muted text-xs"><span className="w-1.5 h-1.5 bg-gold rounded-full animate-bounce" /><span className="w-1.5 h-1.5 bg-gold rounded-full animate-bounce [animation-delay:0.15s]" /><span className="w-1.5 h-1.5 bg-gold rounded-full animate-bounce [animation-delay:0.3s]" /></div>}
             {showWa && (
               <a href="https://wa.me/message/N3PW46LKUALOK1" target="_blank" rel="noopener noreferrer" className="block text-center text-sm bg-gold text-on-gold rounded-full px-4 py-2 mt-2">
-                Continuar por WhatsApp →
+                Escríbenos por WhatsApp →
               </a>
             )}
             {quickReplies.length > 0 && (

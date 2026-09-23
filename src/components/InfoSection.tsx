@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { Mail, MapPin } from "./Icons";
+import { getWhatsAppUrl, getWhatsAppUrlWithParams } from "@/lib/whatsapp";
 
 export default function InfoSection() {
   const reduce = useReducedMotion();
@@ -13,11 +14,10 @@ export default function InfoSection() {
     e.preventDefault();
     const form = e.currentTarget;
     const fd = new FormData(form);
-    const name = fd.get("name");
-    const message = fd.get("message");
+    const name = fd.get("name") as string;
+    const message = fd.get("message") as string;
     if (fd.get("website")) return;
-    const text = encodeURIComponent(`Hola Biyum, soy ${name}.%0A${message}`);
-    const url = `https://wa.me/message/N3PW46LKUALOK1?text=${text}`;
+    const url = getWhatsAppUrlWithParams({ name, message });
     setSent(true);
     setTimeout(() => setSent(false), 3000);
     window.open(url, "_blank");
@@ -50,7 +50,7 @@ export default function InfoSection() {
             <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gold tracking-[-0.04em] leading-[0.95] mb-2">
               ¿Tienes un proyecto en mente?
             </h3>
-            <p className="text-secondary text-sm leading-relaxed mb-6">Hablemos y creemos algo increíble juntos.</p>
+            <p className="text-secondary text-sm leading-relaxed mb-6">Escríbenos y creemos algo increíble juntos.</p>
             <a href="mailto:biyumdis@gmail.com" className="flex items-center gap-2 text-muted hover:text-foreground text-sm transition-colors">
               <Mail size={14} /> biyumdis@gmail.com
             </a>
@@ -115,7 +115,7 @@ export default function InfoSection() {
               <div className="flex flex-wrap gap-3">
                 <a href="https://www.facebook.com/profile.php?id=61590844183641" target="_blank" rel="noopener noreferrer" className="rounded-full px-5 py-2.5 text-xs ring-1 ring-border text-muted hover:text-foreground hover:ring-foreground/20 transition-all hover:scale-[1.02] active:scale-[0.98]">Facebook</a>
                 <a href="https://www.instagram.com/alejandro_veloz_vera/" target="_blank" rel="noopener noreferrer" className="rounded-full px-5 py-2.5 text-xs ring-1 ring-border text-muted hover:text-foreground hover:ring-foreground/20 transition-all hover:scale-[1.02] active:scale-[0.98]">Instagram</a>
-                <a href="https://wa.me/message/N3PW46LKUALOK1" target="_blank" rel="noopener noreferrer" className="rounded-full px-5 py-2.5 text-xs ring-1 ring-border text-foreground hover:ring-gold/30 transition-all hover:scale-[1.02] active:scale-[0.98]">WhatsApp</a>
+                <a href={getWhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="rounded-full px-5 py-2.5 text-xs ring-1 ring-border text-foreground hover:ring-gold/30 min-h-[44px] flex items-center transition-all hover:scale-[1.02] active:scale-[0.98]">WhatsApp</a>
               </div>
             </div>
             <div className="rounded-2xl bg-surface ring-1 ring-border p-5">
@@ -123,7 +123,7 @@ export default function InfoSection() {
                 <span className="w-2 h-2 bg-gold rounded-full animate-pulse" />
                 Respuesta en menos de 2 horas
               </div>
-              <p className="text-muted text-xs mt-2 leading-relaxed">Atención directa del equipo, sin compromiso. ¿Prefieres ir directo? <a href="https://wa.me/message/N3PW46LKUALOK1" target="_blank" rel="noopener noreferrer" className="text-gold hover:text-gold-light underline underline-offset-4">Escríbenos por WhatsApp →</a></p>
+              <p className="text-muted text-xs mt-2 leading-relaxed">Atención directa del equipo, sin compromiso. ¿Prefieres ir directo? <a href={getWhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="text-gold hover:text-gold-light underline underline-offset-4">Escríbenos por WhatsApp →</a></p>
             </div>
           </div>
         </motion.div>

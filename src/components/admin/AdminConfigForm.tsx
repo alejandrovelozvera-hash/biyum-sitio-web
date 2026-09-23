@@ -6,6 +6,7 @@ import { Save, Plus, Trash } from "../Icons";
 import { Category } from "@/types";
 import { demoHeroSlides } from "@/lib/demo-data";
 import MediaPicker from "./MediaPicker";
+import { getWhatsAppUrl } from "@/lib/whatsapp";
 
 interface Slide { image_url: string; title: string; subtitle: string; cta_text: string; cta_link: string; video_id?: string; is_video?: boolean; }
 interface CategoryInput { id: string; name: string; slug: string; order_index: number; }
@@ -14,7 +15,7 @@ interface Props {
   initialCategories?: Category[] | null;
 }
 
-const defaultSlide: Slide = { image_url: "", title: "", subtitle: "", cta_text: "Escríbenos", cta_link: "https://wa.me/message/N3PW46LKUALOK1" };
+const defaultSlide: Slide = { image_url: "", title: "", subtitle: "", cta_text: "Escríbenos", cta_link: getWhatsAppUrl() };
 
 function slugify(text: string): string {
   return text.toLowerCase().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-").replace(/-+/g, "-").trim();

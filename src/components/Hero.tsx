@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { ChevronLeft, ChevronRight } from "./Icons";
 import { motion, AnimatePresence } from "motion/react";
+import { getWhatsAppUrl } from "@/lib/whatsapp";
 
 interface Slide {
   image_url: string;
@@ -18,14 +19,14 @@ const fallback: Slide[] = [
     title: "Fotografía Publicitaria",
     subtitle: "Destaca tu marca con imágenes que hablan por sí solas.",
     cta_text: "Escríbenos",
-    cta_link: "https://wa.me/message/N3PW46LKUALOK1",
+    cta_link: getWhatsAppUrl(),
   },
   {
     image_url: "https://picsum.photos/seed/biyum2/1920/1080",
     title: "Fotografía Gastronómica",
     subtitle: "Potencia tu menú con imágenes de alta calidad.",
     cta_text: "Escríbenos",
-    cta_link: "https://wa.me/message/N3PW46LKUALOK1",
+    cta_link: getWhatsAppUrl("gastronomica"),
   },
   {
     image_url: "https://picsum.photos/seed/biyum3/1920/1080",

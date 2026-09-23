@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { Mail, MapPin, Whatsapp } from "./Icons";
+import { getWhatsAppUrl, getWhatsAppUrlWithParams } from "@/lib/whatsapp";
 
 export default function Footer() {
   const reduce = useReducedMotion();
@@ -12,11 +13,11 @@ export default function Footer() {
     e.preventDefault();
     const form = e.currentTarget;
     const fd = new FormData(form);
-    const name = fd.get("name");
-    const message = fd.get("message");
+    const name = fd.get("name") as string;
+    const message = fd.get("message") as string;
     if (fd.get("website")) return;
-    const text = encodeURIComponent(`Hola Biyum, soy ${name}.%0A${message}`);
-    window.open(`https://wa.me/message/N3PW46LKUALOK1?text=${text}`, "_blank");
+    const url = getWhatsAppUrlWithParams({ name, message });
+    window.open(url, "_blank");
     setSent(true);
     setTimeout(() => setSent(false), 3000);
   };
@@ -38,7 +39,7 @@ export default function Footer() {
                   <span className="text-muted text-[10px] tracking-[0.2em] uppercase">Contacto</span>
                 </div>
                 <h3 className="text-3xl md:text-4xl font-bold text-gold tracking-[-0.04em] leading-[0.95]">¿Tienes un proyecto en mente?</h3>
-                <p className="text-secondary text-sm leading-relaxed mt-2">Hablemos y creemos algo increíble juntos. Respuesta en menos de 2 horas.</p>
+                <p className="text-secondary text-sm leading-relaxed mt-2">Escríbenos y creemos algo increíble juntos. Respuesta en menos de 2 horas.</p>
                 <div className="mt-4 flex flex-wrap gap-3 text-sm">
                   <a href="mailto:biyumdis@gmail.com" className="inline-flex items-center gap-2 text-muted hover:text-foreground transition-colors"><Mail size={14} /> biyumdis@gmail.com</a>
                   <span className="hidden sm:inline text-border">·</span>
@@ -82,12 +83,12 @@ export default function Footer() {
                   <div>
                     <p className="text-muted text-xs tracking-widest uppercase mb-3">Síguenos</p>
                     <div className="flex gap-2.5">
-                      <a href="https://www.facebook.com/profile.php?id=61590844183641" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-surface border border-border text-muted hover:text-foreground hover:border-foreground/20 flex items-center justify-center transition-all hover:scale-105"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg></a>
-                      <a href="https://www.instagram.com/alejandro_veloz_vera/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-surface border border-border text-muted hover:text-foreground hover:border-foreground/20 flex items-center justify-center transition-all hover:scale-105"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" /></svg></a>
-                      <a href="https://wa.me/message/N3PW46LKUALOK1" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="w-9 h-9 rounded-full bg-gold text-on-gold flex items-center justify-center shadow-sm hover:scale-105 transition-all"><Whatsapp size={14} /></a>
+                      <a href="https://www.facebook.com/profile.php?id=61590844183641" target="_blank" rel="noopener noreferrer" className="w-9 h-9 min-h-[44px] min-w-[44px] rounded-full bg-surface border border-border text-muted hover:text-foreground hover:border-foreground/20 flex items-center justify-center transition-all hover:scale-105"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg></a>
+                      <a href="https://www.instagram.com/alejandro_veloz_vera/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 min-h-[44px] min-w-[44px] rounded-full bg-surface border border-border text-muted hover:text-foreground hover:border-foreground/20 flex items-center justify-center transition-all hover:scale-105"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" /></svg></a>
+                      <a href={getWhatsAppUrl()} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="w-9 h-9 min-h-[44px] min-w-[44px] rounded-full bg-gold text-on-gold flex items-center justify-center shadow-sm hover:scale-105 transition-all"><Whatsapp size={14} /></a>
                     </div>
                   </div>
-                  <a href="https://wa.me/message/N3PW46LKUALOK1" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 text-sm bg-gold text-on-gold rounded-full px-6 py-3 font-semibold hover:scale-[1.02] active:scale-[0.98] transition-transform">Chatea por WhatsApp</a>
+                  <a href={getWhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 text-sm bg-gold text-on-gold rounded-full px-6 py-3 font-semibold hover:scale-[1.02] active:scale-[0.98] min-h-[44px] transition-transform">Escríbenos por WhatsApp</a>
                 </div>
               </div>
             </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { motion, useReducedMotion, AnimatePresence } from "motion/react";
 import { Project } from "@/types";
 import ExhibitionDetail from "./Exhibition/ExhibitionDetail";
@@ -12,12 +12,21 @@ const categoryLabels: Record<string, string> = {
   "social-media": "Social Media",
 };
 
+function SkeletonLoader() {
+  return (
+    <div className="w-full h-full bg-gradient-to-r from-surface via-muted to-surface animate-pulse" />
+  );
+}
+
 function TiltCard({ project, index, reduce, onSelect }: {
   project: Project;
   index: number;
   reduce: boolean | null;
   onSelect: (p: Project) => void;
 }) {
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
+
   return (
     <motion.div
       initial={reduce ? false : { opacity: 0, y: 16 }}
@@ -27,15 +36,22 @@ function TiltCard({ project, index, reduce, onSelect }: {
     >
       <div
         onClick={() => onSelect(project)}
-        className="group block relative overflow-hidden bg-surface cursor-pointer rounded-2xl ring-1 ring-border shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300"
+        onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onSelect(project); } }}
+        tabIndex={0}
+        role="button"
+        aria-label={`Ver proyecto: ${project.title}`}
+        className="group block relative overflow-hidden bg-surface cursor-pointer rounded-2xl ring-1 ring-border shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-background"
       >
         <div className="aspect-[4/3] relative overflow-hidden">
+          {!imageLoaded && !imageError && <SkeletonLoader />}
           {project.cover_image_url && (
             <img
               src={project.cover_image_url}
               alt={project.title}
               loading="lazy"
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+              onLoad={() => setImageLoaded(true)}
+              onError={() => setImageError(true)}
+              className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04] ${imageLoaded ? "opacity-100" : "opacity-0"} transition-opacity duration-300`}
             />
           )}
           {project.featured && (

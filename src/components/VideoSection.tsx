@@ -243,7 +243,7 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
                 <div className="shrink-0 w-[78%] sm:w-[44%] md:w-[32%] flex flex-col items-center justify-center text-center rounded-xl bg-surface/60 border border-gold/10 p-6 aspect-video md:aspect-auto md:min-h-[180px]">
                   <p className="text-muted text-[10px] tracking-[0.2em] uppercase mb-2">¿Proyecto audiovisual?</p>
                   <p className="text-secondary text-xs leading-relaxed mb-3">Cuéntanos tu idea.</p>
-                  <a href="https://wa.me/message/N3PW46LKUALOK1" target="_blank" rel="noopener noreferrer" className="text-[10px] tracking-[0.15em] uppercase text-gold border border-gold/30 rounded-full px-5 py-2">Escríbenos</a>
+                  <a href="https://wa.me/message/N3PW46LKUALOK1" target="_blank" rel="noopener noreferrer" className="text-[10px] tracking-[0.15em] uppercase text-gold border border-gold/30 rounded-full px-5 py-2 min-h-[44px] flex items-center justify-center">Escríbenos</a>
                 </div>
               )}
             </div>

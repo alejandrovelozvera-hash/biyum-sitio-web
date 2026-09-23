@@ -3,6 +3,7 @@ import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import ScrollProgress from "@/components/ScrollProgress";
 import AiChatWidget from "@/components/AiChatWidget";
+import ErrorBoundary from "@/components/ErrorBoundary";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://biyum.agency"),
@@ -68,7 +69,7 @@ export default function RootLayout({
       <body className="min-h-screen bg-background text-foreground">
         <ScrollProgress />
         <div className="grain-overlay" />
-        {children}
+        <ErrorBoundary>{children}</ErrorBoundary>
         <AiChatWidget />
         <script
           type="application/ld+json"
