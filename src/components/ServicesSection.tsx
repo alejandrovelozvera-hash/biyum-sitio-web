@@ -1,8 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { useRef, useState } from "react";
-import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { useState } from "react";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { Camera, Video, Palette, Megaphone, Code, ChevronRight } from "./Icons";
 import BrandingProcess from "./BrandingProcess";
 import { getWhatsAppUrl } from "@/lib/whatsapp";
@@ -177,10 +177,6 @@ function ServiceVisual({ kind, size, className }: { kind: string; size: number; 
 
 function ServiceCard({ s, i, onBranding }: { s: (typeof services)[number]; i: number; onBranding?: () => void }) {
   const reduce = useReducedMotion();
-  const ref = useRef<HTMLAnchorElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const iconY = useTransform(scrollYProgress, [0, 1], [40, -40]);
-  const iconRotate = useTransform(scrollYProgress, [0, 1], [0, -8]);
   const isBranding = s.kind === "branding";
   const serviceKeyMap: Record<string, import("@/lib/whatsapp").ServiceKey> = {
     food: "gastronomica",
@@ -194,7 +190,6 @@ function ServiceCard({ s, i, onBranding }: { s: (typeof services)[number]; i: nu
   const waLink = getWhatsAppUrl(serviceKeyMap[s.kind] || "general");
   return (
     <motion.a
-      ref={ref}
       href={waLink}
       target="_blank"
       rel="noopener noreferrer"
@@ -208,9 +203,9 @@ function ServiceCard({ s, i, onBranding }: { s: (typeof services)[number]; i: nu
     >
       <span className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-border to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       <div className="absolute -left-16 top-1/3 w-64 h-64 rounded-full bg-foreground/[0.03] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" aria-hidden />
-      <motion.div style={{ y: iconY, rotate: iconRotate }} className="absolute -right-6 -bottom-8 text-[160px] text-foreground/[0.03] transition-colors duration-500 group-hover:text-foreground/[0.06]" aria-hidden>
+      <div className="absolute -right-6 -bottom-8 text-[160px] text-foreground/[0.03] transition-colors duration-500 group-hover:text-foreground/[0.06]" aria-hidden>
         <ServiceVisual kind={s.kind} size={160} />
-      </motion.div>
+      </div>
       <div className="relative flex flex-col flex-1">
         <div className="flex items-start gap-3 mb-4">
           <div className="w-11 h-11 flex items-center justify-center rounded-xl bg-surface ring-1 ring-border text-muted group-hover:text-foreground transition-colors duration-500 shrink-0 mt-0.5">
