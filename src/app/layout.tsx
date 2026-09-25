@@ -30,8 +30,12 @@ export const metadata: Metadata = {
   publisher: "Biyum",
   alternates: { canonical: "/" },
   icons: {
-    icon: "/favicon.svg",
-    apple: "/favicon.svg",
+    icon: [
+      { url: "/favicon.ico", sizes: "32x32" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+    apple: "/apple-touch-icon.png",
+    shortcut: "/favicon.ico",
   },
   openGraph: {
     title: "Biyum | Agencia de Diseño, Fotografía y Video en Riobamba",
