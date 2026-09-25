@@ -54,30 +54,17 @@ function KineticTitle({ text, reduce = false }: { text: string; reduce?: boolean
     return <span className="inline-block">{text}</span>;
   }
   
-  const words = text.split(" ");
   return (
-    <span className="inline-block" aria-label={text}>
-      {words.map((word, wi) => (
-        <span key={wi} className="inline-block whitespace-nowrap">
-          {word.split("").map((char, ci) => (
-            <span
-              key={ci}
-              className="inline-block overflow-hidden align-bottom pb-[0.5em] mb-[-0.5em]"
-              style={{
-                animation: "kinetic-char 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards",
-                animationDelay: `${0.15 + (wi * 4 + ci) * 0.035}s`,
-              } as React.CSSProperties}
-            >
-              {char}
-            </span>
-          ))}
-          {wi < words.length - 1 && <span className="inline-block">&nbsp;</span>}
-        </span>
-      ))}
+    <span className="inline-block" aria-label={text} style={{ animation: "title-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards" }}>
+      {text}
       <style jsx>{`
-        @keyframes kinetic-char {
-          from { transform: translateY(110%); }
-          to { transform: translateY(0); }
+        @keyframes title-reveal {
+          from { opacity: 0; transform: translateY(12px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes scale-x {
+          from { transform: scaleX(0); }
+          to { transform: scaleX(1); }
         }
       `}</style>
     </span>
@@ -138,10 +125,10 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
       <AnimatePresence mode="wait">
         <motion.div
           key={current}
-          initial={{ opacity: 0, scale: 1.08 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="absolute inset-0"
           style={{ y: parallaxY }}
         >
@@ -194,12 +181,12 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
 
       <div className="relative h-full flex items-center px-4 sm:px-6 md:px-16 max-w-[1400px] mx-auto">
         <AnimatePresence mode="wait">
-          <motion.div
+<motion.div
             key={`c-${current}`}
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className={`w-full relative ${current % 3 === 0 ? "flex justify-center" : current % 3 === 1 ? "flex justify-center sm:justify-start" : "flex justify-center sm:justify-end"}`}
           >
             <div className={`relative flex items-center ${
@@ -215,19 +202,17 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
                   <span className="w-6 h-px bg-gold/20" />
                   <span>Galería de Diseño</span>
                 </p>
-                <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold text-gold tracking-[-0.04em] leading-[1] pb-[0.12em] mb-[-0.12em]">
+                <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold text-gold tracking-[-0.04em] leading-[1] pb-[0.12em] mb-[0.12em]">
                   <KineticTitle text={s?.title || ""} reduce={reduce} />
                 </h1>
-                <motion.span
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  transition={{ duration: 0.9, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                <span
                   className={`block h-[2px] w-16 md:w-24 mt-4 md:mt-6 bg-gradient-to-r from-gold to-gold/0 origin-left ${current % 3 === 0 ? "mx-auto" : "mx-auto sm:mx-0"}`}
+                  style={{ animation: "scale-x 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards", animationDelay: "0.4s" }}
                 />
                 <motion.p
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.7 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.4 }}
                   className={`text-secondary text-base sm:text-lg md:text-xl mt-3 md:mt-5 max-w-lg leading-relaxed ${current % 3 === 0 ? "mx-auto" : "mx-auto sm:mx-0"}`}
                 >
                   {s?.subtitle
@@ -246,9 +231,9 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
                 </motion.p>
               </div>
                <motion.div
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.85 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
                 className={`flex flex-col sm:flex-row gap-3 md:gap-4 mt-6 md:mt-8 ${current % 3 === 0 ? "justify-center" : "justify-center shrink-0 sm:justify-start sm:mt-0"}`}
               >
                 {(s?.is_video || s?.image_url?.includes('youtube.com')) ? (
