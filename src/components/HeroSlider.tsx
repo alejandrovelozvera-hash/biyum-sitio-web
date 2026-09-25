@@ -38,15 +38,6 @@ const fallback: Slide[] = [
   },
 ];
 
-const services = [
-  "Fotografía Publicitaria",
-  "Fotografía Gastronómica",
-  "Producción de Video",
-  "Branding",
-  "Social Media",
-  "Diseño Web",
-];
-
 const TITLE_DURATION = 10;
 
 function KineticTitle({ text, reduce = false }: { text: string; reduce?: boolean }) {
@@ -304,28 +295,6 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
             </div>
           </motion.div>
         </AnimatePresence>
-      </div>
-
-      {/* Marquee services strip */}
-      <div className="absolute bottom-24 md:bottom-28 left-0 right-0 overflow-hidden pointer-events-none">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.2 }}
-          className="flex whitespace-nowrap"
-          style={{ animation: "marquee 24s linear infinite" }}
-        >
-          {[0, 1].map((dup) => (
-            <div key={dup} className="flex shrink-0 items-center">
-              {services.map((label) => (
-                <span key={`${dup}-${label}`} className="flex items-center">
-                  <span className="text-gold-dark/60 text-[11px] md:text-xs uppercase tracking-[0.3em]">{label}</span>
-                  <span className="mx-6 md:mx-10 text-gold/40">*</span>
-                </span>
-              ))}
-            </div>
-          ))}
-        </motion.div>
       </div>
 
       {slides.length > 1 && (
