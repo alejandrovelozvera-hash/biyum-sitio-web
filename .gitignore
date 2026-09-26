@@ -30,14 +30,13 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (NUNCA commitear estos archivos)
+# env files (NUNCA commitear estos archivos con secretos reales)
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
-*.env
-*.env.*
+# .env.example SÍ se commitea (plantilla sin valores reales)
 
 # credentials & secrets
 *.pem
