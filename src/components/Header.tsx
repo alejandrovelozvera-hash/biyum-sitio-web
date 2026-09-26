@@ -24,6 +24,7 @@ const navLinks: Array<{ href: string; label: string; children?: Array<{ href: st
     label: "Portafolio",
     children: [
       { href: "/#portafolio", label: "Diseño y Logos" },
+      { href: "/web", label: "Diseño Web" },
       { href: "/#video", label: "Videos" },
       { href: "/#gastronomica", label: "Foto Gastronómica" },
       { href: "/#servicios", label: "Ver Más Servicios" },
@@ -73,13 +74,13 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 overflow-visible ${
         scrolled
           ? "glass shadow-xl shadow-indigo-900/10"
           : "bg-gradient-to-b from-surface/70 via-surface/30 to-transparent"
       }`}
     >
-      <div className="max-w-[1400px] mx-auto px-6 md:px-8 h-16 md:h-20 flex items-center justify-between">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-8 h-16 md:h-20 flex items-center justify-between overflow-visible">
         <Link href="/" className="flex items-center">
           <img src="/logo.svg" alt="Biyum" className="logo-theme h-7 md:h-9 w-auto" />
         </Link>
@@ -101,7 +102,7 @@ export default function Header() {
                   {link.label}
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="opacity-60 group-hover:opacity-100 transition-opacity"><path d="M6 9l6 6 6-6" /></svg>
                 </Link>
-                <div className="absolute left-1/2 -translate-x-1/2 top-full pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                <div className="absolute left-1/2 -translate-x-1/2 top-full pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[60]">
                   <div className="bg-surface rounded-2xl ring-1 ring-gold/10 shadow-xl shadow-black/10 p-2 min-w-[200px]">
                     {link.children.map((c) => (
                       <Link
