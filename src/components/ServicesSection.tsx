@@ -202,9 +202,9 @@ function ServiceCard({ s, i, onBranding }: { s: (typeof services)[number]; i: nu
       className={`bg-surface-elevated rounded-2xl p-7 md:p-8 group relative overflow-hidden ring-1 ring-border shadow-sm hover:shadow-md transition-all duration-300 flex flex-col ${s.size === "large" ? "md:min-h-[340px]" : "md:min-h-[320px]"}`}
     >
       <span className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-border to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      <div className="absolute -left-16 top-1/3 w-64 h-64 rounded-full bg-foreground/[0.03] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" aria-hidden />
-      <div className="absolute -right-6 -bottom-8 text-[160px] text-foreground/[0.03] transition-colors duration-500 group-hover:text-foreground/[0.06]" aria-hidden>
-        <ServiceVisual kind={s.kind} size={160} />
+      <div className="absolute left-0 top-1/3 w-48 h-48 rounded-full bg-foreground/[0.03] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" aria-hidden />
+      <div className="absolute right-0 bottom-0 text-[120px] text-foreground/[0.02] transition-colors duration-500 group-hover:text-foreground/[0.04]" aria-hidden style={{ transform: "translate(25%, 25%)" }}>
+        <ServiceVisual kind={s.kind} size={120} />
       </div>
       <div className="relative flex flex-col flex-1">
         <div className="flex items-start gap-3 mb-4">
