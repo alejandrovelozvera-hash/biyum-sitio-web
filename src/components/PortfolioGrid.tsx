@@ -114,7 +114,7 @@ export default function PortfolioGrid({ projects }: { projects: Project[] }) {
   const reduce = useReducedMotion();
   const [selected, setSelected] = useState<Project | null>(null);
   const [filter, setFilter] = useState<string | null>(null);
-  const [visibleCount, setVisibleCount] = useState(() => typeof window !== "undefined" && window.innerWidth < 768 ? 6 : 8);
+  const [visibleCount, setVisibleCount] = useState(() => typeof window !== "undefined" && window.innerWidth < 768 ? 6 : 12);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
