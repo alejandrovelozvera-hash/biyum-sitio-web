@@ -10,6 +10,7 @@ const categoryLabels: Record<string, string> = {
   branding: "Branding",
   video: "Video",
   "social-media": "Social Media",
+  "web-design": "Diseño Web",
 };
 
 function SkeletonLoader() {
@@ -113,6 +114,15 @@ export default function PortfolioGrid({ projects }: { projects: Project[] }) {
   const reduce = useReducedMotion();
   const [selected, setSelected] = useState<Project | null>(null);
   const [filter, setFilter] = useState<string | null>(null);
+  const [visibleCount, setVisibleCount] = useState(4);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const categories = useMemo(() => {
     const cats = new Set(projects.map((p) => p.category));
@@ -125,6 +135,10 @@ export default function PortfolioGrid({ projects }: { projects: Project[] }) {
       (a, b) => Number(b.featured) - Number(a.featured)
     );
   }, [projects, filter]);
+
+  const visibleProjects = filtered.slice(0, visibleCount);
+  const hasMore = visibleCount < filtered.length;
+  const loadMore = () => setVisibleCount((prev) => Math.min(prev + 4, filtered.length));
 
   if (projects.length === 0) return null;
 
@@ -180,7 +194,7 @@ export default function PortfolioGrid({ projects }: { projects: Project[] }) {
 
       <AnimatePresence mode="popLayout">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5">
-          {filtered.map((project, i) => (
+          {visibleProjects.map((project, i) => (
             <TiltCard
               key={project.id}
               project={project}
@@ -191,6 +205,26 @@ export default function PortfolioGrid({ projects }: { projects: Project[] }) {
           ))}
         </div>
       </AnimatePresence>
+
+      {hasMore && (
+        <div className="text-center mt-10 md:mt-12">
+          <motion.button
+            onClick={loadMore}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="inline-flex items-center gap-2 text-sm font-medium text-gold hover:text-gold-light border border-gold/30 hover:border-gold/50 rounded-full px-8 py-3 transition-all hover:scale-[1.02] active:scale-[0.98]"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            Ver más proyectos
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="transition-transform group-hover:translate-x-1">
+              <path d="M12 5v14M19 12l-7 7-7-7" />
+            </svg>
+            <span className="opacity-60">({visibleProjects.length} de {filtered.length})</span>
+          </motion.button>
+        </div>
+      )}
 
       <AnimatePresence>
         {selected && (
