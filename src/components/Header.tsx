@@ -174,7 +174,7 @@ export default function Header() {
       </div>
 
       <motion.div
-        className="absolute bottom-0 left-0 right-0 h-[2px] bg-gold/10 pointer-events-none"
+        className="absolute bottom-0 left-0 right-0 h-[2px] bg-gold/10 pointer-events-none hidden md:block"
         aria-hidden="true"
       >
         <motion.div

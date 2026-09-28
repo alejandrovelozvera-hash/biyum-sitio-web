@@ -73,7 +73,7 @@ export default function GastronomicSection() {
           <div className="flex items-center gap-3 shrink-0">
             <div className="hidden md:flex gap-1.5 mr-2">
               {pages.map((_, i) => (
-                <button key={i} onClick={() => setCurrent(i)} aria-label={`Ir ${i + 1}`} className={`h-1 rounded-full transition-all ${i === current ? "w-5 bg-foreground" : "w-1 bg-border hover:bg-muted"}`} />
+                <button key={i} onClick={() => setCurrent(i)} aria-label={`Ir ${i + 1}`} className={`h-2 rounded-full transition-all ${i === current ? "w-5 bg-foreground" : "w-1 bg-border hover:bg-muted"}`} />
               ))}
             </div>
             <button onClick={prev} aria-label="Anterior" className="w-8 h-8 rounded-full bg-surface border border-border flex items-center justify-center text-muted hover:text-foreground hover:border-foreground/20 transition-colors"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M15 18l-6-6 6-6" /></svg></button>
@@ -94,7 +94,7 @@ export default function GastronomicSection() {
         </div>
         <div className="md:hidden flex gap-1.5 justify-center mt-4">
           {pages.map((_, i) => (
-            <button key={i} onClick={() => setCurrent(i)} className={`h-1 rounded-full transition-all ${i === current ? "w-5 bg-foreground" : "w-1 bg-border"}`} />
+            <button key={i} onClick={() => setCurrent(i)} className={`h-2 rounded-full transition-all ${i === current ? "w-5 bg-foreground" : "w-1 bg-border"}`} />
           ))}
         </div>
 

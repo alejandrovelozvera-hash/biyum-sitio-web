@@ -124,10 +124,10 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
           style={{ y: parallaxY }}
         >
           {vid ? (
-            <div className="absolute inset-0 overflow-hidden bg-black">
+            <div className="absolute inset-0 overflow-hidden bg-black aspect-video md:aspect-auto md:h-full">
               <iframe
                 src={`https://www.youtube.com/embed/${vid}?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&playlist=${vid}&iv_load_policy=3&disablekb=1&fs=0&start=${vStart}`}
-                className="absolute top-1/2 left-1/2 w-[177.77vh] h-[56.25vw] min-w-full min-h-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+                className="absolute inset-0 w-full h-full pointer-events-none"
                 allow="autoplay; encrypted-media"
                 title={s.title}
               />
