@@ -62,11 +62,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es" className={GeistSans.variable} suppressHydrationWarning>
+    <html lang="es" className={`${GeistSans.variable} dark`} suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem("biyum-theme");var d=t?t==="dark":true;if(d)document.documentElement.classList.add("dark")}catch(e){}})();`,
+            __html: `(function(){try{var t=localStorage.getItem("biyum-theme");var d=t?t==="dark":true;if(d)document.documentElement.classList.add("dark");else document.documentElement.classList.remove("dark")}catch(e){}})();`,
           }}
         />
       </head>
