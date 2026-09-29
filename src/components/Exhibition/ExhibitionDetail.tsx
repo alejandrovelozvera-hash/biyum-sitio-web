@@ -18,8 +18,6 @@ export default function ExhibitionDetail({ project, onClose }: Props) {
     ...project.images.map((i) => ({ url: i.url, alt: i.alt })),
   ];
 
-  if (slides.length === 0) return null;
-
   const prev = () => setActive((a) => (a - 1 + slides.length) % slides.length);
   const next = () => setActive((a) => (a + 1) % slides.length);
 
@@ -36,6 +34,8 @@ export default function ExhibitionDetail({ project, onClose }: Props) {
       window.removeEventListener("keydown", onKey);
     };
   }, [onClose, slides.length]);
+
+  if (slides.length === 0) return null;
 
   const mainImage = slides[active]?.url;
 

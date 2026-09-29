@@ -1,9 +1,15 @@
 import type { Metadata } from "next";
-import { GeistSans } from "geist/font/sans";
+import { Geist } from "next/font/google";
 import "./globals.css";
 import ScrollProgress from "@/components/ScrollProgress";
 import AiChatWidget from "@/components/AiChatWidget";
 import ErrorBoundary from "@/components/ErrorBoundary";
+
+const geistSans = Geist({
+  subsets: ["latin"],
+  variable: "--font-geist-sans",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://biyum.agency"),
@@ -72,7 +78,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es" className={`${GeistSans.variable} dark`} suppressHydrationWarning style={{colorScheme: 'dark'}}>
+    <html lang="es" className={`${geistSans.variable} dark`} suppressHydrationWarning style={{colorScheme: 'dark'}}>
       <head>
         <script
           dangerouslySetInnerHTML={{

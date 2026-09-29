@@ -40,7 +40,7 @@ export default function AiChatWidget() {
   // Hide hint when chat opens
   useEffect(() => {
     if (open) setShowHint(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/set-state-in-effect
   }, [open]);
 
   const send = useCallback(async (text = input) => {

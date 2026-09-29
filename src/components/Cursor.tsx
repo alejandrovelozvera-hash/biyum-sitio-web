@@ -24,7 +24,7 @@ export default function Cursor() {
     }
     setVisible(true);
     document.body.style.cursor = "none";
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/set-state-in-effect
 
     const move = (e: MouseEvent) => {
       mouseX.set(e.clientX);
@@ -48,7 +48,7 @@ export default function Cursor() {
       window.removeEventListener("mousemove", move);
       window.removeEventListener("mouseover", over);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/set-state-in-effect
   }, []);
 
   if (!visible) return null;

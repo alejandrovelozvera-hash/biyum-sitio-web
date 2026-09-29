@@ -14,7 +14,7 @@ export default function AdminMediaPage() {
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [copied, setCopied] = useState<string | null>(null);
   const [msg, setMsg] = useState("");
-  const loadRef = useRef<() => Promise<void>>(null);
+  const loadRef = useRef<() => Promise<void> | null>(null);
 
   const load = useCallback(async () => {
     setLoading(true);
