@@ -62,16 +62,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es" className={`${GeistSans.variable} dark`} suppressHydrationWarning>
+    <html lang="es" className={`${GeistSans.variable} dark`} suppressHydrationWarning style={{colorScheme: 'dark'}}>
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem("biyum-theme");var d=t?t==="dark":true;document.documentElement.classList.toggle("dark",d)}catch(e){}})();`,
+            __html: `(function(){try{var t=localStorage.getItem("biyum-theme");var d=t?t==="dark":true;document.documentElement.classList.toggle("dark",d);document.documentElement.style.colorScheme="dark"}catch(e){}})();`,
           }}
         />
-        <style dangerouslySetInnerHTML={{__html: `:root{color-scheme:dark}.dark{color-scheme:dark}`}} />
+        <style dangerouslySetInnerHTML={{__html: `
+          :root{color-scheme:dark}
+          .dark{color-scheme:dark}
+          html,body{background-color:#1C1463!important;color:#D3D3D3!important}
+        `}} />
       </head>
-      <body className="min-h-screen bg-background text-foreground">
+      <body className="min-h-screen bg-background text-foreground" style={{backgroundColor:'#1C1463',color:'#D3D3D3'}}>
         <ScrollProgress />
         <div className="grain-overlay" />
         <ErrorBoundary>{children}</ErrorBoundary>
