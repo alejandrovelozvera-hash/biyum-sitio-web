@@ -52,12 +52,8 @@ export default function Header() {
 
   useEffect(() => {
     document.documentElement.classList.add("dark");
+    document.documentElement.style.colorScheme = "dark";
     setDark(true);
-    const stored = localStorage.getItem("biyum-theme");
-    if (stored === "light") {
-      document.documentElement.classList.remove("dark");
-      setDark(false);
-    }
   }, []);
 
   const toggleTheme = () => {
