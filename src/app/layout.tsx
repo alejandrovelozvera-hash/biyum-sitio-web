@@ -36,7 +36,12 @@ export const metadata: Metadata = {
     ],
     apple: "/apple-touch-icon.png",
     shortcut: "/favicon.ico",
+    other: [
+      { rel: "icon", type: "image/png", sizes: "192x192", url: "/android-chrome-192x192.png" },
+      { rel: "icon", type: "image/png", sizes: "512x512", url: "/android-chrome-512x512.png" },
+    ],
   },
+  manifest: "/site.webmanifest",
   openGraph: {
     title: "Biyum | Agencia de Diseño, Fotografía y Video en Riobamba",
     description:
@@ -45,15 +50,21 @@ export const metadata: Metadata = {
     siteName: "Biyum",
     locale: "es_EC",
     type: "website",
-    images: [{ url: "https://wp.biyum.agency/wp-content/uploads/2023/06/DSC01381-2-scaled.jpg", width: 1200, height: 630, alt: "Biyum — Agencia de Diseño y Video" }],
+    images: [
+      { url: "https://biyum.agency/logo.svg", width: 1200, height: 630, alt: "Biyum — Agencia de Diseño y Video" },
+      { url: "https://wp.biyum.agency/wp-content/uploads/2023/06/DSC01381-2-scaled.jpg", width: 1200, height: 630, alt: "Biyum — Agencia de Diseño y Video" },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Biyum | Agencia de Diseño & Publicidad",
     description: "Fotografía, video, branding y publicidad para tu marca.",
-    images: ["https://wp.biyum.agency/wp-content/uploads/2023/06/DSC01381-2-scaled.jpg"],
+    images: ["https://biyum.agency/logo.svg"],
   },
   robots: { index: true, follow: true },
+  other: {
+    "theme-color": "#1C1463",
+  },
 };
 
 export default function RootLayout({
@@ -66,16 +77,16 @@ export default function RootLayout({
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem("biyum-theme");var d=t?t==="dark":true;document.documentElement.classList.toggle("dark",d);document.documentElement.style.colorScheme="dark"}catch(e){}})();`,
+            __html: `(function(){try{document.documentElement.classList.add("dark");document.documentElement.style.colorScheme="dark"}catch(e){}})();`,
           }}
         />
         <style dangerouslySetInnerHTML={{__html: `
-          :root{color-scheme:dark}
-          .dark{color-scheme:dark}
           html,body{background-color:#1C1463!important;color:#D3D3D3!important}
+          :root{color-scheme:dark}
+          *{color-scheme:dark}
         `}} />
       </head>
-      <body className="min-h-screen bg-background text-foreground" style={{backgroundColor:'#1C1463',color:'#D3D3D3'}}>
+      <body className="min-h-screen bg-background text-foreground" style={{backgroundColor:'#1C1463',color:'#D3D3D3',colorScheme:'dark'}}>
         <ScrollProgress />
         <div className="grain-overlay" />
         <ErrorBoundary>{children}</ErrorBoundary>

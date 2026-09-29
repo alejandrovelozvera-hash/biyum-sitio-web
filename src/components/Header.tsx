@@ -38,12 +38,7 @@ const navLinks: Array<{ href: string; label: string; children?: Array<{ href: st
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [dark, setDark] = useState(() => {
-    if (typeof window !== "undefined") {
-      return document.documentElement.classList.contains("dark");
-    }
-    return true;
-  });
+  const [dark, setDark] = useState(true);
   const [mobileDropdown, setMobileDropdown] = useState<string | null>(null);
   
   const { scrollYProgress } = useScroll();
@@ -53,6 +48,16 @@ export default function Header() {
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.classList.add("dark");
+    setDark(true);
+    const stored = localStorage.getItem("biyum-theme");
+    if (stored === "light") {
+      document.documentElement.classList.remove("dark");
+      setDark(false);
+    }
   }, []);
 
   const toggleTheme = () => {
