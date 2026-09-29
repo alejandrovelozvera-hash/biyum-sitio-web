@@ -1,0 +1,45 @@
+{
+  "name": "Biyum | Agencia de Diseño, Fotografía y Video",
+  "short_name": "Biyum",
+  "description": "Agencia creativa en Riobamba — fotografía publicitaria y gastronómica, producción de video, branding, social media y diseño web.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1C1463",
+  "theme_color": "#1C1463",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "32x32",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "32x32",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "apple touch icon"
+    },
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["design", "photography", "video", "business"],
+  "lang": "es",
+  "dir": "ltr"
+}
