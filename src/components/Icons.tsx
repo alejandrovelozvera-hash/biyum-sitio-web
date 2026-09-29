@@ -1,9 +1,9 @@
-import { SVGProps } from "react";
+import { SVGProps, FC } from "react";
 
 type IconProps = SVGProps<SVGSVGElement> & { size?: number };
 
-const s = (d: string, size = 20) =>
-  ({ size: sz = size, className, ...rest }: IconProps) => (
+const s = (d: string, size = 20): FC<IconProps> =>
+  ({ size: sz = size, className, ...rest }) => (
     <svg width={sz} height={sz} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className} {...rest}>
       <path d={d} />
     </svg>
@@ -18,7 +18,7 @@ export const ChevronDown = s("M6 9l6 6 6-6");
 export const ArrowLeft = s("M19 12H5m7-7l-7 7 7 7");
 export const Plus = s("M12 5v14m-7-7h14");
 export const Upload = s("M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4m5-6l5-5 5 5m-5-5v12");
-export const Copy = s("M9 9h11a2 2 0 012 2v9a2 2 0 01-2 2H9a2 2 0 01-2-2v-9a2 2 0 012-2zM5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1");
+export const Copy = s("M9 9h11a2 2 0 012 2v9a2 2 0 01-2 2H9a2 2 0 01-2-2v-9a2 2 0 01-2-2v-9a2 2 0 012-2zM5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1");
 export const Trash = s("M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2");
 export const Trash2 = s("M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6");
 export const Pencil = s("M17 3a2.85 2.85 0 114 4L7.5 20.5 2 22l1.5-5.5L17 3z");
@@ -127,4 +127,8 @@ export const Play = ({ size = 20, className, ...rest }: IconProps) => (
   </svg>
 );
 
-export const Whatsapp = s("M22 16.9v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.68A2 2 0 014.11 2h3a2 2 0 012 1.72c.13 1 .43 2 .88 2.88a2 2 0 01-.56 2.17l-1.27 1.27a16 16 0 006 6l1.27-1.27a2 2 0 012.19-.56c.88.45 1.87.75 2.88.88a2 2 0 011.72 2.04z");
+export const Whatsapp = ({ size = 20, className, ...rest }: IconProps) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className} {...rest}>
+    <path d="M22 16.9v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.68A2 2 0 014.11 2h3a2 2 0 012 1.72c.13 1 .43 2 .88 2.88a2 2 0 01-.56 2.17l-1.27 1.27a16 16 0 006 6l1.27-1.27a2 2 0 012.19-.56c.88.45 1.87.75 2.88.88a2 2 0 011.72 2.04z" />
+  </svg>
+);
