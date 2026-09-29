@@ -66,9 +66,10 @@ export default function RootLayout({
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem("biyum-theme");var d=t?t==="dark":true;if(d)document.documentElement.classList.add("dark");else document.documentElement.classList.remove("dark")}catch(e){}})();`,
+            __html: `(function(){try{var t=localStorage.getItem("biyum-theme");var d=t?t==="dark":true;document.documentElement.classList.toggle("dark",d)}catch(e){}})();`,
           }}
         />
+        <style dangerouslySetInnerHTML={{__html: `:root{color-scheme:dark}.dark{color-scheme:dark}`}} />
       </head>
       <body className="min-h-screen bg-background text-foreground">
         <ScrollProgress />
