@@ -12,6 +12,13 @@ interface Props {
 export default function ProjectDetail({ project, onClose }: Props) {
   const [imageIndex, setImageIndex] = useState(0);
 
+  const allImages = [
+    ...(project.cover_image_url ? [{ url: project.cover_image_url, alt: project.title }] : []),
+    ...project.images.map((img) => ({ url: img.url, alt: img.alt })),
+  ];
+
+  const currentImage = allImages[imageIndex];
+
   useEffect(() => {
     document.body.style.overflow = "hidden";
     const onKey = (e: KeyboardEvent) => {
@@ -24,14 +31,7 @@ export default function ProjectDetail({ project, onClose }: Props) {
       document.body.style.overflow = "";
       window.removeEventListener("keydown", onKey);
     };
-  }, [onClose]);
-
-  const allImages = [
-    ...(project.cover_image_url ? [{ url: project.cover_image_url, alt: project.title }] : []),
-    ...project.images.map((img) => ({ url: img.url, alt: img.alt })),
-  ];
-
-  const currentImage = allImages[imageIndex];
+  }, [onClose, allImages.length]);
 
   return (
     <div

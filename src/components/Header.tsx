@@ -38,7 +38,12 @@ const navLinks: Array<{ href: string; label: string; children?: Array<{ href: st
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = useState(() => {
+    if (typeof window !== "undefined") {
+      return document.documentElement.classList.contains("dark");
+    }
+    return true;
+  });
   const [mobileDropdown, setMobileDropdown] = useState<string | null>(null);
   
   const { scrollYProgress } = useScroll();
@@ -48,10 +53,6 @@ export default function Header() {
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  useEffect(() => {
-    setDark(document.documentElement.classList.contains("dark"));
   }, []);
 
   const toggleTheme = () => {

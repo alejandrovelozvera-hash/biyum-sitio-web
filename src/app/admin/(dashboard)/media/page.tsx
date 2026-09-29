@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Search, Trash2, Spinner, Copy } from "@/components/Icons";
 import { WpMediaItem } from "@/types";
 
@@ -15,9 +15,7 @@ export default function AdminMediaPage() {
   const [copied, setCopied] = useState<string | null>(null);
   const [msg, setMsg] = useState("");
 
-  useEffect(() => { load(); }, [page, search]);
-
-  async function load() {
+  const load = useCallback(async () => {
     setLoading(true);
     try {
       const params = new URLSearchParams({ page: String(page) });
@@ -28,7 +26,10 @@ export default function AdminMediaPage() {
       setTotal(data.total || 0);
     } catch { setImages([]); }
     setLoading(false);
-  }
+  }, [page, search]);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => { load(); }, [load]);
 
   function toggleSelect(id: string | number) {
     const sid = String(id);

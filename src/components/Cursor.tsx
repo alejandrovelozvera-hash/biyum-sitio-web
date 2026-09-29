@@ -4,7 +4,12 @@ import { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring } from "motion/react";
 
 export default function Cursor() {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(() => {
+    if (typeof window !== "undefined") {
+      return window.matchMedia("(pointer:fine)").matches;
+    }
+    return false;
+  });
   const [hovering, setHovering] = useState(false);
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
@@ -13,9 +18,13 @@ export default function Cursor() {
 
   useEffect(() => {
     const isFine = window.matchMedia("(pointer:fine)").matches;
-    if (!isFine) return;
+    if (!isFine) {
+      setVisible(false);
+      return;
+    }
     setVisible(true);
     document.body.style.cursor = "none";
+    // eslint-disable-next-line react-hooks/exhaustive-deps
 
     const move = (e: MouseEvent) => {
       mouseX.set(e.clientX);
@@ -39,6 +48,7 @@ export default function Cursor() {
       window.removeEventListener("mousemove", move);
       window.removeEventListener("mouseover", over);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!visible) return null;

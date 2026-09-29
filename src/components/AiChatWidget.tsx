@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { Chat } from "./Icons";
 
 type Msg = { role: "user" | "assistant"; content: string };
@@ -16,27 +16,39 @@ export default function AiChatWidget() {
   const [isHovering, setIsHovering] = useState(false);
   const [quickReplies, setQuickReplies] = useState<string[]>([]);
   const listRef = useRef<HTMLDivElement>(null);
-  const sessionId = useRef(Math.random().toString(36).slice(2, 8));
+  const sessionId = useRef<string>("");
   const openAt = useRef<number>(0);
   const lastSendAt = useRef<number>(0);
+  const hintTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // Initialize sessionId once
+  useEffect(() => {
+    sessionId.current = Math.random().toString(36).slice(2, 8);
+  }, []);
+
+  // Scroll to bottom when messages change
   useEffect(() => {
     listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, loading]);
 
+  // Show hint after 2.5s
   useEffect(() => {
-    const t = setTimeout(() => setShowHint(true), 2500);
-    return () => clearTimeout(t);
+    hintTimeout.current = setTimeout(() => setShowHint(true), 2500);
+    return () => { if (hintTimeout.current) clearTimeout(hintTimeout.current); };
   }, []);
+
+  // Hide hint when chat opens
   useEffect(() => {
     if (open) setShowHint(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
-  const send = async (text = input) => {
+  const send = useCallback(async (text = input) => {
     if (!text.trim() || loading) return;
     if (text.length > 1000) return;
-    if (Date.now() - lastSendAt.current < 900) return;
-    lastSendAt.current = Date.now();
+    const now = Date.now();
+    if (now - lastSendAt.current < 900) return;
+    lastSendAt.current = now;
     const userMsg: Msg = { role: "user", content: text };
     setMessages((m) => [...m, userMsg]);
     setInput("");
@@ -94,14 +106,23 @@ export default function AiChatWidget() {
         const j = await r.json();
         setMessages((m) => { const c = [...m]; c[c.length - 1] = { role: "assistant", content: j.answer }; return c; });
         if (j.escalate) setShowWa(true);
-        if (j.quickReplies?.length) setQuickReplies(j.quickReplies);
+        if (j?.quickReplies?.length) setQuickReplies(j.quickReplies);
       }
     } catch {
       setMessages((m) => { const c = [...m]; c[c.length - 1] = { role: "assistant", content: "Hubo un error. Escríbenos por WhatsApp y te ayudamos." }; return c; });
       setShowWa(true);
     }
     setLoading(false);
-  };
+  }, [input, loading, messages, openAt]);
+
+  useEffect(() => {
+    listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: "smooth" });
+  }, [messages, loading]);
+
+  useEffect(() => {
+    const t = setTimeout(() => setShowHint(true), 2500);
+    return () => clearTimeout(t);
+  }, []);
 
   return (
     <>
