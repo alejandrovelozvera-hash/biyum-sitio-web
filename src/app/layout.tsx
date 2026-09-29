@@ -51,15 +51,14 @@ export const metadata: Metadata = {
     locale: "es_EC",
     type: "website",
     images: [
-      { url: "https://biyum.agency/logo.svg", width: 1200, height: 630, alt: "Biyum — Agencia de Diseño y Video" },
-      { url: "https://wp.biyum.agency/wp-content/uploads/2023/06/DSC01381-2-scaled.jpg", width: 1200, height: 630, alt: "Biyum — Agencia de Diseño y Video" },
+      { url: "https://biyum.agency/og-image.png", width: 1200, height: 630, alt: "Biyum — Agencia de Diseño y Video" },
     ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Biyum | Agencia de Diseño & Publicidad",
     description: "Fotografía, video, branding y publicidad para tu marca.",
-    images: ["https://biyum.agency/logo.svg"],
+    images: ["https://biyum.agency/og-image.png"],
   },
   robots: { index: true, follow: true },
   other: {
@@ -99,7 +98,7 @@ export default function RootLayout({
               "@type": "LocalBusiness",
               name: "Biyum",
               url: "https://biyum.agency",
-              image: "https://biyum.agency/logo.svg",
+              image: "https://biyum.agency/og-image.png",
               description:
                 "Agencia de diseño, fotografía, video, branding y publicidad en Riobamba, Ecuador.",
               address: { "@type": "PostalAddress", addressLocality: "Riobamba", addressRegion: "Chimborazo", addressCountry: "EC" },
