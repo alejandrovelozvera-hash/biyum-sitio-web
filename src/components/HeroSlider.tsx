@@ -127,7 +127,7 @@ export default function HeroSlider({ slides = fallback }: { slides?: Slide[] }) 
             <div className="absolute inset-0 overflow-hidden bg-black">
               <iframe
                 src={`https://www.youtube.com/embed/${vid}?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&playlist=${vid}&iv_load_policy=3&disablekb=1&fs=0&start=${vStart}`}
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-full min-h-full w-[177.78vh] h-[56.25vw] pointer-events-none md:w-full md:h-full md:min-w-0 md:min-h-0 md:translate-x-0 md:translate-y-0 md:top-0 md:left-0"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-full min-h-full w-[177.78vh] h-[56.25vw] pointer-events-none"
                 allow="autoplay; encrypted-media"
                 title={s.title}
               />
