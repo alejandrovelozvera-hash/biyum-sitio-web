@@ -29,6 +29,11 @@ const nextConfig: NextConfig = {
         destination: `${wpHost}/wp-includes/:path*`,
         permanent: false,
       },
+      {
+        source: "/index.php/:path*",
+        destination: "/",
+        permanent: true,
+      },
     ];
   },
 };
