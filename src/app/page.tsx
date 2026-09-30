@@ -7,7 +7,6 @@ import VideoSection from "@/components/VideoSection";
 import GastronomicSection from "@/components/GastronomicSection";
 import ServicesSection from "@/components/ServicesSection";
 import Footer from "@/components/Footer";
-import Cursor from "@/components/Cursor";
 import AmbientGlow from "@/components/AmbientGlow";
 import BackToTop from "@/components/BackToTop";
 
@@ -36,7 +35,6 @@ export default async function HomePage() {
     <main className="relative bg-background">
       <AmbientGlow />
       <div className="relative z-10">
-        <Cursor />
         <Header />
         <HeroSlider slides={heroSlides} />
         <Divider />
