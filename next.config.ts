@@ -36,6 +36,14 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      {
+        source: "/friofest/:path*",
+        destination: "https://wp.biyum.agency/wp-content/uploads/concierto/:path*",
+      },
+    ];
+  },
 };
 
 export default nextConfig;
