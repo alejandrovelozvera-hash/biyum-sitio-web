@@ -206,7 +206,7 @@ function ServiceCard({ s, i, onBranding }: { s: (typeof services)[number]; i: nu
       viewport={{ once: true, amount: 0.2 }}
       whileHover={!reduce ? { y: -4 } : undefined}
       transition={{ duration: 0.5, delay: i * 0.06, ease: [0.16, 1, 0.3, 1] }}
-      className={`bg-surface-elevated rounded-2xl p-7 md:p-8 group relative overflow-hidden ring-1 ring-border shadow-sm hover:shadow-md transition-all duration-300 flex flex-col ${s.size === "large" ? "md:min-h-[340px]" : "md:min-h-[320px]"}`}
+      className={`bg-surface-elevated rounded-2xl p-7 md:p-8 group relative overflow-hidden ring-1 ring-border shadow-sm hover:shadow-md transition-[box-shadow] duration-300 flex flex-col ${s.size === "large" ? "md:min-h-[340px]" : "md:min-h-[320px]"}`}
     >
       <span className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-border to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       <div className="absolute left-0 top-1/3 w-48 h-48 rounded-full bg-foreground/[0.03] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none hidden md:block" aria-hidden />
@@ -218,7 +218,7 @@ function ServiceCard({ s, i, onBranding }: { s: (typeof services)[number]; i: nu
           <div className="w-11 h-11 flex items-center justify-center rounded-xl bg-surface ring-1 ring-border text-muted group-hover:text-foreground transition-colors duration-500 shrink-0 mt-0.5">
             <ServiceVisual kind={s.kind} size={20} />
           </div>
-          <div className="flex-1 min-w-0 glass rounded-2xl px-4 py-3 flex flex-col gap-2">
+          <div className="flex-1 min-w-0 glass-plain rounded-2xl px-4 py-3 flex flex-col gap-2">
             <h3 className="text-[16px] md:text-[17px] font-semibold tracking-[-0.01em] text-foreground leading-tight break-words">{s.title}</h3>
             <span className="self-start inline-flex items-baseline gap-1 bg-white ring-1 ring-border px-3.5 py-1 rounded-full shadow-sm">
               {s.price.toLowerCase().startsWith("desde") ? (
@@ -282,7 +282,7 @@ export default function ServicesSection() {
             <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gold tracking-[-0.04em] leading-[0.92]">Servicios</h2>
             <motion.p initial={anim ? { opacity: 0 } : false} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.4 }} className="text-secondary text-sm md:text-base leading-relaxed mt-5 max-w-md">Todo lo que tu marca necesita para destacar: del disparo a la pantalla, de la idea a la identidad.</motion.p>
           </div>
-          <motion.a initial={anim ? { opacity: 0, y: 12 } : false} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.5 }} href={getWhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-on-gold bg-gold hover:bg-gold-light rounded-full px-7 py-3 font-medium transition-all hover:scale-[1.02] active:scale-[0.98] shrink-0">Cotizar proyecto<ChevronRight size={14} className="group-hover:translate-x-0.5 transition-transform duration-300" /></motion.a>
+          <motion.a initial={anim ? { opacity: 0, y: 12 } : false} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.5 }} href={getWhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-on-gold bg-gold hover:bg-gold-light rounded-full px-7 py-3 font-medium transition-[transform,background-color] duration-300 hover:scale-[1.02] active:scale-[0.98] shrink-0">Cotizar proyecto<ChevronRight size={14} className="group-hover:translate-x-0.5 transition-transform duration-300" /></motion.a>
         </motion.div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
           {services.map((s, i) => (

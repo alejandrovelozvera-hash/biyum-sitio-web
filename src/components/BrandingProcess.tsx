@@ -550,7 +550,7 @@ export default function BrandingProcess() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="relative bg-surface-elevated rounded-2xl ring-1 ring-border shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden p-2 md:p-3"
+            className="relative bg-surface-elevated rounded-2xl ring-1 ring-border shadow-sm hover:shadow-md transition-[box-shadow] duration-300 overflow-hidden p-2 md:p-3"
           >
             <div className="relative aspect-[400/280]">
               <LogoDemo phase={display} anim={anim} />

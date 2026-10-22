@@ -38,7 +38,7 @@ function PhotoItem({ src, alt, index }: { src: string; alt: string; index: numbe
         width={800}
         height={800}
         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-        className={`w-full aspect-[4/3] object-cover block group-hover:scale-[1.03] transition-transform duration-700 ${loaded ? "opacity-100" : "opacity-0"} transition-opacity duration-300`}
+        className={`w-full aspect-[4/3] object-cover block group-hover:scale-[1.03] ${loaded ? "opacity-100" : "opacity-0"} transition-[transform,opacity] [transition-duration:700ms,300ms]`}
         onLoad={() => setLoaded(true)}
         onError={() => setError(true)}
       />

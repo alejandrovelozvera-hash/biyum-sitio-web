@@ -74,7 +74,7 @@ function TiltCard({ project, index, reduce, onSelect }: {
               src={project.cover_image_url}
               alt={project.title}
               loading="lazy"
-              className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04] ${!imageLoaded && !imageError ? "opacity-0" : "opacity-100"} transition-opacity duration-300`}
+              className={`w-full h-full object-cover group-hover:scale-[1.04] ${!imageLoaded && !imageError ? "opacity-0" : "opacity-100"} transition-[transform,opacity] [transition-duration:700ms,300ms]`}
             />
           )}
           {imageError && project.cover_image_url && (

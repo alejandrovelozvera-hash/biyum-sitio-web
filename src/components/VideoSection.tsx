@@ -146,7 +146,7 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
             initial={anim ? { opacity: 0 } : false}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.4 }}
-            className="relative overflow-hidden rounded-2xl bg-surface cursor-pointer group ring-1 ring-border shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300"
+            className="relative overflow-hidden rounded-2xl bg-surface cursor-pointer group ring-1 ring-border shadow-sm hover:shadow-md hover:-translate-y-1 transition-[transform,box-shadow] duration-300"
             onClick={() => openVideo(active)}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
