@@ -3,17 +3,24 @@
 import * as React from "react";
 import { useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
-import { Camera, Video, Palette, Megaphone, Code, ChevronRight } from "./Icons";
+import { Camera, Palette, ChevronRight } from "./Icons";
 import BrandingProcess from "./BrandingProcess";
 import { getWhatsAppUrl } from "@/lib/whatsapp";
 
-const Food = ({ size = 20, className, ...rest }: any) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className} {...rest}>
-    <path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3" />
-  </svg>
-);
+type ServiceSize = "small" | "large";
 
-const services = [
+type Service = {
+  kind: string;
+  title: string;
+  desc: string;
+  deliverables: string[];
+  ideal: string;
+  price: string;
+  size: ServiceSize;
+  note?: string;
+};
+
+const services: Service[] = [
   {
     kind: "food",
     title: "Fotografía Gastronómica",
@@ -80,7 +87,7 @@ const services = [
   },
 ];
 
-function CameraVisual({ size, className }: any) {
+function CameraVisual({ size, className }: { size?: number; className?: string }) {
   const reduce = useReducedMotion();
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -91,7 +98,7 @@ function CameraVisual({ size, className }: any) {
   );
 }
 
-function FoodVisual({ size, className }: any) {
+function FoodVisual({ size, className }: { size?: number; className?: string }) {
   const reduce = useReducedMotion();
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -103,7 +110,7 @@ function FoodVisual({ size, className }: any) {
   );
 }
 
-function VideoVisual({ size, className }: any) {
+function VideoVisual({ size, className }: { size?: number; className?: string }) {
   const reduce = useReducedMotion();
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -114,7 +121,7 @@ function VideoVisual({ size, className }: any) {
   );
 }
 
-function BrandingVisual({ size, className }: any) {
+function BrandingVisual({ size, className }: { size?: number; className?: string }) {
   const reduce = useReducedMotion();
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -125,7 +132,7 @@ function BrandingVisual({ size, className }: any) {
   );
 }
 
-function SocialVisual({ size, className }: any) {
+function SocialVisual({ size, className }: { size?: number; className?: string }) {
   const reduce = useReducedMotion();
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -137,7 +144,7 @@ function SocialVisual({ size, className }: any) {
   );
 }
 
-function WebVisual({ size, className }: any) {
+function WebVisual({ size, className }: { size?: number; className?: string }) {
   const reduce = useReducedMotion();
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -147,7 +154,7 @@ function WebVisual({ size, className }: any) {
   );
 }
 
-function DroneVisual({ size, className }: any) {
+function DroneVisual({ size, className }: { size?: number; className?: string }) {
   const reduce = useReducedMotion();
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -234,7 +241,7 @@ function ServiceCard({ s, i, onBranding }: { s: (typeof services)[number]; i: nu
             </li>
           ))}
         </ul>
-        {(s as any).note && <p className="text-[10px] leading-relaxed text-muted bg-surface ring-1 ring-border rounded-lg px-3 py-2 mt-3">{(s as any).note}</p>}
+        {s.note && <p className="text-[10px] leading-relaxed text-muted bg-surface ring-1 ring-border rounded-lg px-3 py-2 mt-3">{s.note}</p>}
         <p className="text-[10px] tracking-[0.14em] uppercase text-muted/60 mt-3">Ideal: {s.ideal}</p>
         <div className="mt-auto pt-5 flex items-center justify-between">
           <span className="text-gold text-[11px] tracking-[0.14em] uppercase inline-flex items-center gap-1.5 opacity-60 group-hover:opacity-100 transition-opacity">
@@ -266,7 +273,7 @@ export default function ServicesSection() {
   return (
     <section id="servicios" className="py-20 md:py-24 bg-section-alt">
       <div className="max-w-[1400px] mx-auto px-6 md:px-16">
-        <motion.div initial={anim ? { clipPath: "inset(0 100% 0 0)" } : false} whileInView={{ clipPath: "inset(0 0% 0 0)" }} viewport={{ once: true }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }} className="mb-14 flex flex-col md:flex-row md:items-end md:justify-between gap-8">
+        <motion.div initial={anim ? { clipPath: "inset(0 100% 0 0)" } : false} whileInView={{ clipPath: "inset(0 0% 0 0)", transitionEnd: { clipPath: "none" } }} viewport={{ once: true }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }} className="mb-14 flex flex-col md:flex-row md:items-end md:justify-between gap-8">
           <div>
             <div className="flex items-center gap-4 mb-3">
               <span className="w-8 h-px bg-gradient-to-r from-border to-transparent" />

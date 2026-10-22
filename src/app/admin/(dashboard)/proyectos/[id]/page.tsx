@@ -8,8 +8,8 @@ async function getData(id: string) {
     getCategories(0),
   ]);
   return {
-    project: project as any,
-    categories: (categories || []) as any[],
+    project,
+    categories: categories || [],
   };
 }
 
@@ -32,7 +32,7 @@ export default async function EditProjectPage({
           {project.title}
         </p>
       </div>
-      <AdminProjectForm project={project} categories={categories as any} />
+      <AdminProjectForm project={project} categories={categories} />
     </div>
   );
 }

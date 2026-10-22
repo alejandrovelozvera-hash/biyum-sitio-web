@@ -528,7 +528,7 @@ export default function BrandingProcess() {
         <div className="mb-14">
           <motion.div
             initial={anim ? { clipPath: "inset(0 100% 0 0)" } : false}
-            whileInView={{ clipPath: "inset(0 0% 0 0)" }}
+            whileInView={{ clipPath: "inset(0 0% 0 0)", transitionEnd: { clipPath: "none" } }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >

@@ -61,7 +61,7 @@ export default function GastronomicSection() {
   return (
     <section id="gastronomica" className="py-20 md:py-24 bg-background">
       <div className="max-w-[1400px] mx-auto px-6 md:px-16">
-        <motion.div initial={anim ? { clipPath: "inset(0 100% 0 0)" } : false} whileInView={{ clipPath: "inset(0 0% 0 0)" }} viewport={{ once: true }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }} className="mb-8 md:mb-10 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+        <motion.div initial={anim ? { clipPath: "inset(0 100% 0 0)" } : false} whileInView={{ clipPath: "inset(0 0% 0 0)", transitionEnd: { clipPath: "none" } }} viewport={{ once: true }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }} className="mb-8 md:mb-10 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <div>
             <div className="flex items-center gap-4 mb-3">
               <span className="w-8 h-px bg-gradient-to-r from-border to-transparent" />

@@ -147,7 +147,7 @@ export default function PortfolioGrid({ projects }: { projects: Project[] }) {
       <div className="px-6 md:px-16 max-w-[1400px] mx-auto mb-12 md:mb-16">
         <motion.div
           initial={reduce ? false : { clipPath: "inset(0 100% 0 0)" }}
-          whileInView={{ clipPath: "inset(0 0% 0 0)" }}
+          whileInView={{ clipPath: "inset(0 0% 0 0)", transitionEnd: { clipPath: "none" } }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >

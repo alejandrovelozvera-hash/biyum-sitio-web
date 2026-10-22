@@ -29,11 +29,12 @@ export default function AdminMediaPage() {
     setLoading(false);
   }, [page, search]);
 
-  loadRef.current = load;
+  useEffect(() => {
+    loadRef.current = load;
+  }, [load]);
 
   useEffect(() => {
     loadRef.current?.();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, search]);
 
   function toggleSelect(id: string | number) {

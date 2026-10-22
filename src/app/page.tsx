@@ -12,7 +12,7 @@ import BackToTop from "@/components/BackToTop";
 
 async function getProjectsData() {
   const projects = await getProjects();
-  return projects && projects.length > 0 ? projects : (demoProjects as any[]);
+  return projects && projects.length > 0 ? projects : demoProjects;
 }
 
 async function getHeroData() {

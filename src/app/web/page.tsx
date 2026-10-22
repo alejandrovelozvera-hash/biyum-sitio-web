@@ -6,12 +6,12 @@ import Footer from "@/components/Footer";
 
 async function getProjectsData() {
   const projects = await getProjects();
-  return projects && projects.length > 0 ? projects : (demoProjects as any[]);
+  return projects && projects.length > 0 ? projects : demoProjects;
 }
 
 export default async function WebProjectsPage() {
   const projects = await getProjectsData();
-  const webProjects = projects.filter((p: any) => p.category === "web-design");
+  const webProjects = projects.filter((p) => p.category === "web-design");
 
   return (
     <main className="bg-background">

@@ -106,7 +106,7 @@ export default function VideoSection({ videos }: { videos: VideoItem[] }) {
       <div className="max-w-[1400px] mx-auto px-6 md:px-16 mb-10 md:mb-14">
         <motion.div
           initial={anim ? { clipPath: "inset(0 100% 0 0)" } : false}
-          whileInView={{ clipPath: "inset(0 0% 0 0)" }}
+          whileInView={{ clipPath: "inset(0 0% 0 0)", transitionEnd: { clipPath: "none" } }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >

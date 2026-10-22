@@ -233,7 +233,7 @@ export default function ImageSelector({ selected, onSelect, maxImages = 50 }: Pr
       <div>
         <div className="flex items-center justify-between mb-3">
           <p className="text-[#9CA3AF] text-xs">WordPress Media</p>
-          <p className="text-[#525252] text-xs">Haz clic en una imagen para añadirla. Pasa el cursor y toca "Link" para copiar su URL.</p>
+          <p className="text-[#525252] text-xs">Haz clic en una imagen para añadirla. Pasa el cursor y toca &quot;Link&quot; para copiar su URL.</p>
         </div>
 
         <div className="mb-4 p-4 border border-white/10 bg-white/[0.02]">

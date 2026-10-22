@@ -13,7 +13,7 @@ export default async function NewProjectPage() {
           Crea un nuevo proyecto para tu portafolio
         </p>
       </div>
-      <AdminProjectForm categories={categories as any} />
+      <AdminProjectForm categories={categories} />
     </div>
   );
 }

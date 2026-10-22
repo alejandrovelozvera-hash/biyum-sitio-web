@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Project, Category, WpMediaItem } from "@/types";
+import { Project, ProjectImage, Category, WpMediaItem } from "@/types";
 import { Save, ArrowLeft, Plus, X } from "../Icons";
 import ImageSelector from "./ImageSelector";
 import Link from "next/link";
@@ -38,7 +38,7 @@ export default function AdminProjectForm({ project, categories }: Props) {
     ...(project?.cover_image_url
       ? [{ id: project?.cover_image_id || 0, url: project.cover_image_url, thumb: project.cover_image_url, medium: project.cover_image_url, title: project.title, alt: "", width: 0, height: 0, isCover: true } as WpMediaItem & { isCover?: boolean }]
       : []),
-    ...(project?.images?.map((img: any) => ({ id: img.id || 0, url: img.url || "", thumb: img.thumb || img.url || "", medium: img.medium || img.url || "", title: img.alt || "", alt: img.alt || "", width: img.width || 0, height: img.height || 0 })) || []),
+    ...(project?.images?.map((img: ProjectImage) => ({ id: img.id || 0, url: img.url || "", thumb: img.thumb || img.url || "", medium: img.url || "", title: img.alt || "", alt: img.alt || "", width: img.width || 0, height: img.height || 0 })) || []),
   ];
 
   const [selectedImages, setSelectedImages] = useState<(WpMediaItem & { isCover?: boolean })[]>(initialImages);

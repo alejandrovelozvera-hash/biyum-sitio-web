@@ -1,15 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { motion, useMotionValue, useSpring } from "motion/react";
 
+const subscribePointerFine = (onStoreChange: () => void) => {
+  const mq = window.matchMedia("(pointer:fine)");
+  mq.addEventListener("change", onStoreChange);
+  return () => mq.removeEventListener("change", onStoreChange);
+};
+const getPointerFineSnapshot = () => window.matchMedia("(pointer:fine)").matches;
+const getPointerFineServerSnapshot = () => false;
+
 export default function Cursor() {
-  const [visible, setVisible] = useState(() => {
-    if (typeof window !== "undefined") {
-      return window.matchMedia("(pointer:fine)").matches;
-    }
-    return false;
-  });
+  const visible = useSyncExternalStore(subscribePointerFine, getPointerFineSnapshot, getPointerFineServerSnapshot);
   const [hovering, setHovering] = useState(false);
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
@@ -17,14 +20,8 @@ export default function Cursor() {
   const springY = useSpring(mouseY, { stiffness: 200, damping: 25 });
 
   useEffect(() => {
-    const isFine = window.matchMedia("(pointer:fine)").matches;
-    if (!isFine) {
-      setVisible(false);
-      return;
-    }
-    setVisible(true);
+    if (!visible) return;
     document.body.style.cursor = "none";
-    // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/set-state-in-effect
 
     const move = (e: MouseEvent) => {
       mouseX.set(e.clientX);
@@ -48,8 +45,7 @@ export default function Cursor() {
       window.removeEventListener("mousemove", move);
       window.removeEventListener("mouseover", over);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/set-state-in-effect
-  }, []);
+  }, [visible, mouseX, mouseY]);
 
   if (!visible) return null;
 

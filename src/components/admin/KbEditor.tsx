@@ -29,8 +29,8 @@ export default function KbEditor() {
       const j = await r.json();
       if (!r.ok) throw new Error(j.error || "Error");
       setMsg(j.warning ? `Guardado ✓ — ${j.warning}` : "Guardado ✓ — la IA ya usa lo nuevo");
-    } catch (e: any) {
-      setMsg(`Error: ${e.message}`);
+    } catch (e) {
+      setMsg(`Error: ${e instanceof Error ? e.message : String(e)}`);
     }
     setSaving(false);
     setTimeout(() => setMsg(""), 4000);

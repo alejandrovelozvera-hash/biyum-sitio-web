@@ -28,14 +28,14 @@ export async function POST(req: Request) {
     fs.mkdirSync(path.dirname(p), { recursive: true });
     fs.writeFileSync(p, content, "utf-8");
     return Response.json({ ok: true });
-  } catch (e: any) {
+  } catch (e) {
     try {
       const tmp = path.join("/tmp", "kb", "biyum.md");
       fs.mkdirSync(path.dirname(tmp), { recursive: true });
       fs.writeFileSync(tmp, content, "utf-8");
       return Response.json({ ok: true, warning: "Guardado en /tmp (efímero en Vercel). Configura persistencia para producción." });
-    } catch (e2: any) {
-      return Response.json({ error: e?.message || "Error al escribir archivo. En Vercel el filesystem es de solo lectura." }, { status: 500 });
+    } catch {
+      return Response.json({ error: e instanceof Error ? e.message : "Error al escribir archivo. En Vercel el filesystem es de solo lectura." }, { status: 500 });
     }
   }
 }

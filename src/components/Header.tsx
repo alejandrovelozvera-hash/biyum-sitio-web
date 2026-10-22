@@ -53,7 +53,6 @@ export default function Header() {
   useEffect(() => {
     document.documentElement.classList.add("dark");
     document.documentElement.style.colorScheme = "dark";
-    setDark(true);
   }, []);
 
   const toggleTheme = () => {

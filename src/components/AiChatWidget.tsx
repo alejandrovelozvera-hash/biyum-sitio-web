@@ -38,11 +38,6 @@ export default function AiChatWidget() {
   }, []);
 
   // Hide hint when chat opens
-  useEffect(() => {
-    if (open) setShowHint(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/set-state-in-effect
-  }, [open]);
-
   const send = useCallback(async (text = input) => {
     if (!text.trim() || loading) return;
     if (text.length > 1000) return;
@@ -137,7 +132,10 @@ export default function AiChatWidget() {
         onClick={() => {
           const n = !open;
           setOpen(n);
-          if (n) openAt.current = Date.now();
+          if (n) {
+            openAt.current = Date.now();
+            setShowHint(false);
+          }
         }}
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}

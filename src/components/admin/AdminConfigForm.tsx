@@ -23,14 +23,14 @@ function slugify(text: string): string {
 
 export default function AdminConfigForm({ initialSlides, initialCategories }: Props) {
   const router = useRouter();
-  const [slides, setSlides] = useState<Slide[]>(initialSlides && initialSlides.length > 0 ? initialSlides : demoHeroSlides as any[]);
+  const [slides, setSlides] = useState<Slide[]>(initialSlides && initialSlides.length > 0 ? initialSlides : demoHeroSlides as Slide[]);
   const [categories, setCategories] = useState<CategoryInput[]>(initialCategories && initialCategories.length > 0
     ? initialCategories.map((c, i) => ({ id: c.id, name: c.name, slug: c.slug, order_index: c.order_index ?? i }))
     : []);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
 
-  function updateSlide(index: number, field: keyof Slide, value: string) {
+  function updateSlide<K extends keyof Slide>(index: number, field: K, value: Slide[K]) {
     setSlides((prev) => prev.map((s, i) => (i === index ? { ...s, [field]: value } : s)));
   }
 
@@ -113,12 +113,12 @@ export default function AdminConfigForm({ initialSlides, initialCategories }: Pr
           <MediaPicker value={slide.image_url} onPick={(url) => updateSlide(index, "image_url", url)} />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <label className="flex items-center gap-2 text-sm text-white cursor-pointer">
-              <input type="checkbox" checked={!!slide.is_video} onChange={(e) => updateSlide(index, "is_video" as any, e.target.checked as any)} className="rounded border-white/20 bg-black/30" />
+              <input type="checkbox" checked={!!slide.is_video} onChange={(e) => updateSlide(index, "is_video", e.target.checked)} className="rounded border-white/20 bg-black/30" />
               Es video
             </label>
             <div>
               <label className="text-[#525252] text-xs block mb-2">YouTube ID (si es video)</label>
-              <input type="text" value={slide.video_id || ""} onChange={(e) => updateSlide(index, "video_id" as any, e.target.value as any)} placeholder="qyjZxlPQSZI" className="w-full bg-black/30 border border-[#1F1F1F] px-4 py-3 text-white text-sm focus:outline-none focus:border-white/20" />
+              <input type="text" value={slide.video_id || ""} onChange={(e) => updateSlide(index, "video_id", e.target.value)} placeholder="qyjZxlPQSZI" className="w-full bg-black/30 border border-[#1F1F1F] px-4 py-3 text-white text-sm focus:outline-none focus:border-white/20" />
             </div>
             <div className="flex items-end">
               <p className="text-[#525252] text-xs">Si es video, se reproduce autoplay muteado. Deja vacío para slide de imagen.</p>

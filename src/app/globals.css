@@ -71,7 +71,7 @@
   ::selection {
     @apply bg-gold/15 text-gold;
   }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; scroll-padding-top: 96px; }
 }
 
 @layer utilities {

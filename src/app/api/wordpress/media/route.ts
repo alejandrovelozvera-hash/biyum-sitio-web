@@ -39,6 +39,22 @@ export async function POST(request: Request) {
   }
 }
 
+interface WpMediaItemRaw {
+  id?: number;
+  source_url?: string;
+  alt_text?: string;
+  title?: { rendered?: string };
+  media_details?: {
+    file?: string;
+    width?: number;
+    height?: number;
+    sizes?: {
+      thumbnail?: { source_url?: string };
+      medium?: { source_url?: string };
+    };
+  };
+}
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const page = searchParams.get("page") || "1";
@@ -58,8 +74,8 @@ export async function GET(request: Request) {
     const totalHeader = res.headers.get("x-wp-total");
     const total = totalHeader ? parseInt(totalHeader) : 0;
 
-    const data = await res.json();
-    const items = data.map((item: any) => {
+    const data: WpMediaItemRaw[] = await res.json();
+    const items = data.map((item) => {
       const url = item.source_url || "";
       const filePath = item.media_details?.file || item.source_url || "";
       const filename = filePath.split("/").pop() || url.split("/").filter(Boolean).pop() || "";
