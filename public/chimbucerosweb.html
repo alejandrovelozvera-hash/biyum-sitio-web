@@ -4,6 +4,48 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Chimbuceros: Time to live — Cortometraje Documental</title>
+<meta name="description" content="Cortometraje documental ecuatoriano en quechua sobre los últimos guardianes de una tradición musical andina. Ganador CineLebu 2026. Sinopsis, trailer, galería y kit de prensa." />
+<meta name="theme-color" content="#080705" />
+<link rel="canonical" href="https://biyum.agency/chimbuceros" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="video.movie" />
+<meta property="og:site_name" content="Biyum Agency" />
+<meta property="og:locale" content="es_EC" />
+<meta property="og:locale:alternate" content="en_US" />
+<meta property="og:url" content="https://biyum.agency/chimbuceros" />
+<meta property="og:title" content="Chimbuceros: Time to live — Cortometraje Documental" />
+<meta property="og:description" content="Cortometraje documental ecuatoriano en quechua sobre los últimos guardianes de una tradición musical andina. Ganador CineLebu 2026. Sinopsis, trailer, galería y kit de prensa." />
+<meta property="og:image" content="https://biyum.agency/wp-content/uploads/2026/05/Foto-Chimbuceros.png" />
+<meta property="og:image:alt" content="Fotograma del cortometraje documental Chimbuceros" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Chimbuceros: Time to live — Cortometraje Documental" />
+<meta name="twitter:description" content="Cortometraje documental ecuatoriano en quechua sobre los últimos guardianes de una tradición musical andina. Ganador CineLebu 2026." />
+<meta name="twitter:image" content="https://biyum.agency/wp-content/uploads/2026/05/Foto-Chimbuceros.png" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Movie",
+  "name": "Chimbuceros",
+  "alternateName": "Chimbuceros: Time to live",
+  "description": "Documental sobre los últimos guardianes de una tradición musical andina en Cacha, territorio ancestral del pueblo Puruhá, Ecuador.",
+  "url": "https://biyum.agency/chimbuceros",
+  "image": "https://biyum.agency/wp-content/uploads/2026/05/Foto-Chimbuceros.png",
+  "trailer": "https://www.youtube.com/watch?v=PlttSPH3AxY",
+  "datePublished": "2026",
+  "duration": "PT9M",
+  "genre": ["Documental"],
+  "inLanguage": "quz",
+  "director": { "@type": "Person", "name": "Jahir Rosales" },
+  "award": "Ganador Pueblos Originarios del Mundo — CineLebu 2026; Selección Oficial Seff Santiago del Estero 2026; Beca Kunturñawi Lab; Selección Oficial Presence Autochtone 2026"
+}
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,700;1,300;1,400&family=DM+Sans:wght@200;300;400;500&family=Libre+Baskerville:ital@0;1&display=swap" rel="stylesheet" />
 <style>
   html, body {
@@ -60,7 +102,7 @@
   }
 
   /* ── NAV ── */
-  nav {
+  #navbar {
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 100;
@@ -70,7 +112,7 @@
     padding: 1.8rem 4rem;
     transition: all 0.5s cubic-bezier(0.4,0,0.2,1);
   }
-  nav.scrolled {
+  #navbar.scrolled {
     background: rgba(8,7,5,0.96);
     padding: 1.2rem 4rem;
     border-bottom: 1px solid var(--line);
@@ -956,20 +998,76 @@
   /* ── FOOTER ── */
   footer {
     background: var(--dark-2);
-    padding: 4rem;
+    padding: 4.5rem 4rem 2.5rem;
+    border-top: 1px solid var(--line);
+  }
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .footer-brand { max-width: 340px; }
+  .footer-logo-img {
+    display: block;
+    max-height: 30px;
+    width: auto;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.75;
+    margin-bottom: 1.1rem;
+  }
+  .footer-tagline {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin-bottom: 1.2rem;
+    font-weight: 300;
+  }
+  .footer-kit {
+    display: inline-block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold) !important;
+    text-decoration: none;
+    border: 1px solid rgba(184,146,46,0.35);
+    padding: 0.65rem 1.3rem;
+    border-radius: 6px;
+    transition: background 0.3s, color 0.3s;
+  }
+  .footer-kit:hover { background: rgba(184,146,46,0.1); }
+  .footer-heading {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+    font-weight: 400;
+  }
+  .footer-nav, .footer-contact { display: flex; flex-direction: column; gap: 0.65rem; }
+  .footer-nav a, .footer-contact a {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem;
+    color: var(--text-mid);
+    text-decoration: none;
+    transition: color 0.3s;
+    font-weight: 300;
+  }
+  .footer-nav a:hover, .footer-contact a:hover { color: var(--cream); }
+  .footer-bottom {
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 2rem;
-    border-top: 1px solid var(--line);
-  }
-  .footer-logo-img {
-    display: block;
-    max-height: 28px;
-    object-fit: contain;
-    filter: brightness(0) invert(1);
-    opacity: 0.6;
+    gap: 1rem;
+    padding-top: 2.2rem;
   }
   .footer-copy {
     font-family: 'DM Sans', sans-serif;
@@ -977,6 +1075,18 @@
     color: var(--text-dim);
     letter-spacing: 0.08em;
     font-weight: 300;
+  }
+  .footer-credit {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-credit:hover { color: var(--gold-light); }
+  @media (min-width: 901px) {
+    .footer-bottom { padding-right: 3.5rem; }
   }
 
   html body a.trx_addons_scroll_to_top,
@@ -1061,13 +1171,13 @@
   @media (min-width: 901px) and (max-width: 1320px) {
     .nav-links { gap: 1.4rem; }
     #navbar .nav-links li a { font-size: 0.8rem; letter-spacing: 0.12em; white-space: nowrap; }
-    nav, nav.scrolled { padding-left: 2rem; padding-right: 2rem; }
+    #navbar, #navbar.scrolled { padding-left: 2rem; padding-right: 2rem; }
   }
 
   @media (max-width: 900px) {
     body { font-size: 1.45rem !important; }
-    nav { padding: 1.4rem 1.6rem; }
-    nav.scrolled { padding: 1rem 1.6rem; }
+    #navbar { padding: 1.4rem 1.6rem; }
+    #navbar.scrolled { padding: 1rem 1.6rem; }
     .nav-links { display: none; }
     .nav-links.open {
       display: flex;
@@ -1128,7 +1238,11 @@
     .contact-value { font-size: 1rem !important; }
     .contact-item { padding: 2.6rem 0.8rem; }
 
-    footer { flex-direction: column; align-items: center; text-align: center; padding: 3rem 1.6rem; }
+    footer { padding: 3.5rem 1.6rem 2rem; }
+    .footer-top { flex-direction: column; align-items: center; text-align: center; gap: 2.5rem; }
+    .footer-brand { max-width: 100%; }
+    .footer-nav, .footer-contact { align-items: center; }
+    .footer-bottom { justify-content: center; text-align: center; }
     .footer-copy { font-size: 1rem !important; }
   }
 
@@ -1467,8 +1581,30 @@
 
   <!-- FOOTER -->
   <footer>
-    <img src="https://biyum.agency/wp-content/uploads/2026/05/logo-chimbuceros-e1780076256140.png" alt="Chimbuceros Logo" class="footer-logo-img" />
-    <div class="footer-copy">© 2026 Chimbuceros — Todos los derechos reservados</div>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="https://biyum.agency/wp-content/uploads/2026/05/logo-chimbuceros-e1780076256140.png" alt="Chimbuceros Logo" class="footer-logo-img" />
+        <p class="footer-tagline">Cortometraje documental · Quechua con subtítulos ES/EN · 2026</p>
+        <a href="/chimbuceros-kit.html" class="footer-kit" target="_blank" rel="noopener noreferrer">Kit de prensa ↓</a>
+      </div>
+      <nav class="footer-nav" aria-label="Navegación del pie de página">
+        <div class="footer-heading">Navegación</div>
+        <a href="#sinopsis">La Película</a>
+        <a href="#prensa">Prensa</a>
+        <a href="#trailer">Trailer</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+      <div class="footer-contact">
+        <div class="footer-heading">Contacto</div>
+        <a href="mailto:jahir.c.rosales@gmail.com">Jahir Rosales — Dirección</a>
+        <a href="mailto:alejandrovelozvera@gmail.com">Alejandro Veloz — Producción</a>
+        <a href="mailto:sakomedia97@gmail.com">Dennys Quishpe — Fotografía</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 Chimbuceros — Todos los derechos reservados</div>
+      <a class="footer-credit" href="https://biyum.agency" target="_blank" rel="noopener noreferrer">Sitio por Biyum Agency</a>
+    </div>
   </footer>
 
 </div>
@@ -1511,10 +1647,14 @@
       galeriaLabel: 'Detrás de Cámaras',
       galeriaTitle: 'Fotos de <em>Producción</em>',
       mediosLabel: 'En los Medios',
-      medioTypes: { publicacion: 'Publicación', instagram: 'Instagram', youtube: 'YouTube', facebook: 'Facebook', festival: 'Festival', prensa: 'Prensa' },
+      medioTypes: { publicacion: 'Publicación', instagram: 'Instagram', youtube: 'YouTube', facebook: 'Facebook', festival: 'Festival', prensa: 'Prensa', kit: 'Kit de prensa' },
       contactoLabel: 'Contacto Directo',
       contactoTitle: 'Póngase en <em>Contacto</em>',
       footerCopy: '© 2026 Chimbuceros — Todos los derechos reservados',
+      footerTagline: 'Cortometraje documental · Quechua con subtítulos ES/EN · 2026',
+      footerKit: 'Kit de prensa ↓',
+      footerNavHeading: 'Navegación',
+      footerContactHeading: 'Contacto',
     },
     en: {
       nav: ['The Film','Press','Trailer','Contact'],
@@ -1546,10 +1686,14 @@
       galeriaLabel: 'Behind the Scenes',
       galeriaTitle: 'Production <em>Photos</em>',
       mediosLabel: 'In the Media',
-      medioTypes: { publicacion: 'Feature', instagram: 'Instagram', youtube: 'YouTube', facebook: 'Facebook', festival: 'Festival', prensa: 'Press' },
+      medioTypes: { publicacion: 'Feature', instagram: 'Instagram', youtube: 'YouTube', facebook: 'Facebook', festival: 'Festival', prensa: 'Press', kit: 'Press kit' },
       contactoLabel: 'Direct Contact',
       contactoTitle: 'Get in <em>Touch</em>',
       footerCopy: '© 2026 Chimbuceros — All rights reserved',
+      footerTagline: 'Documentary short · Quechua with ES/EN subtitles · 2026',
+      footerKit: 'Press kit ↓',
+      footerNavHeading: 'Navigation',
+      footerContactHeading: 'Contact',
     },
   };
 
@@ -1591,6 +1735,7 @@
 
   // ── MEDIOS: para añadir un link, agrega una línea ──
   const medios = [
+    { type: 'kit', title: 'Kit de prensa — sinopsis, stills y créditos', source: 'biyum.agency', url: '/chimbuceros-kit.html' },
     { type: 'publicacion', title: 'Todos nuestros tambores', source: '25 Watts Cine', url: 'https://25wattscine.com/chimbuceros-j-rosales/' },
     { type: 'publicacion', title: 'Cortometraje ecuatoriano «Chimbuceros», ganador CineLebu 2026', source: 'Casa Bukowski', url: 'https://casabukowski.com/noticias/cortometraje-documental-ecuatoriano-chimbuceros-ganador-cinelebu-2026/' },
     { type: 'instagram', title: '«Chimbuceros» en la programación de ListaPAD', source: 'Instagram @listapad_festival', url: 'https://www.instagram.com/p/DfEzS90o8AQ/' },
@@ -1601,6 +1746,7 @@
 
   const medioIcons = {
     publicacion: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h8l4 4v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><path d="M14 4v4h4"/><path d="M8.5 12.5h6M8.5 16h4"/></svg>',
+    kit: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"/><path d="M7.5 10.5 12 15l4.5-4.5"/><path d="M5 20h14"/></svg>',
     instagram: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor" stroke="none"/></svg>',
     youtube: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.76-1.77C18.28 5 12 5 12 5s-6.28 0-7.84.43A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.76 1.77C5.72 19 12 19 12 19s6.28 0 7.84-.43a2.5 2.5 0 0 0 1.76-1.77A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8zM10 15V9l5.2 3z"/></svg>',
     facebook: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.6-1.5h1.5V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 3.9v2.3H8v3h2.5V21z"/></svg>',
@@ -1640,6 +1786,7 @@
 
   function applyLang(l) {
     const t = i18n[l];
+    document.documentElement.lang = l;
 
     document.querySelectorAll('#navLinks li a').forEach((a, i) => {
       if (t.nav[i]) a.textContent = t.nav[i];
@@ -1678,6 +1825,11 @@
     document.querySelector('#contacto .section-label').textContent = t.contactoLabel;
     document.querySelector('#contacto .section-title').innerHTML = t.contactoTitle;
     document.querySelector('.footer-copy').textContent = t.footerCopy;
+    document.querySelector('.footer-tagline').textContent = t.footerTagline;
+    document.querySelector('.footer-kit').textContent = t.footerKit;
+    document.querySelector('.footer-nav .footer-heading').textContent = t.footerNavHeading;
+    document.querySelector('.footer-contact .footer-heading').textContent = t.footerContactHeading;
+    document.querySelectorAll('.footer-nav a').forEach((a, i) => { if (t.nav[i]) a.textContent = t.nav[i]; });
 
     const premioTitles = document.querySelectorAll('.premio-titulo');
     premioTitles.forEach((el) => {

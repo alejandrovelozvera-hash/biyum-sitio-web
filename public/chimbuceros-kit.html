@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kit de Prensa — Chimbuceros: Time to live</title>
+<meta name="description" content="Kit de prensa del cortometraje documental Chimbuceros: ficha técnica, sinopsis ES/EN, premios, equipo, fotografías y contacto." />
+<meta name="robots" content="noindex" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,700;1,300;1,400&family=DM+Sans:wght@200;300;400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --gold: #B8922E;
+    --gold-light: #D4AA52;
+    --cream: #EDE5D4;
+    --dark: #080705;
+    --dark-2: #0F0D09;
+    --dark-3: #161310;
+    --text: #D8CEBC;
+    --text-dim: #7A6E5C;
+    --line: rgba(184,146,46,0.15);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.75;
+    font-size: 1.02rem;
+  }
+  .wrap { max-width: 940px; margin: 0 auto; padding: 3.5rem 1.6rem; }
+
+  .kit-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 3rem;
+  }
+  .kit-logo { height: 44px; width: auto; filter: brightness(0) invert(1); }
+  .kit-actions { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+  .btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+       letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+    border: 1px solid rgba(184,146,46,0.4);
+    background: transparent;
+    color: var(--gold-light);
+    font-weight: 400;
+  }
+  .btn-solid { background: var(--gold); border-color: var(--gold); color: #0b0906; }
+  .btn:hover { background: rgba(184,146,46,0.15); }
+  .btn-solid:hover { background: var(--gold-light); }
+
+  .label {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.1rem;
+    font-weight: 400;
+  }
+  .label::before { content: ''; display: block; width: 26px; height: 1px; background: var(--gold); flex-shrink: 0; }
+  h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2.4rem, 6vw, 3.6rem);
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.1;
+    margin-bottom: 0.6rem;
+  }
+  h1 em { font-style: italic; color: var(--gold-light); }
+  h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(1.7rem, 3.5vw, 2.1rem);
+    font-weight: 300;
+    color: var(--cream);
+    margin-bottom: 1.3rem;
+  }
+  .subtitle { color: var(--text-dim); font-size: 1.05rem; margin-bottom: 0.4rem; }
+  section { margin-bottom: 3.2rem; }
+  p { margin-bottom: 1.1rem; }
+  p strong { color: var(--cream); font-weight: 400; }
+
+  .ficha {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .ficha-item { background: var(--dark-2); padding: 1.2rem 1.4rem; }
+  .ficha-key {
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.35rem;
+    font-weight: 400;
+  }
+  .ficha-val { color: var(--cream); font-size: 1rem; font-weight: 300; }
+
+  .list { list-style: none; }
+  .list li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(184,146,46,0.09);
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .list li:last-child { border-bottom: none; }
+  .list b { color: var(--cream); font-weight: 400; }
+  .list span { color: var(--text-dim); font-size: 0.95rem; text-align: right; }
+
+  .stills { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 10px; }
+  .stills img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; display: block; aspect-ratio: 16/9; }
+  .stills a { display: block; }
+
+  .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+  .contact-card {
+    background: var(--dark-2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 1.3rem 1.5rem;
+  }
+  .contact-card b { display: block; color: var(--cream); font-weight: 400; margin-bottom: 0.2rem; }
+  .contact-card a { color: var(--gold-light); text-decoration: none; font-size: 0.95rem; word-break: break-all; }
+
+  .kit-footer {
+    border-top: 1px solid var(--line);
+    padding-top: 1.6rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+  }
+  .kit-footer a { color: var(--text-dim); }
+  .en-note {
+    background: var(--dark-2);
+    border-left: 2px solid var(--gold);
+    border-radius: 0 8px 8px 0;
+    padding: 1.3rem 1.6rem;
+  }
+  .en-note h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    color: var(--gold-light);
+    font-size: 1.15rem;
+    margin-bottom: 0.5rem;
+  }
+  .en-note p { color: var(--text-dim); margin-bottom: 0; font-size: 0.98rem; }
+
+  @media print {
+    body { background: #fff; color: #1c1a15; font-size: 10.5pt; }
+    .kit-actions, .btn { display: none !important; }
+    .wrap { padding: 0; max-width: 100%; }
+    h1, h2, .ficha-val, .list b { color: #000; }
+    .label, .ficha-key { color: #8a6a1e; }
+    .label::before { background: #8a6a1e; }
+    .ficha, .contact-card, .en-note, .ficha-item { background: #f7f5ef; border-color: #ddd6c4; }
+    .stills img { border: 1px solid #ddd; }
+    section { margin-bottom: 1.6rem; break-inside: avoid; }
+    .kit-header { border-color: #ddd; }
+    .kit-logo { filter: none; }
+    .en-note { border-left-color: #8a6a1e; }
+    .en-note p, .list span { color: #4a463c; }
+    a { color: inherit; text-decoration: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="kit-header">
+    <img src="https://biyum.agency/wp-content/uploads/2026/05/logo-chimbuceros-e1780076256140.png" alt="Chimbuceros Logo" class="kit-logo" />
+    <div class="kit-actions">
+      <button class="btn btn-solid" onclick="window.print()">Imprimir / Guardar PDF</button>
+      <a class="btn" href="/chimbuceros" target="_blank" rel="noopener">Ver sitio</a>
+    </div>
+  </header>
+
+  <section>
+    <div class="label">Kit de Prensa · Press Kit · 2026</div>
+    <h1>Chimbuceros: <em>Time to live</em></h1>
+    <p class="subtitle">Cortometraje documental · Ecuador · 9 minutos · Quechua con subtítulos ES/EN</p>
+    <p><strong>Logline:</strong> En Cacha, territorio ancestral del pueblo Puruhá, los últimos guardianes de una música hecha con trombones artesanales resisten el silencio y el olvido.</p>
+  </section>
+
+  <section>
+    <div class="label">Ficha Técnica</div>
+    <div class="ficha">
+      <div class="ficha-item"><div class="ficha-key">Título</div><div class="ficha-val">Chimbuceros: Time to live</div></div>
+      <div class="ficha-item"><div class="ficha-key">Año</div><div class="ficha-val">2026</div></div>
+      <div class="ficha-item"><div class="ficha-key">Duración</div><div class="ficha-val">9 minutos</div></div>
+      <div class="ficha-item"><div class="ficha-key">País</div><div class="ficha-val">Ecuador</div></div>
+      <div class="ficha-item"><div class="ficha-key">Idioma</div><div class="ficha-val">Quechua (subt. ES / EN)</div></div>
+      <div class="ficha-item"><div class="ficha-key">Género</div><div class="ficha-val">Documental</div></div>
+      <div class="ficha-item"><div class="ficha-key">Dirección</div><div class="ficha-val">Jahir Rosales</div></div>
+      <div class="ficha-item"><div class="ficha-key">Producción</div><div class="ficha-val">Beca Kunturñawi Lab III</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="label">Sinopsis</div>
+    <h2>Sobre la película</h2>
+    <p>
+      A través de su vida cotidiana, sus voces y sus instrumentos que se resisten al silencio, <strong>CHIMBUCEROS</strong> captura cómo la tradición lucha contra la desaparición y cómo perdura la memoria colectiva, incluso cuando ya solo quedan dos para recordarla.
+    </p>
+    <p>
+      Una mirada íntima hacia la resistencia cultural, filmada en una enriquecedora atmósfera sonora y visual nativa. El cortometraje fue filmado en Cacha (Riobamba), primera parroquia indígena reconocida oficialmente en Ecuador, y sigue a Don Lorenzo y Don Valdez, guardianes de una tradición musical del pueblo Puruhá.
+    </p>
+    <div class="en-note">
+      <h3>English synopsis</h3>
+      <p>
+        Through their daily life, their voices and their instruments that resist silence, <strong>CHIMBUCEROS</strong> captures how tradition fights against disappearance and how collective memory endures, even when only two remain to remember it. An intimate look at cultural resistance in the Ecuadorian Andes.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="label">Premios y Selecciones</div>
+    <ul class="list">
+      <li><b>Ganador — Pueblos Originarios del Mundo</b><span>CineLebu 26 · Chile · Mayo 2026</span></li>
+      <li><b>Selección Oficial — Competencia de Trabajos Académicos</b><span>Seff Santiago del Estero · Argentina · Junio 2026</span></li>
+      <li><b>Selección Oficial</b><span>Présence Autochtone · Montreal, Canadá · Agosto 2026</span></li>
+      <li><b>Beca Kunturñawi Lab III</b><span>Festival Kunturñawi · Ecuador · Septiembre 2026</span></li>
+      <li><b>Selección Oficial — documentales</b><span>Elipsis 2026 · Ecuador</span></li>
+      <li><b>Selección Oficial — cortometrajes</b><span>FICQUITO 11 · Ecuador · Noviembre 2026</span></li>
+      <li><b>Selección Oficial — documental</b><span>Kinoki 20 · IBERO · Guayaquil</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="label">Fotogramas · Stills</div>
+    <div class="stills">
+      <a href="https://biyum.agency/wp-content/uploads/2026/05/Foto-Chimbuceros.png" target="_blank" rel="noopener"><img src="https://biyum.agency/wp-content/uploads/2026/05/Foto-Chimbuceros.png" alt="Fotograma Chimbuceros 1" loading="lazy"></a>
+      <a href="https://biyum.agency/wp-content/uploads/2026/05/Captura-2025-09-27-163758_3.7.1-e1780074009131.jpg" target="_blank" rel="noopener"><img src="https://biyum.agency/wp-content/uploads/2026/05/Captura-2025-09-27-163758_3.7.1-e1780074009131.jpg" alt="Fotograma Chimbuceros 2" loading="lazy"></a>
+      <a href="https://biyum.agency/wp-content/uploads/2026/05/Captura-2025-09-27-163758_3.4.1-e1780074031231.jpg" target="_blank" rel="noopener"><img src="https://biyum.agency/wp-content/uploads/2026/05/Captura-2025-09-27-163758_3.4.1-e1780074031231.jpg" alt="Fotograma Chimbuceros 3" loading="lazy"></a>
+    </div>
+    <p class="subtitle" style="margin-top:0.9rem;">Haz clic en una imagen para abrirla en tamaño completo.</p>
+  </section>
+
+  <section>
+    <div class="label">Equipo</div>
+    <ul class="list">
+      <li><b>Dirección</b><span>Jahir Rosales</span></li>
+      <li><b>Asistente de Dirección</b><span>Shirley Zarate</span></li>
+      <li><b>Dirección de Fotografía / Color</b><span>Dennys Quishpe</span></li>
+      <li><b>Primer Asistente de Foto / Montaje</b><span>Alejandro Veloz</span></li>
+      <li><b>Producción</b><span>Aldo Sisalema / Jahir Rosales</span></li>
+      <li><b>Sonido</b><span>Marlon Pozo</span></li>
+      <li><b>Microfonistas</b><span>Saywa Masaquiza / Alejandro Becerra</span></li>
+      <li><b>Diseño Sonoro y Mezcla</b><span>Alain Cortez</span></li>
+      <li><b>Gaffer</b><span>Samuel Buñay</span></li>
+      <li><b>Traducción</b><span>William Cava / Dennys Quishpe / Saywa Masaquiza</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="label">Trailer</div>
+    <p><a class="btn" href="https://www.youtube.com/watch?v=PlttSPH3AxY" target="_blank" rel="noopener" style="display:inline-block;">Ver trailer en YouTube →</a></p>
+  </section>
+
+  <section>
+    <div class="label">Contacto para prensa y festivales</div>
+    <div class="contact-grid">
+      <div class="contact-card"><b>Jahir Rosales — Dirección</b><a href="mailto:jahir.c.rosales@gmail.com">jahir.c.rosales@gmail.com</a></div>
+      <div class="contact-card"><b>Alejandro Veloz — Producción</b><a href="mailto:alejandrovelozvera@gmail.com">alejandrovelozvera@gmail.com</a></div>
+      <div class="contact-card"><b>Dennys Quishpe — Fotografía</b><a href="mailto:sakomedia97@gmail.com">sakomedia97@gmail.com</a></div>
+    </div>
+  </section>
+
+  <footer class="kit-footer">
+    <div>© 2026 Chimbuceros — Todos los derechos reservados</div>
+    <div><a href="https://biyum.agency/chimbuceros" target="_blank" rel="noopener">biyum.agency/chimbuceros</a></div>
+  </footer>
+
+</div>
+</body>
+</html>
