@@ -39,12 +39,12 @@
   "url": "https://biyum.agency/chimbuceros",
   "image": "https://biyum.agency/wp-content/uploads/2026/05/Foto-Chimbuceros.png",
   "trailer": "https://www.youtube.com/watch?v=PlttSPH3AxY",
-  "datePublished": "2026",
+  "datePublished": "2025",
   "duration": "PT9M",
   "genre": ["Documental"],
   "inLanguage": "quz",
   "director": { "@type": "Person", "name": "Jahir Rosales" },
-  "award": "Ganador Pueblos Originarios del Mundo — CineLebu 2026; Selección Oficial Seff Santiago del Estero 2026; Beca Kunturñawi Lab; Selección Oficial Presence Autochtone 2026"
+  "award": "Ganador Pueblos Originarios del Mundo — CineLebu 26; Selección Oficial Présence Autochtone 36°; Selección Minsk International Film Festival 32°; Selección Kinoki 20°; Selección Oficial Seff Santiago del Estero; Selección FICQUITO 11; Selección Oficial Desde Las Vísceras Film Festival; Finalista Premios En Corto; Ganador Beca Kunturñawi Lab III"
 }
 </script>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,700;1,300;1,400&family=DM+Sans:wght@200;300;400;500&family=Libre+Baskerville:ital@0;1&display=swap" rel="stylesheet" />
@@ -271,6 +271,49 @@
     opacity: 0;
     animation: fadeSlideUp 1.1s ease 0.65s forwards;
   }
+
+  .hero-carousel {
+    margin: 3rem 0;
+    overflow: hidden;
+    position: relative;
+    max-height: 400px;
+  }
+  .carousel-track {
+    display: flex;
+    transition-transform: transform 0.5s ease;
+    width: max-content;
+  }
+  .carousel-slide {
+    min-width: 100%;
+    flex: 0 0 100%;
+    display: none;
+  }
+  .carousel-slide.active {
+    display: block;
+  }
+  .carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .carousel-prev, .carousel-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(8,7,5,0.5);
+    border: none;
+    color: var(--cream);
+    padding: 0.5rem;
+    cursor: pointer;
+    font-size: 1.2rem;
+    z-index: 10;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+  }
+  .carousel-prev { left: 10px; }
+  .carousel-next { right: 10px; }
 
   @keyframes fadeSlideUp {
     from { opacity: 0; transform: translateY(22px); }
@@ -597,6 +640,14 @@
   .premio-card:hover .premio-logo-wrap img { opacity: 1; }
   .premio-logo-wrap.premio-presence-lg { height: 120px; }
   .premio-logo-wrap.premio-presence-lg img { height: 120px; max-width: 92%; }
+  .premio-logo-wrap.premio-no-logo svg {
+    height: 46px;
+    width: auto;
+    color: var(--gold);
+    opacity: 0.45;
+    transition: opacity 0.3s;
+  }
+  .premio-card:hover .premio-logo-wrap.premio-no-logo svg { opacity: 0.85; }
   .premio-icon-fallback {
     font-size: 2rem;
     opacity: 0.7;
@@ -1308,7 +1359,7 @@
     <div class="hero-content">
       <div class="hero-eyebrow">
         <div class="hero-eyebrow-line"></div>
-        <div class="hero-eyebrow-text">Cortometraje Documental · 2026</div>
+        <div class="hero-eyebrow-text">Cortometraje Documental · 2025</div>
       </div>
 
       <div class="hero-title-block">
@@ -1317,6 +1368,16 @@
 
       <div class="hero-subtitle-wrap">
         <p class="hero-subtitle">Time to live</p>
+      </div>
+
+      <div class="hero-carousel">
+        <div class="carousel-track" id="heroCarouselTrack">
+          <div class="carousel-slide" id="slide1"><img src="https://biyum.agency/wp-content/uploads/2026/05/Captura-2025-09-27-163758_3.7.1-e1780074009131.jpg" alt="Slide 1" loading="lazy"></div>
+          <div class="carousel-slide" id="slide2"><img src="https://biyum.agency/wp-content/uploads/2026/05/Captura-2025-09-27-163758_3.4.1-e1780074031231.jpg" alt="Slide 2" loading="lazy"></div>
+          <div class="carousel-slide" id="slide3"><img src="https://biyum.agency/wp-content/uploads/2026/05/Foto-Chimbuceros.png" alt="Slide 3" loading="lazy"></div>
+        </div>
+        <button class="carousel-prev" onclick="prevSlide()">←</button>
+        <button class="carousel-next" onclick="nextSlide()">→</button>
       </div>
 
       <div class="hero-actions">
@@ -1350,10 +1411,10 @@
       <div class="section-label">La Historia</div>
       <h2 class="section-title">Sobre la <em>Película</em></h2>
       <p>
-        A través de su vida cotidiana, sus voces y sus instrumentos que se resisten al silencio, <strong>CHIMBUCEROS</strong> captura cómo la tradición lucha contra la desaparición y cómo perdura la memoria colectiva, incluso cuando ya solo quedan dos para recordarla.
+        En Cacha, territorio ancestral del pueblo Puruhá y primera parroquia indígena reconocida oficialmente en Ecuador, sobreviven los últimos «chimbuceros», Don Lorenzo y Don Valdez, guardianes de una música hecha con trombones artesanales que alguna vez marcó la identidad de la comunidad. A través de su cotidianidad, de su voz y de sus instrumentos que desafían el silencio, <strong>CHIMBUCEROS</strong> observa cómo la tradición se enfrenta a la desaparición y cómo la memoria colectiva se sostiene, aunque solo queden dos para recordarla.
       </p>
       <p>
-        Una mirada íntima hacia la resistencia cultural, filmada en una enriquecedora atmósfera sonora y visual nativa.
+        Un retrato urgente sobre la desaparición de una práctica cultural frente a la migración contemporánea en la sierra ecuatoriana.
       </p>
       <a href="#contacto" class="btn-ghost">Solicitar proyección →</a>
     </div>
@@ -1363,8 +1424,8 @@
         <div class="stat-label">Duración</div>
       </div>
       <div class="stat-block">
-        <div class="stat-num">2026</div>
-        <div class="stat-label">Año</div>
+        <div class="stat-num">2025</div>
+        <div class="stat-label">Año de producción</div>
       </div>
       <div class="stat-block">
         <div class="stat-num">Doc</div>
@@ -1386,7 +1447,7 @@
         <div class="section-label">Prensa &amp; Festivales</div>
         <h2 class="section-title">Premios &amp; <em>Cobertura</em></h2>
       </div>
-      <div class="premios-count">04</div>
+      <div class="premios-count" style="display: none;">10</div>
     </div>
     <div class="premios-grid" id="premios">
 
@@ -1396,7 +1457,16 @@
         </div>
         <div class="premio-festival">CineLebu 26 · Chile</div>
         <div class="premio-titulo">Ganador</div>
-        <div class="premio-anio">Mayo 2026 · Selección Documental</div>
+        <div class="premio-anio">Pueblos Originarios del Mundo</div>
+      </div>
+
+      <div class="premio-card reveal">
+        <div class="premio-logo-wrap premio-presence-lg">
+          <img src="/presence-autochtone.png" alt="Festival Presence Autochtone" loading="lazy">
+        </div>
+        <div class="premio-festival">Présence Autochtone 36° · Canadá</div>
+        <div class="premio-titulo">Selección Oficial</div>
+        <div class="premio-anio">Montreal</div>
       </div>
 
       <div class="premio-card reveal">
@@ -1405,25 +1475,70 @@
         </div>
         <div class="premio-festival">Seff Santiago del Estero · Argentina</div>
         <div class="premio-titulo">Selección Oficial</div>
-        <div class="premio-anio">Junio 2026 · Competencia</div>
+        <div class="premio-anio">Trabajos Académicos</div>
       </div>
 
       <div class="premio-card reveal">
         <div class="premio-logo-wrap">
           <img src="https://biyum.agency/wp-content/uploads/2026/05/kunturblanco.png" alt="Festival Kunturñawi" loading="lazy">
         </div>
-        <div class="premio-festival">Festival Kunturñawi · Ecuador</div>
+        <div class="premio-festival">Kunturñawi Lab III · Ecuador</div>
         <div class="premio-titulo">Beca Kunturñawi Lab</div>
-        <div class="premio-anio">Septiembre 2026</div>
+        <div class="premio-anio">Beca otorgada en 2025</div>
       </div>
 
       <div class="premio-card reveal">
-        <div class="premio-logo-wrap premio-presence-lg">
-          <img src="/presence-autochtone.png" alt="Festival Presence Autochtone" loading="lazy">
+        <div class="premio-logo-wrap premio-no-logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4"/><path d="M6 3h12v5a6 6 0 0 1-12 0z"/><path d="M6 5H4a2 2 0 0 0 2 2M18 5h2a2 2 0 0 1-2 2"/></svg>
         </div>
-        <div class="premio-festival">Presence Autochtone · Canadá</div>
+        <div class="premio-festival">Minsk Film Festival 32° · Bielorrusia</div>
+        <div class="premio-titulo">Selección</div>
+        <div class="premio-anio"> Internacional</div>
+      </div>
+
+      <div class="premio-card reveal">
+        <div class="premio-logo-wrap premio-no-logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4"/><path d="M6 3h12v5a6 6 0 0 1-12 0z"/><path d="M6 5H4a2 2 0 0 0 2 2M18 5h2a2 2 0 0 1-2 2"/></svg>
+        </div>
+        <div class="premio-festival">Kinoki 20° · México</div>
+        <div class="premio-titulo">Selección</div>
+        <div class="premio-anio">Cine Universitario · Ibero</div>
+      </div>
+
+      <div class="premio-card reveal">
+        <div class="premio-logo-wrap premio-no-logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4"/><path d="M6 3h12v5a6 6 0 0 1-12 0z"/><path d="M6 5H4a2 2 0 0 0 2 2M18 5h2a2 2 0 0 1-2 2"/></svg>
+        </div>
+        <div class="premio-festival">FICQUITO 11 · Ecuador</div>
+        <div class="premio-titulo">Selección</div>
+        <div class="premio-anio">Festival Internacional de Cine de Quito</div>
+      </div>
+
+      <div class="premio-card reveal">
+        <div class="premio-logo-wrap premio-no-logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4"/><path d="M6 3h12v5a6 6 0 0 1-12 0z"/><path d="M6 5H4a2 2 0 0 0 2 2M18 5h2a2 2 0 0 1-2 2"/></svg>
+        </div>
+        <div class="premio-festival">Desde Las Vísceras · Ecuador</div>
         <div class="premio-titulo">Selección Oficial</div>
-        <div class="premio-anio">Agosto 2026 · Selección Documental</div>
+        <div class="premio-anio">Film Festival</div>
+      </div>
+
+      <div class="premio-card reveal">
+        <div class="premio-logo-wrap premio-no-logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4"/><path d="M6 3h12v5a6 6 0 0 1-12 0z"/><path d="M6 5H4a2 2 0 0 0 2 2M18 5h2a2 2 0 0 1-2 2"/></svg>
+        </div>
+        <div class="premio-festival">Premios En Corto · Ecuador</div>
+        <div class="premio-titulo">Finalista</div>
+        <div class="premio-anio">Nacional</div>
+      </div>
+
+      <div class="premio-card reveal">
+        <div class="premio-logo-wrap premio-no-logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4"/><path d="M6 3h12v5a6 6 0 0 1-12 0z"/><path d="M6 5H4a2 2 0 0 0 2 2M18 5h2a2 2 0 0 1-2 2"/></svg>
+        </div>
+        <div class="premio-festival">Elipsis · Ecuador</div>
+        <div class="premio-titulo">Selección Oficial</div>
+        <div class="premio-anio">Documentales</div>
       </div>
 
     </div>
@@ -1514,7 +1629,7 @@
       <div class="trailer-cta">
         <div class="trailer-eyebrow">
           <span class="trailer-eyebrow-line"></span>
-          <span class="trailer-eyebrow-text">Cortometraje Documental · 2026</span>
+          <span class="trailer-eyebrow-text">Cortometraje Documental · 2025</span>
           <span class="trailer-eyebrow-line"></span>
         </div>
         <div class="play-btn">
@@ -1585,7 +1700,7 @@
     <div class="footer-top">
       <div class="footer-brand">
         <img src="https://biyum.agency/wp-content/uploads/2026/05/logo-chimbuceros-e1780076256140.png" alt="Chimbuceros Logo" class="footer-logo-img" />
-        <p class="footer-tagline">Cortometraje documental · Quechua con subtítulos ES/EN · 2026</p>
+        <p class="footer-tagline">Cortometraje documental · Quechua con subtítulos ES/EN · 2025</p>
         <a href="/chimbuceros-kit.html" class="footer-kit" target="_blank" rel="noopener noreferrer">Kit de prensa ↓</a>
       </div>
       <nav class="footer-nav" aria-label="Navegación del pie de página">
@@ -1620,7 +1735,7 @@
   const i18n = {
     es: {
       nav: ['La Película','Prensa','Trailer','Contacto'],
-      heroEyebrow: 'Cortometraje Documental · 2026',
+      heroEyebrow: 'Cortometraje Documental · 2025',
       heroSubtitle: 'Time to live',
       heroTrailer: 'Ver Trailer',
       heroSinopsis: 'Conoce la historia →',
@@ -1628,21 +1743,23 @@
       patrocinadores: 'Gracias al apoyo de',
       sinopsisLabel: 'La Historia',
       sinopsisTitle: 'Sobre la <em>Película</em>',
-      sinopsisP1: 'A través de su vida cotidiana, sus voces y sus instrumentos que se resisten al silencio, <strong>CHIMBUCEROS</strong> captura cómo la tradición lucha contra la desaparición y cómo perdura la memoria colectiva, incluso cuando ya solo quedan dos para recordarla.',
-      sinopsisP2: 'Una mirada íntima hacia la resistencia cultural, filmada en una enriquecedora atmósfera sonora y visual nativa.',
+      sinopsisP1: 'En Cacha, territorio ancestral del pueblo Puruhá y primera parroquia indígena reconocida oficialmente en Ecuador, sobreviven los últimos «chimbuceros», Don Lorenzo y Don Valdez, guardianes de una música hecha con trombones artesanales que alguna vez marcó la identidad de la comunidad. A través de su cotidianidad, de su voz y de sus instrumentos que desafían el silencio, <strong>CHIMBUCEROS</strong> observa cómo la tradición se enfrenta a la desaparición y cómo la memoria colectiva se sostiene, aunque solo queden dos para recordarla.',
+      sinopsisP2: 'Un retrato urgente sobre la desaparición de una práctica cultural frente a la migración contemporánea en la sierra ecuatoriana.',
       sinopsisCta: 'Solicitar proyección →',
       statDuracion: 'Duración',
-      statAnio: 'Año',
+      statAnio: 'Año de producción',
       statGenero: 'Género',
       statLang: 'Quechua · Subt. EN / ES',
       prensaLabel: 'Prensa & Festivales',
       prensaTitle: 'Premios & <em>Cobertura</em>',
       premioGanador: 'Ganador',
       premioSeleccion: 'Selección Oficial',
+      premioSeleccionCorto: 'Selección',
+      premioFinalista: 'Finalista',
       premioBeca: 'Beca Kunturñawi Lab',
       crewLabel: 'Ficha Técnica',
       crewTitle: 'El <em>Equipo</em> detrás',
-      trailerEyebrow: 'Cortometraje Documental · 2026',
+      trailerEyebrow: 'Cortometraje Documental · 2025',
       trailerLabel: 'Reproducir Trailer',
       trailerDuration: '28 segundos',
       galeriaLabel: 'Detrás de Cámaras',
@@ -1652,14 +1769,14 @@
       contactoLabel: 'Contacto Directo',
       contactoTitle: 'Póngase en <em>Contacto</em>',
       footerCopy: '© 2026 Chimbuceros — Todos los derechos reservados',
-      footerTagline: 'Cortometraje documental · Quechua con subtítulos ES/EN · 2026',
+      footerTagline: 'Cortometraje documental · Quechua con subtítulos ES/EN · 2025',
       footerKit: 'Kit de prensa ↓',
       footerNavHeading: 'Navegación',
       footerContactHeading: 'Contacto',
     },
     en: {
       nav: ['The Film','Press','Trailer','Contact'],
-      heroEyebrow: 'Documentary Short Film · 2026',
+      heroEyebrow: 'Documentary Short Film · 2025',
       heroSubtitle: 'Time to live',
       heroTrailer: 'Watch Trailer',
       heroSinopsis: 'Know the story →',
@@ -1667,21 +1784,23 @@
       patrocinadores: 'With the support of',
       sinopsisLabel: 'The Story',
       sinopsisTitle: 'About the <em>Film</em>',
-      sinopsisP1: 'Through their daily life, their voices and their instruments that resist silence, <strong>CHIMBUCEROS</strong> captures how tradition fights against disappearance and how collective memory endures, even when only two remain to remember it.',
-      sinopsisP2: 'An intimate look at cultural resistance, filmed in an enriching native sound and visual atmosphere.',
+      sinopsisP1: 'In Cacha, ancestral territory of the Puruhá people and the first officially recognized indigenous parish in Ecuador, the last «chimbuceros» survive — Don Lorenzo and Don Valdez, guardians of a music made with artisanal trombones that once defined the community\'s identity. Through their daily life, their voices and their instruments that defy silence, <strong>CHIMBUCEROS</strong> watches tradition face disappearance and collective memory hold on, even when only two remain to remember it.',
+      sinopsisP2: 'An urgent portrait of the disappearance of a cultural practice in the face of contemporary migration in the Ecuadorian highlands.',
       sinopsisCta: 'Request a screening →',
       statDuracion: 'Duration',
-      statAnio: 'Year',
+      statAnio: 'Production year',
       statGenero: 'Genre',
       statLang: 'Quechua · Subs. EN / ES',
       prensaLabel: 'Press & Festivals',
       prensaTitle: 'Awards & <em>Coverage</em>',
       premioGanador: 'Winner',
       premioSeleccion: 'Official Selection',
+      premioSeleccionCorto: 'Selection',
+      premioFinalista: 'Finalist',
       premioBeca: 'Kunturñawi Lab Grant',
       crewLabel: 'Credits',
       crewTitle: 'The <em>Team</em> behind',
-      trailerEyebrow: 'Documentary Short Film · 2026',
+      trailerEyebrow: 'Documentary Short Film · 2025',
       trailerLabel: 'Play Trailer',
       trailerDuration: '28 seconds',
       galeriaLabel: 'Behind the Scenes',
@@ -1691,7 +1810,7 @@
       contactoLabel: 'Direct Contact',
       contactoTitle: 'Get in <em>Touch</em>',
       footerCopy: '© 2026 Chimbuceros — All rights reserved',
-      footerTagline: 'Documentary short · Quechua with ES/EN subtitles · 2026',
+      footerTagline: 'Documentary short · Quechua with ES/EN subtitles · 2025',
       footerKit: 'Press kit ↓',
       footerNavHeading: 'Navigation',
       footerContactHeading: 'Contact',
@@ -1736,13 +1855,13 @@
 
   // ── MEDIOS: para añadir un link, agrega una línea ──
   const medios = [
-    { type: 'kit', title: 'Kit de prensa — sinopsis, stills y créditos', source: 'biyum.agency', url: '/chimbuceros-kit.html' },
     { type: 'publicacion', title: 'Todos nuestros tambores', source: '25 Watts Cine', url: 'https://25wattscine.com/chimbuceros-j-rosales/' },
-    { type: 'publicacion', title: 'Cortometraje ecuatoriano «Chimbuceros», ganador CineLebu 2026', source: 'Casa Bukowski', url: 'https://casabukowski.com/noticias/cortometraje-documental-ecuatoriano-chimbuceros-ganador-cinelebu-2026/' },
+    { type: 'publicacion', title: 'Cortometraje ecuatoriano «Chimbuceros», ganador CineLebu 2025', source: 'Casa Bukowski', url: 'https://casabukowski.com/noticias/cortometraje-documental-ecuatoriano-chimbuceros-ganador-cinelebu-2025/' },
     { type: 'instagram', title: '«Chimbuceros» en la programación de ListaPAD', source: 'Instagram @listapad_festival', url: 'https://www.instagram.com/p/DfEzS90o8AQ/' },
     { type: 'festival', title: 'Elipsis 2026 — Selección oficial de documentales', source: 'Instagram @festivalelipsis', url: 'https://www.instagram.com/p/DezwksYkqpt/' },
     { type: 'festival', title: 'FICQUITO 11 — Selección oficial de cortometrajes', source: 'Instagram @ficquito', url: 'https://www.instagram.com/p/DesgR-8FLh-/' },
     { type: 'festival', title: 'Kinoki 20 — Proyección de selección oficial documental', source: 'Instagram @kinoki_cine', url: 'https://www.instagram.com/p/Dc4fFZIqW7V/' },
+    { type: 'kit', title: 'Kit de prensa — sinopsis, stills y créditos', source: 'biyum.agency', url: '/chimbuceros-kit.html' },
   ];
 
   const medioIcons = {
@@ -1837,6 +1956,8 @@
       const base = el.getAttribute('data-base');
       if (base === 'Ganador') el.textContent = t.premioGanador;
       if (base === 'Selección Oficial') el.textContent = t.premioSeleccion;
+      if (base === 'Selección') el.textContent = t.premioSeleccionCorto;
+      if (base === 'Finalista') el.textContent = t.premioFinalista;
       if (base === 'Beca Kunturñawi Lab') el.textContent = t.premioBeca;
     });
 
@@ -1844,6 +1965,21 @@
       s.classList.toggle('active', s.getAttribute('data-lang') === l);
     });
     langToggle.setAttribute('aria-label', l === 'es' ? 'Cambiar idioma' : 'Change language');
+  }
+
+  // ── HERO CAROUSEL ──
+  let heroSlide = 1;
+  const track = document.getElementById('heroCarouselTrack');
+  if (track) {
+    showSlide(heroSlide);
+    function showSlide(n) {
+      const slides = track.querySelectorAll('.carousel-slide');
+      if (n > slides.length) heroSlide = 1;
+      if (n < 1) heroSlide = slides.length;
+      track.style.transform = `translateX(${- (heroSlide - 1) * 100}%)`;
+    }
+    function prevSlide() { showSlide(heroSlide -= 1); }
+    function nextSlide() { showSlide(heroSlide += 1); }
   }
 
   const observer = new IntersectionObserver((entries) => {
