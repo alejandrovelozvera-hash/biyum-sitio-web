@@ -273,22 +273,19 @@
   }
 
   .hero-carousel {
+    position: relative;
     margin: 3rem 0;
     overflow: hidden;
-    position: relative;
-    max-height: 400px;
   }
   .carousel-track {
     display: flex;
-    transition-transform: transform 0.5s ease;
-    width: max-content;
+    transition-transform: transform 0.6s ease-in-out;
+    width: calc(300% + 2px);
+    height: 100%;
   }
   .carousel-slide {
     min-width: 100%;
     flex: 0 0 100%;
-    display: none;
-  }
-  .carousel-slide.active {
     display: block;
   }
   .carousel-slide img {
@@ -299,12 +296,21 @@
   }
   .carousel-prev, .carousel-next {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(8,7,5,0.5);
+    top: 0;
+    width: 44px;
+    height: 100%;
+    background: rgba(8,7,5,0.4);
     border: none;
     color: var(--cream);
-    padding: 0.5rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .carousel-prev { left: 0; }
+  .carousel-next { right: 0; }
     cursor: pointer;
     font-size: 1.2rem;
     z-index: 10;
@@ -1967,19 +1973,25 @@
     langToggle.setAttribute('aria-label', l === 'es' ? 'Cambiar idioma' : 'Change language');
   }
 
-  // ── HERO CAROUSEL ──
-  let heroSlide = 1;
+  // ── HERO CAROUSEL AUTO ──
   const track = document.getElementById('heroCarouselTrack');
-  if (track) {
-    showSlide(heroSlide);
-    function showSlide(n) {
-      const slides = track.querySelectorAll('.carousel-slide');
-      if (n > slides.length) heroSlide = 1;
-      if (n < 1) heroSlide = slides.length;
-      track.style.transform = `translateX(${- (heroSlide - 1) * 100}%)`;
+  const slides = track ? track.querySelectorAll('.carousel-slide') : [];
+  if (slides.length > 0) {
+    let idx = 0;
+    function go(n) {
+      idx = (n + slides.length) % slides.length;
+      track.style.transform = `translateX(${- idx * 100}%)`;
     }
-    function prevSlide() { showSlide(heroSlide -= 1); }
-    function nextSlide() { showSlide(heroSlide += 1); }
+    // Auto-slide cada 5 segundos
+    const interval = setInterval(() => { go(idx + 1); }, 5000);
+    // Hover para pausar
+    const carousel = track.parentElement;
+    if (carousel) {
+      carousel.addEventListener('mouseenter', () => clearInterval(interval));
+      carousel.addEventListener('mouseleave', () => { interval && setInterval(() => { go(idx + 1); }, 5000); });
+    }
+    // Ir al slide 1 al cargar
+    go(0);
   }
 
   const observer = new IntersectionObserver((entries) => {
